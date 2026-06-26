@@ -488,7 +488,7 @@ const E = (function(){
             if(!seen.has(key)){
               seen.add(key);
               const total = combo.reduce((a,b)=>a+b, 0);
-              moves.push({origin, die:total, combined:combo, dest:result.dest});
+              moves.push({origin, die:total, combined:result.sequence, dest:result.dest});
             }
           }
         }
