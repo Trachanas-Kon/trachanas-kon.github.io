@@ -252,6 +252,10 @@
       position: relative;
     }
     .card-img .emoji { position: relative; z-index: 1; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); transition: opacity 0.4s; }
+    .card-art {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+    }
     .card-photo {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
@@ -259,7 +263,7 @@
       object-position: center;
       opacity: 0;
       transition: opacity 0.7s;
-      z-index: 0;
+      z-index: 2;
     }
     .c1 .card-img { background: linear-gradient(135deg, #1a4a7a 0%, #0d2848 100%); }
     .c2 .card-img { background: linear-gradient(135deg, #2a3d5c 0%, #142030 100%); }
@@ -580,10 +584,22 @@
 
       <div class="card c1">
         <div class="card-img">
+          <svg class="card-art" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="122" width="240" height="7" rx="1" fill="rgba(212,168,67,0.55)"/>
+            <rect x="30" y="115" width="220" height="7" rx="1" fill="rgba(212,168,67,0.4)"/>
+            <rect x="25" y="50" width="9" height="65" rx="2" fill="rgba(255,255,255,0.6)"/>
+            <rect x="61" y="50" width="9" height="65" rx="2" fill="rgba(255,255,255,0.6)"/>
+            <rect x="97" y="50" width="9" height="65" rx="2" fill="rgba(255,255,255,0.6)"/>
+            <rect x="133" y="50" width="9" height="65" rx="2" fill="rgba(255,255,255,0.6)"/>
+            <rect x="169" y="50" width="9" height="65" rx="2" fill="rgba(255,255,255,0.6)"/>
+            <rect x="205" y="50" width="9" height="65" rx="2" fill="rgba(255,255,255,0.6)"/>
+            <rect x="241" y="50" width="9" height="65" rx="2" fill="rgba(255,255,255,0.6)"/>
+            <rect x="18" y="40" width="244" height="10" fill="rgba(255,255,255,0.45)"/>
+            <polygon points="18,40 140,8 262,40" fill="none" stroke="rgba(212,168,67,0.8)" stroke-width="2.5"/>
+            <circle cx="140" cy="28" r="5" fill="rgba(212,168,67,0.55)"/>
+          </svg>
           <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Temple_of_Apollo_Ptoon,_a_fountain,_and_nothing_else,_Boeotia,_central_Greece.jpg/640px-Temple_of_Apollo_Ptoon,_a_fountain,_and_nothing_else,_Boeotia,_central_Greece.jpg" alt="Ιερό Απόλλωνα Πτώου"
-            onload="this.style.opacity=1;var e=this.parentNode.querySelector('.emoji');if(e)e.style.opacity=0"
-            onerror="this.remove()">
-          <span class="emoji">🏛</span>
+            onload="this.style.opacity=1" onerror="this.style.display='none'">
         </div>
         <div class="card-body">
           <div class="card-era">7ος – 6ος αι. π.Χ.</div>
@@ -594,10 +610,26 @@
 
       <div class="card c2">
         <div class="card-img">
+          <svg class="card-art" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="0,140 70,50 140,140" fill="rgba(255,255,255,0.1)"/>
+            <polygon points="90,140 180,25 270,140" fill="rgba(255,255,255,0.12)"/>
+            <polygon points="150,140 200,60 250,140" fill="rgba(255,255,255,0.08)"/>
+            <rect x="0" y="108" width="280" height="8" fill="rgba(212,168,67,0.3)"/>
+            <rect x="15" y="82" width="28" height="34" rx="2" fill="rgba(212,168,67,0.38)"/>
+            <rect x="15" y="74" width="7" height="8" rx="1" fill="rgba(212,168,67,0.38)"/>
+            <rect x="25" y="74" width="7" height="8" rx="1" fill="rgba(212,168,67,0.38)"/>
+            <rect x="35" y="74" width="7" height="8" rx="1" fill="rgba(212,168,67,0.38)"/>
+            <rect x="80" y="88" width="22" height="28" rx="2" fill="rgba(212,168,67,0.35)"/>
+            <rect x="80" y="81" width="6" height="7" rx="1" fill="rgba(212,168,67,0.35)"/>
+            <rect x="90" y="81" width="6" height="7" rx="1" fill="rgba(212,168,67,0.35)"/>
+            <rect x="180" y="85" width="24" height="31" rx="2" fill="rgba(212,168,67,0.38)"/>
+            <rect x="237" y="78" width="28" height="38" rx="2" fill="rgba(212,168,67,0.35)"/>
+            <rect x="237" y="70" width="7" height="8" rx="1" fill="rgba(212,168,67,0.35)"/>
+            <rect x="248" y="70" width="7" height="8" rx="1" fill="rgba(212,168,67,0.35)"/>
+            <rect x="259" y="70" width="6" height="8" rx="1" fill="rgba(212,168,67,0.35)"/>
+          </svg>
           <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Mountain_Ptoon.JPG/640px-Mountain_Ptoon.JPG" alt="Βουνό Πτώου"
-            onload="this.style.opacity=1;var e=this.parentNode.querySelector('.emoji');if(e)e.style.opacity=0"
-            onerror="this.remove()">
-          <span class="emoji">🏔</span>
+            onload="this.style.opacity=1" onerror="this.style.display='none'">
         </div>
         <div class="card-body">
           <div class="card-era">4ος αι. π.Χ.</div>
@@ -608,10 +640,22 @@
 
       <div class="card c3">
         <div class="card-img">
+          <svg class="card-art" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="60" cy="135" rx="90" ry="55" fill="rgba(255,255,255,0.07)"/>
+            <ellipse cx="220" cy="130" rx="85" ry="60" fill="rgba(255,255,255,0.07)"/>
+            <circle cx="140" cy="32" r="20" fill="none" stroke="rgba(212,168,67,0.55)" stroke-width="2"/>
+            <circle cx="140" cy="32" r="10" fill="rgba(212,168,67,0.2)"/>
+            <line x1="140" y1="5" x2="140" y2="12" stroke="rgba(212,168,67,0.4)" stroke-width="1.5"/>
+            <line x1="140" y1="52" x2="140" y2="59" stroke="rgba(212,168,67,0.4)" stroke-width="1.5"/>
+            <line x1="113" y1="32" x2="120" y2="32" stroke="rgba(212,168,67,0.4)" stroke-width="1.5"/>
+            <line x1="160" y1="32" x2="167" y2="32" stroke="rgba(212,168,67,0.4)" stroke-width="1.5"/>
+            <ellipse cx="140" cy="78" rx="24" ry="6" fill="rgba(212,168,67,0.3)"/>
+            <path d="M0,90 Q35,80 70,90 Q105,100 140,90 Q175,80 210,90 Q245,100 280,90" fill="none" stroke="rgba(90,171,220,0.75)" stroke-width="2.5"/>
+            <path d="M0,105 Q35,95 70,105 Q105,115 140,105 Q175,95 210,105 Q245,115 280,105" fill="none" stroke="rgba(90,171,220,0.55)" stroke-width="2"/>
+            <path d="M0,118 Q35,108 70,118 Q105,128 140,118 Q175,108 210,118 Q245,128 280,118" fill="none" stroke="rgba(90,171,220,0.35)" stroke-width="1.5"/>
+          </svg>
           <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Lake_Yliki.jpg/640px-Lake_Yliki.jpg" alt="Λίμνη Υλίκη"
-            onload="this.style.opacity=1;var e=this.parentNode.querySelector('.emoji');if(e)e.style.opacity=0"
-            onerror="this.remove()">
-          <span class="emoji">🌊</span>
+            onload="this.style.opacity=1" onerror="this.style.display='none'">
         </div>
         <div class="card-body">
           <div class="card-era">Φυσικό Τοπίο</div>
@@ -621,7 +665,20 @@
       </div>
 
       <div class="card c4">
-        <div class="card-img"><span class="emoji">⛪</span></div>
+        <div class="card-img">
+          <svg class="card-art" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="80" y="75" width="120" height="65" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <path d="M80,75 Q80,32 140,28 Q200,32 200,75" fill="rgba(255,255,255,0.16)"/>
+            <rect x="96" y="58" width="88" height="20" fill="rgba(255,255,255,0.12)"/>
+            <line x1="140" y1="10" x2="140" y2="32" stroke="rgba(212,168,67,0.9)" stroke-width="3.5"/>
+            <line x1="128" y1="19" x2="152" y2="19" stroke="rgba(212,168,67,0.9)" stroke-width="3.5"/>
+            <path d="M95,92 L95,122 Q110,112 125,122 L125,92" fill="rgba(90,171,220,0.18)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+            <path d="M155,92 L155,122 Q170,112 185,122 L185,92" fill="rgba(90,171,220,0.18)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+            <ellipse cx="50" cy="140" rx="60" ry="30" fill="rgba(255,255,255,0.06)"/>
+            <ellipse cx="230" cy="140" rx="60" ry="30" fill="rgba(255,255,255,0.06)"/>
+            <rect x="65" y="137" width="150" height="3" rx="1" fill="rgba(212,168,67,0.4)"/>
+          </svg>
+        </div>
         <div class="card-body">
           <div class="card-era">16ος – 17ος αι. μ.Χ.</div>
           <h3>Μονή Πελαγίας</h3>
@@ -630,7 +687,18 @@
       </div>
 
       <div class="card c5">
-        <div class="card-img"><span class="emoji">⚔️</span></div>
+        <div class="card-img">
+          <svg class="card-art" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <path d="M55,140 L55,62 Q55,15 140,15 Q225,15 225,62 L225,140" fill="none" stroke="rgba(212,168,67,0.5)" stroke-width="3"/>
+            <path d="M78,140 L78,72 Q78,45 140,45 Q202,45 202,72 L202,140" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.28)" stroke-width="1.5"/>
+            <line x1="140" y1="58" x2="140" y2="115" stroke="rgba(212,168,67,0.85)" stroke-width="4.5"/>
+            <line x1="115" y1="78" x2="165" y2="78" stroke="rgba(212,168,67,0.85)" stroke-width="4.5"/>
+            <line x1="120" y1="98" x2="160" y2="98" stroke="rgba(212,168,67,0.4)" stroke-width="1.5"/>
+            <circle cx="92" cy="120" r="5" fill="rgba(212,168,67,0.4)"/>
+            <circle cx="188" cy="120" r="5" fill="rgba(212,168,67,0.4)"/>
+            <rect x="0" y="136" width="280" height="4" rx="1" fill="rgba(212,168,67,0.3)"/>
+          </svg>
+        </div>
         <div class="card-body">
           <div class="card-era">1311 μ.Χ. · Φραγκοκρατία</div>
           <h3>Εκκλησία Αγίου Γεωργίου</h3>
@@ -639,7 +707,19 @@
       </div>
 
       <div class="card c6">
-        <div class="card-img"><span class="emoji">🦇</span></div>
+        <div class="card-img">
+          <svg class="card-art" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="0,0 50,0 35,35 65,10 95,42 125,5 155,38 185,8 215,40 245,12 280,30 280,0" fill="rgba(255,255,255,0.1)"/>
+            <path d="M50,140 L50,68 Q50,18 140,18 Q230,18 230,68 L230,140 Z" fill="rgba(8,24,46,0.55)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+            <polygon points="72,18 78,52 84,18" fill="rgba(255,255,255,0.22)"/>
+            <polygon points="100,18 106,48 112,18" fill="rgba(255,255,255,0.18)"/>
+            <polygon points="128,18 134,56 140,18" fill="rgba(255,255,255,0.22)"/>
+            <polygon points="156,18 162,46 168,18" fill="rgba(255,255,255,0.18)"/>
+            <polygon points="182,18 188,50 194,18" fill="rgba(255,255,255,0.22)"/>
+            <ellipse cx="140" cy="136" rx="55" ry="8" fill="rgba(90,171,220,0.18)"/>
+            <circle cx="140" cy="105" r="12" fill="rgba(90,171,220,0.12)" stroke="rgba(90,171,220,0.25)" stroke-width="1"/>
+          </svg>
+        </div>
         <div class="card-body">
           <div class="card-era">Αρχαιολογικό Ενδιαφέρον</div>
           <h3>Σπήλαιο Σαρακηνού</h3>
@@ -649,10 +729,23 @@
 
       <div class="card c7">
         <div class="card-img">
-          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg/640px-Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg" alt="Κούροι από το Πτώο, Αρχαιολογικό Μουσείο Θηβών"
-            onload="this.style.opacity=1;var e=this.parentNode.querySelector('.emoji');if(e)e.style.opacity=0"
-            onerror="this.remove()">
-          <span class="emoji">🗿</span>
+          <svg class="card-art" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="6" width="264" height="128" rx="3" fill="none" stroke="rgba(212,168,67,0.3)" stroke-width="1.5"/>
+            <circle cx="140" cy="34" r="16" fill="none" stroke="rgba(212,168,67,0.75)" stroke-width="2"/>
+            <path d="M124,50 L124,95 Q124,98 128,98 L152,98 Q156,98 156,95 L156,50 Z" fill="none" stroke="rgba(212,168,67,0.75)" stroke-width="2"/>
+            <line x1="124" y1="62" x2="156" y2="62" stroke="rgba(212,168,67,0.4)" stroke-width="1"/>
+            <path d="M108,54 L124,58" stroke="rgba(212,168,67,0.55)" stroke-width="1.5"/>
+            <path d="M156,58 L172,54" stroke="rgba(212,168,67,0.55)" stroke-width="1.5"/>
+            <rect x="124" y="98" width="12" height="32" rx="3" fill="none" stroke="rgba(212,168,67,0.75)" stroke-width="2"/>
+            <rect x="144" y="98" width="12" height="32" rx="3" fill="none" stroke="rgba(212,168,67,0.75)" stroke-width="2"/>
+            <rect x="116" y="130" width="48" height="4" rx="1" fill="rgba(212,168,67,0.4)"/>
+            <circle cx="62" cy="72" r="18" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <circle cx="218" cy="72" r="18" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <text x="62" y="77" text-anchor="middle" fill="rgba(212,168,67,0.35)" font-size="18">Α</text>
+            <text x="218" y="77" text-anchor="middle" fill="rgba(212,168,67,0.35)" font-size="18">Π</text>
+          </svg>
+          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg/640px-Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg" alt="Κούροι από το Πτώο"
+            onload="this.style.opacity=1" onerror="this.style.display='none'">
         </div>
         <div class="card-body">
           <div class="card-era">Αρχαϊκή εποχή · Γαλλικές ανασκαφές 1884–1891</div>
