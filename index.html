@@ -251,7 +251,16 @@
       font-size: 3.5rem;
       position: relative;
     }
-    .card-img .emoji { position: relative; z-index: 1; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); }
+    .card-img .emoji { position: relative; z-index: 1; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); transition: opacity 0.4s; }
+    .card-photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 0.7s;
+      z-index: 0;
+    }
     .c1 .card-img { background: linear-gradient(135deg, #1a4a7a 0%, #0d2848 100%); }
     .c2 .card-img { background: linear-gradient(135deg, #2a3d5c 0%, #142030 100%); }
     .c3 .card-img { background: linear-gradient(135deg, #0d4a6e 0%, #062840 100%); }
@@ -570,7 +579,12 @@
     <div class="cards">
 
       <div class="card c1">
-        <div class="card-img"><span class="emoji">🏛</span></div>
+        <div class="card-img">
+          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Temple_of_Apollo_Ptoon,_a_fountain,_and_nothing_else,_Boeotia,_central_Greece.jpg/640px-Temple_of_Apollo_Ptoon,_a_fountain,_and_nothing_else,_Boeotia,_central_Greece.jpg" alt="Ιερό Απόλλωνα Πτώου"
+            onload="this.style.opacity=1;var e=this.parentNode.querySelector('.emoji');if(e)e.style.opacity=0"
+            onerror="this.remove()">
+          <span class="emoji">🏛</span>
+        </div>
         <div class="card-body">
           <div class="card-era">7ος – 6ος αι. π.Χ.</div>
           <h3>Ιερό Απόλλωνα Πτώου</h3>
@@ -579,7 +593,12 @@
       </div>
 
       <div class="card c2">
-        <div class="card-img"><span class="emoji">🏔</span></div>
+        <div class="card-img">
+          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Mountain_Ptoon.JPG/640px-Mountain_Ptoon.JPG" alt="Βουνό Πτώου"
+            onload="this.style.opacity=1;var e=this.parentNode.querySelector('.emoji');if(e)e.style.opacity=0"
+            onerror="this.remove()">
+          <span class="emoji">🏔</span>
+        </div>
         <div class="card-body">
           <div class="card-era">4ος αι. π.Χ.</div>
           <h3>Αρχαία Ακρόπολη Ακραιφίας</h3>
@@ -588,7 +607,12 @@
       </div>
 
       <div class="card c3">
-        <div class="card-img"><span class="emoji">🌊</span></div>
+        <div class="card-img">
+          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Lake_Yliki.jpg/640px-Lake_Yliki.jpg" alt="Λίμνη Υλίκη"
+            onload="this.style.opacity=1;var e=this.parentNode.querySelector('.emoji');if(e)e.style.opacity=0"
+            onerror="this.remove()">
+          <span class="emoji">🌊</span>
+        </div>
         <div class="card-body">
           <div class="card-era">Φυσικό Τοπίο</div>
           <h3>Λίμνη Υλίκη</h3>
@@ -624,7 +648,12 @@
       </div>
 
       <div class="card c7">
-        <div class="card-img"><span class="emoji">🗿</span></div>
+        <div class="card-img">
+          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg/640px-Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg" alt="Κούροι από το Πτώο, Αρχαιολογικό Μουσείο Θηβών"
+            onload="this.style.opacity=1;var e=this.parentNode.querySelector('.emoji');if(e)e.style.opacity=0"
+            onerror="this.remove()">
+          <span class="emoji">🗿</span>
+        </div>
         <div class="card-body">
           <div class="card-era">Αρχαϊκή εποχή · Γαλλικές ανασκαφές 1884–1891</div>
           <h3>Ηρώον Πτώου</h3>
