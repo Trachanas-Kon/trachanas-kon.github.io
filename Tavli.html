@@ -874,7 +874,8 @@ function renderHeader(){
 function renderBoard(){
   const myTurnDice = state.turn===myPlayer && state.dice.length>0 && state.phase==='playing';
   const allMyMoves = myTurnDice ? E.legalMoves(state, myPlayer, state.dice) : [];
-  const originsWithMoves = new Set(allMyMoves.map(m=>m.origin));
+  const allMyCombined = myTurnDice ? E.computeCombinedMoves(state, myPlayer, state.dice) : [];
+  const originsWithMoves = new Set([...allMyMoves, ...allMyCombined].map(m=>m.origin));
 
   for(let p=1; p<=24; p++){
     const ptEl = boardEl.querySelector(`.tv-pt[data-point="${p}"]`);
