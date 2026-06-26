@@ -464,6 +464,32 @@
     }
     .wx-error { color: #e87070; }
 
+    /* sun bar */
+    .wx-sun-bar {
+      background: rgba(212,168,67,0.07);
+      border: 1px solid rgba(212,168,67,0.18);
+      border-radius: 12px; padding: 1rem 1.4rem;
+      display: flex; align-items: center; gap: 0.6rem 2rem; flex-wrap: wrap;
+      font-family: sans-serif;
+    }
+    .wx-sun-item { display: flex; align-items: center; gap: 0.55rem; }
+    .wx-sun-item .si { font-size: 1.5rem; }
+    .wx-sun-item .sv { font-size: 1.05rem; font-weight: 600; color: #f0cc78; }
+    .wx-sun-item .sl { font-size: 0.72rem; color: #4a6880; text-transform: uppercase; letter-spacing: 0.06em; }
+    .wx-sun-sep { color: rgba(90,171,220,0.18); font-size: 1.4rem; align-self: center; }
+
+    /* hourly chart */
+    .wx-chart-wrap {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(90,171,220,0.14);
+      border-radius: 14px; padding: 1.2rem 1.2rem 0.7rem;
+      overflow: hidden;
+    }
+    .wx-chart-title {
+      font-family: sans-serif; font-size: 0.75rem; color: #4a6880;
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    }
+
     @media (max-width: 800px) {
       .wx-main { grid-template-columns: 1fr; }
     }
@@ -730,7 +756,8 @@
   var LAT=38.41,LON=23.22,REFRESH_SEC=600;
   var API='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON
     +'&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,relative_humidity_2m'
-    +'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,precipitation_sum'
+    +'&hourly=temperature_2m'
+    +'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,precipitation_sum,sunrise,sunset'
     +'&wind_speed_unit=kmh&timezone=Europe%2FAthens&forecast_days=7';
   var WMO={
     0:['☀️','Αίθριος'],1:['🌤','Σχεδόν αίθριος'],2:['⛅','Μερικώς συννεφιά'],3:['☁️','Συννεφιά'],
@@ -749,9 +776,80 @@
   function fmtDate(s){var d=new Date(s+'T12:00:00');return DAYS[d.getDay()]+' '+d.getDate()+' '+MONTHS[d.getMonth()];}
   var wxData=null,selDay=0,countdown=REFRESH_SEC,countTimer=null;
 
+  /* ── Smooth SVG curve (Catmull-Rom → cubic Bezier) ── */
+  function buildChart(temps,curHour){
+    var VW=520,VH=140,PL=34,PR=10,PT=22,PB=28;
+    var CW=VW-PL-PR,CH=VH-PT-PB;
+    var minT=temps[0],maxT=temps[0];
+    for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
+    var range=maxT-minT; if(range<4){var mid=(maxT+minT)/2;minT=mid-2;maxT=mid+2;range=4;}
+    function xp(i){return PL+CW*i/23;}
+    function yp(t){return PT+CH*(1-(t-minT)/range);}
+    var pts=[];for(var i=0;i<24;i++)pts.push([xp(i),yp(temps[i])]);
+
+    /* smooth path */
+    function seg(i){
+      var p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(23,i+2)];
+      return 'C '+(p1[0]+(p2[0]-p0[0])/6).toFixed(1)+' '+(p1[1]+(p2[1]-p0[1])/6).toFixed(1)+' '+
+                  (p2[0]-(p3[0]-p1[0])/6).toFixed(1)+' '+(p2[1]-(p3[1]-p1[1])/6).toFixed(1)+' '+
+                  p2[0].toFixed(1)+' '+p2[1].toFixed(1);
+    }
+    var linePath='M '+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1);
+    for(var i=0;i<23;i++)linePath+=' '+seg(i);
+    var fillPath=linePath+' L '+pts[23][0].toFixed(1)+' '+(PT+CH)+' L '+pts[0][0].toFixed(1)+' '+(PT+CH)+' Z';
+
+    /* grid */
+    var grid='';
+    for(var g=1;g<4;g++){var gy=(PT+CH*g/4).toFixed(1);grid+='<line x1="'+PL+'" y1="'+gy+'" x2="'+(VW-PR)+'" y2="'+gy+'" stroke="rgba(90,171,220,0.07)" stroke-width="1"/>';}
+
+    /* current-hour marker */
+    var curLine='';
+    if(curHour>=0&&curHour<24){
+      var cx=xp(curHour).toFixed(1);
+      curLine='<line x1="'+cx+'" y1="'+(PT-2)+'" x2="'+cx+'" y2="'+(PT+CH)+'" stroke="rgba(240,204,120,0.55)" stroke-width="1.5" stroke-dasharray="3,3"/>'+
+              '<text x="'+cx+'" y="'+(PT-6)+'" text-anchor="middle" fill="rgba(240,204,120,0.9)" font-size="8.5" font-family="sans-serif">Τώρα</text>';
+    }
+
+    /* x-axis labels + temp callouts */
+    var marks='';
+    [0,4,8,12,16,20,23].forEach(function(h){
+      var x=xp(h).toFixed(1),lbl=p(h)+':00';
+      marks+='<text x="'+x+'" y="'+(VH-6)+'" text-anchor="middle" fill="#4a6880" font-size="9" font-family="sans-serif">'+lbl+'</text>';
+      marks+='<line x1="'+x+'" y1="'+(PT+CH)+'" x2="'+x+'" y2="'+(PT+CH+3)+'" stroke="#4a6880" stroke-width="1"/>';
+      marks+='<text x="'+x+'" y="'+(yp(temps[h])-5).toFixed(1)+'" text-anchor="middle" fill="rgba(220,240,255,0.8)" font-size="8.5" font-family="sans-serif">'+Math.round(temps[h])+'°</text>';
+    });
+
+    /* y-axis labels */
+    var yLbls='<text x="'+(PL-4)+'" y="'+(PT+4)+'" text-anchor="end" fill="#4a6880" font-size="9" font-family="sans-serif">'+Math.round(maxT)+'°</text>'+
+              '<text x="'+(PL-4)+'" y="'+(PT+CH)+'" text-anchor="end" fill="#4a6880" font-size="9" font-family="sans-serif">'+Math.round(minT)+'°</text>';
+
+    return '<svg viewBox="0 0 '+VW+' '+VH+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:140px;display:block;">'+
+      '<defs><linearGradient id="wxG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a6eb5" stop-opacity="0.42"/><stop offset="100%" stop-color="#1a6eb5" stop-opacity="0"/></linearGradient></defs>'+
+      grid+
+      '<path d="'+fillPath+'" fill="url(#wxG)"/>'+
+      '<path d="'+linePath+'" fill="none" stroke="#5aabdc" stroke-width="2"/>'+
+      curLine+yLbls+marks+
+    '</svg>';
+  }
+
+  /* ── Sunrise / sunset bar ── */
+  function buildSunBar(rise,set){
+    function fmtT(iso){return iso.slice(11,16);}
+    var rDate=new Date(rise),sDate=new Date(set);
+    var mins=Math.round((sDate-rDate)/60000);
+    var dur=Math.floor(mins/60)+'ω '+(mins%60)+'λ';
+    return '<div class="wx-sun-bar">'+
+      '<div class="wx-sun-item"><span class="si">🌅</span><div><span class="sv">'+fmtT(rise)+'</span><br><span class="sl">Ανατολή</span></div></div>'+
+      '<span class="wx-sun-sep">·</span>'+
+      '<div class="wx-sun-item"><span class="si">🌇</span><div><span class="sv">'+fmtT(set)+'</span><br><span class="sl">Δύση</span></div></div>'+
+      '<span class="wx-sun-sep">·</span>'+
+      '<div class="wx-sun-item"><span class="si">☀️</span><div><span class="sv">'+dur+'</span><br><span class="sl">Διάρκεια ημέρας</span></div></div>'+
+    '</div>';
+  }
+
   function render(){
     if(!wxData)return;
-    var c=wxData.current,d=wxData.daily,si=selDay;
+    var c=wxData.current,d=wxData.daily,h=wxData.hourly,si=selDay;
     var mIcon,mDesc,mTemp,mFeels,mWind,mHum;
     if(si===0){
       var r=wmo(c.weather_code);mIcon=r[0];mDesc=r[1];
@@ -762,6 +860,7 @@
       mTemp=Math.round((d.temperature_2m_max[si]+d.temperature_2m_min[si])/2);mFeels=mTemp-2;
       mWind=Math.round(d.wind_speed_10m_max[si]);mHum='—';
     }
+
     var mainHTML=
       '<div class="wx-main">'+
         '<div class="wx-current">'+
@@ -773,10 +872,15 @@
         '<div class="wx-details">'+
           '<div class="wx-det"><span class="di">💨</span><span class="dv">'+mWind+' km/h</span><span class="dl">Άνεμος</span></div>'+
           '<div class="wx-det"><span class="di">💧</span><span class="dv">'+mHum+'</span><span class="dl">Υγρασία</span></div>'+
-          '<div class="wx-det"><span class="di">🌧</span><span class="dv">'+d.precipitation_probability_max[si]+'%</span><span class="dl">Πιθανότητα βροχής</span></div>'+
+          '<div class="wx-det"><span class="di">🌧</span><span class="dv">'+d.precipitation_probability_max[si]+'%</span><span class="dl">Πιθ. βροχής</span></div>'+
           '<div class="wx-det"><span class="di">🌡</span><span class="dv">'+Math.round(d.temperature_2m_max[si])+'° / '+Math.round(d.temperature_2m_min[si])+'°</span><span class="dl">Μέγ. / Ελάχ.</span></div>'+
         '</div>'+
       '</div>';
+
+    /* sunrise/sunset */
+    var sunHTML=buildSunBar(d.sunrise[si],d.sunset[si]);
+
+    /* day selector */
     var daysHTML='<div class="wx-days">';
     for(var i=0;i<7;i++){
       var r3=wmo(d.weather_code[i]);
@@ -787,6 +891,8 @@
         '<div class="dl2">'+Math.round(d.temperature_2m_min[i])+'°</div></div>';
     }
     daysHTML+='</div>';
+
+    /* summary bar */
     var selLabel=si===0?'Σήμερα':si===1?'Αύριο':fmtDate(d.time[si]);
     var barHTML=
       '<div class="wx-day-bar">'+
@@ -796,7 +902,18 @@
         '<span class="wdb-item">💧 <strong>'+(Math.round(d.precipitation_sum[si]*10)/10)+' mm</strong></span>'+
         '<span class="wdb-item">💨 <strong>'+Math.round(d.wind_speed_10m_max[si])+' km/h</strong></span>'+
       '</div>';
-    document.getElementById('wx-body').innerHTML=mainHTML+daysHTML+barHTML;
+
+    /* hourly temp chart */
+    var dayTemps=h.temperature_2m.slice(si*24,si*24+24);
+    var curHour=si===0?new Date().getHours():-1;
+    var chartHTML=
+      '<div class="wx-chart-wrap">'+
+        '<div class="wx-chart-title">Θερμοκρασία ανά ώρα</div>'+
+        buildChart(dayTemps,curHour)+
+      '</div>';
+
+    document.getElementById('wx-body').innerHTML=mainHTML+sunHTML+daysHTML+barHTML+chartHTML;
+
     var now=new Date();
     document.getElementById('wx-updated').innerHTML=
       'Ενημερώθηκε: '+p(now.getHours())+':'+p(now.getMinutes())+
