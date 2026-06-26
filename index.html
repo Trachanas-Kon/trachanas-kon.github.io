@@ -823,13 +823,76 @@
     var yLbls='<text x="'+(PL-4)+'" y="'+(PT+4)+'" text-anchor="end" fill="#4a6880" font-size="9" font-family="sans-serif">'+Math.round(maxT)+'°</text>'+
               '<text x="'+(PL-4)+'" y="'+(PT+CH)+'" text-anchor="end" fill="#4a6880" font-size="9" font-family="sans-serif">'+Math.round(minT)+'°</text>';
 
-    return '<svg viewBox="0 0 '+VW+' '+VH+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:140px;display:block;">'+
+    /* interactive cursor group (hidden until hover/touch) */
+    var cursorG=
+      '<g id="wx-cur" style="display:none" pointer-events="none">'+
+        '<line id="wx-cl" x1="0" y1="'+PT+'" x2="0" y2="'+(PT+CH)+'" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="4,3"/>'+
+        '<circle id="wx-dot" cx="0" cy="0" r="5" fill="#5aabdc" stroke="rgba(255,255,255,0.92)" stroke-width="2"/>'+
+        '<rect id="wx-tb" rx="6" ry="6" fill="rgba(8,24,46,0.94)" stroke="rgba(90,171,220,0.5)" stroke-width="1"/>'+
+        '<text id="wx-tt" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="12" font-family="sans-serif" font-weight="700"/>'+
+        '<text id="wx-th" text-anchor="middle" dominant-baseline="middle" fill="#a8c8e8" font-size="9.5" font-family="sans-serif"/>'+
+      '</g>'+
+      /* transparent overlay that captures all pointer/touch events */
+      '<rect id="wx-over" x="'+PL+'" y="'+PT+'" width="'+CW+'" height="'+CH+'" fill="transparent" style="cursor:crosshair;touch-action:none"/>';
+
+    return '<svg id="wx-svg" viewBox="0 0 '+VW+' '+VH+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:140px;display:block;">'+
       '<defs><linearGradient id="wxG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a6eb5" stop-opacity="0.42"/><stop offset="100%" stop-color="#1a6eb5" stop-opacity="0"/></linearGradient></defs>'+
       grid+
       '<path d="'+fillPath+'" fill="url(#wxG)"/>'+
       '<path d="'+linePath+'" fill="none" stroke="#5aabdc" stroke-width="2"/>'+
-      curLine+yLbls+marks+
+      curLine+yLbls+marks+cursorG+
     '</svg>';
+  }
+
+  /* ── Interactive chart cursor ── */
+  function initChart(temps){
+    var svg=document.getElementById('wx-svg');
+    var over=document.getElementById('wx-over');
+    var cur=document.getElementById('wx-cur');
+    var cl=document.getElementById('wx-cl');
+    var dot=document.getElementById('wx-dot');
+    var tb=document.getElementById('wx-tb');
+    var tt=document.getElementById('wx-tt');
+    var th=document.getElementById('wx-th');
+    if(!svg||!over||!cur)return;
+
+    var VW=520,VH=140,PL=34,PR=10,PT=22,PB=28;
+    var CW=VW-PL-PR,CH=VH-PT-PB;
+    var minT=temps[0],maxT=temps[0];
+    for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
+    var range=maxT-minT;if(range<4){var mid=(maxT+minT)/2;minT=mid-2;maxT=mid+2;range=4;}
+    function xp(i){return PL+CW*i/23;}
+    function yp(t){return PT+CH*(1-(t-minT)/range);}
+
+    function update(svgX){
+      var hourF=(svgX-PL)/CW*23;
+      var hour=Math.max(0,Math.min(23,Math.round(hourF)));
+      var x=xp(hour),y=yp(temps[hour]);
+      cl.setAttribute('x1',x.toFixed(1));cl.setAttribute('x2',x.toFixed(1));
+      dot.setAttribute('cx',x.toFixed(1));dot.setAttribute('cy',y.toFixed(1));
+      /* tooltip: 66×34, above dot, edge-aware */
+      var TW=66,TH=34,tx=x+10;
+      if(tx+TW>VW-PR-2)tx=x-TW-10;
+      var ty=y-TH-10;if(ty<PT)ty=PT+2;
+      tb.setAttribute('x',tx.toFixed(1));tb.setAttribute('y',ty.toFixed(1));
+      tb.setAttribute('width',TW);tb.setAttribute('height',TH);
+      tt.setAttribute('x',(tx+TW/2).toFixed(1));tt.setAttribute('y',(ty+12).toFixed(1));
+      th.setAttribute('x',(tx+TW/2).toFixed(1));th.setAttribute('y',(ty+26).toFixed(1));
+      tt.textContent=Math.round(temps[hour])+'°C';
+      th.textContent=p(hour)+':00';
+      cur.style.display='';
+    }
+
+    function toSvgX(e){
+      var rect=svg.getBoundingClientRect();
+      var cx=e.touches?e.touches[0].clientX:e.clientX;
+      return (cx-rect.left)*(VW/rect.width);
+    }
+
+    over.addEventListener('mousemove',function(e){update(toSvgX(e));});
+    over.addEventListener('mouseleave',function(){cur.style.display='none';});
+    over.addEventListener('touchstart',function(e){e.preventDefault();update(toSvgX(e));},{passive:false});
+    over.addEventListener('touchmove',function(e){e.preventDefault();update(toSvgX(e));},{passive:false});
   }
 
   /* ── Sunrise / sunset bar ── */
@@ -913,6 +976,7 @@
       '</div>';
 
     document.getElementById('wx-body').innerHTML=mainHTML+sunHTML+daysHTML+barHTML+chartHTML;
+    initChart(dayTemps);
 
     var now=new Date();
     document.getElementById('wx-updated').innerHTML=
