@@ -427,6 +427,60 @@ const E = (function(){
 
   function hasAnyLegalMove(state, player, diceValues){ return legalMoves(state, player, diceValues).length > 0; }
 
+  function cloneState(state){ return JSON.parse(JSON.stringify(state)); }
+
+  function getOrigins(state, player){
+    if(state.bar[player] > 0) return ['bar'];
+    const o = [];
+    for(let i=1;i<=24;i++) if(state.points[i].owner===player && state.points[i].count>0) o.push(i);
+    return o;
+  }
+
+  function tryTwoDice(state, player, origin, d1, d2){
+    const dest1 = computeDest(state, player, origin, d1);
+    if(dest1 && dest1.type==='point'){
+      const s2 = cloneState(state);
+      applyMove(s2, player, origin, d1);
+      const dest2 = computeDest(s2, player, dest1.point, d2);
+      if(dest2) return {via:d1, then:d2, intermediate:dest1.point, dest:dest2};
+    }
+    if(d1 !== d2){
+      const dest1b = computeDest(state, player, origin, d2);
+      if(dest1b && dest1b.type==='point'){
+        const s2 = cloneState(state);
+        applyMove(s2, player, origin, d2);
+        const dest2b = computeDest(s2, player, dest1b.point, d1);
+        if(dest2b) return {via:d2, then:d1, intermediate:dest1b.point, dest:dest2b};
+      }
+    }
+    return null;
+  }
+
+  function computeCombinedMoves(state, player, diceValues){
+    if(diceValues.length < 2) return [];
+    const moves = [];
+    const seen = new Set();
+    const dice = [...new Set(diceValues)];
+    for(const origin of getOrigins(state, player)){
+      for(let i=0;i<dice.length;i++){
+        for(let j=i;j<dice.length;j++){
+          const d1=dice[i], d2=dice[j];
+          if(d1===d2 && diceValues.filter(d=>d===d1).length < 2) continue;
+          const result = tryTwoDice(state, player, origin, d1, d2);
+          if(result){
+            const destKey = result.dest.type==='point' ? result.dest.point : 'off';
+            const key = `${origin}-${destKey}`;
+            if(!seen.has(key)){
+              seen.add(key);
+              moves.push({origin, die:d1+d2, combined:[result.via, result.then], intermediate:result.intermediate, dest:result.dest});
+            }
+          }
+        }
+      }
+    }
+    return moves;
+  }
+
   function applyMove(state, player, origin, die){
     const dest = computeDest(state, player, origin, die);
     if(!dest) throw new Error('Illegal move applied');
@@ -465,7 +519,8 @@ const E = (function(){
   }
 
   return { otherP, dir, homeRange, isOwnHome, entryPoint, distToOff, mkInitialPoints, mkState,
-    allInHome, maxDistInHome, computeDest, legalMoves, hasAnyLegalMove, applyMove, rollDice, pipCount };
+    allInHome, maxDistInHome, computeDest, legalMoves, hasAnyLegalMove, applyMove, rollDice, pipCount,
+    computeCombinedMoves, cloneState };
 })();
 
 // ════════════════════════════════════════════════════════
@@ -590,6 +645,9 @@ function handleMsg(data){
     case 'req-move':
       if(isHost) hostDoMove(oppPlayer, data.origin, data.die);
       break;
+    case 'req-combined-move':
+      if(isHost) hostDoCombinedMove(oppPlayer, data.origin, data.die1, data.die2);
+      break;
     case 'rematch-req':
       if(isHost) hostStartGame();
       break;
@@ -661,6 +719,28 @@ function pushState(){
 // Dispatchers used by UI — route to host logic directly or via network
 function doRoll(){ if(isHost) hostDoRoll(myPlayer); else send({type:'req-roll'}); }
 function doMove(origin, die){ if(isHost) hostDoMove(myPlayer, origin, die); else send({type:'req-move', origin, die}); }
+function doCombinedMove(origin, die1, die2){ if(isHost) hostDoCombinedMove(myPlayer, origin, die1, die2); else send({type:'req-combined-move', origin, die1, die2}); }
+
+function hostDoCombinedMove(player, origin, die1, die2){
+  if(state.turn!==player || state.phase!=='playing') return;
+  if(state.dice.indexOf(die1)===-1) return;
+  const dest1 = E.computeDest(state, player, origin, die1);
+  if(!dest1 || dest1.type!=='point') return;
+  E.applyMove(state, player, origin, die1);
+  if(state.dice.indexOf(die2)===-1){ pushState(); return; }
+  const dest2 = E.computeDest(state, player, dest1.point, die2);
+  if(!dest2){ pushState(); return; }
+  E.applyMove(state, player, dest1.point, die2);
+  if(state.phase!=='game-over'){
+    if(state.dice.length===0 || !E.hasAnyLegalMove(state, player, state.dice)){
+      const stuck = state.dice.length>0;
+      state.dice = [];
+      state.turn = E.otherP(player);
+      if(stuck){ const pname=player==='p1'?(isHost?myName:oppName):(isHost?oppName:myName); state.lastMsg=`${pname}: καμία άλλη νόμιμη κίνηση — η σειρά περνάει.`; }
+    }
+  }
+  pushState();
+}
 
 // ════════════════════════════════════════════════════════
 //  BOARD GEOMETRY
@@ -733,7 +813,11 @@ function handleCellClick(kind, key){
   if(selOrigin!=null){
     if(kind==='point'){
       const dm = selMoves.find(m => m.dest.type==='point' && m.dest.point===key && m.origin===selOrigin);
-      if(dm){ doMove(selOrigin, dm.die); return; }
+      if(dm){
+        if(dm.combined) doCombinedMove(selOrigin, dm.combined[0], dm.combined[1]);
+        else doMove(selOrigin, dm.die);
+        return;
+      }
     }
     if(selOrigin===key){ selOrigin=null; selMoves=[]; renderAll(); return; }
   }
@@ -750,8 +834,11 @@ function handleCellClick(kind, key){
   }
 
   const moves = E.legalMoves(state, myPlayer, state.dice).filter(m=>m.origin===key);
-  if(moves.length===0){ showToast('Δεν υπάρχει νόμιμη κίνηση από εδώ.'); return; }
-  selOrigin = key; selMoves = moves;
+  const singleDestPoints = new Set(moves.map(m=>m.dest.type==='point'?m.dest.point:'off'));
+  const combined = E.computeCombinedMoves(state, myPlayer, state.dice).filter(m=>m.origin===key && !singleDestPoints.has(m.dest.type==='point'?m.dest.point:'off'));
+  const allMoves = [...moves, ...combined];
+  if(allMoves.length===0){ showToast('Δεν υπάρχει νόμιμη κίνηση από εδώ.'); return; }
+  selOrigin = key; selMoves = allMoves;
   renderAll();
 }
 
