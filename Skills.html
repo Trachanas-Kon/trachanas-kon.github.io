@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills — Konstantinos Trachanas</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .skill-group { margin-bottom: 32px; }
+    .skill-group-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .skill-bar-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .skill-bar-name { font-size: 0.9rem; color: var(--text); min-width: 180px; }
+    .skill-bar-track {
+      flex: 1;
+      height: 4px;
+      background: var(--bg3);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--gold));
+      border-radius: 4px;
+      animation: grow 1s 0.4s ease both;
+      transform-origin: left;
+    }
+    @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    .skill-level { font-size: 0.75rem; color: var(--muted); min-width: 80px; text-align: right; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="avatar-wrap">
+    <img class="avatar" src="me.jpg" alt="Konstantinos Trachanas">
+  </div>
+  <div class="header-info">
+    <div class="header-name">Konstantinos Trachanas</div>
+    <div class="header-dept">Dept. of Computer Science &amp; Engineering &nbsp;·&nbsp; University of Ioannina</div>
+    <div class="header-meta">
+      <span class="meta-item"><span class="meta-icon">📍</span> GR-45110 Ioannina, Greece</span>
+      <span class="meta-item"><span class="meta-icon">✉️</span> cs05603@uoi.gr</span>
+    </div>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      3rd Year Undergraduate Student
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="Courses.html">Courses</a>
+  <a href="Projects.html">Projects</a>
+  <a href="Skills.html" class="active">Skills</a>
+  <a href="Interests.html">Interests</a>
+  <a href="Games.html">🎮 Games</a>
+</nav>
+
+<main>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">⚡</div>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Technical Skills</div>
+      <div class="skill-bar-item">
+        <span class="skill-bar-name">Python Programming</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%"></div></div>
+        <span class="skill-level">Beginner</span>
+      </div>
+      <div class="skill-bar-item">
+        <span class="skill-bar-name">Unix / Bash Commands</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:45%"></div></div>
+        <span class="skill-level">Beginner</span>
+      </div>
+      <div class="skill-bar-item">
+        <span class="skill-bar-name">HTML &amp; Web Markup</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%"></div></div>
+        <span class="skill-level">Intermediate</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Tags</div>
+      <div>
+        <span class="skill-tag"><span class="dot"></span> Basic Unix Commands</span>
+        <span class="skill-tag"><span class="dot"></span> Python Programming</span>
+        <span class="skill-tag"><span class="dot"></span> HTML &amp; Web Markup</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 <span>Konstantinos Trachanas</span> &nbsp;·&nbsp; University of Ioannina &nbsp;·&nbsp; Computer Science &amp; Engineering
+</footer>
+
+</body>
+</html>

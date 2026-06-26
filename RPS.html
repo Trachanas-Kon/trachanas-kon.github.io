@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors — Konstantinos Trachanas</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.2/peerjs.min.js"></script>
+  <style>
+    main { max-width: 860px; }
+
+    /* ── Screens ── */
+    .screen { display: none; animation: fadeUp 0.4s ease both; }
+    .screen.active { display: block; }
+    .screen-center {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 58vh;
+      gap: 20px;
+      animation: fadeUp 0.4s ease both;
+    }
+    .screen-center.active { display: flex; }
+
+    /* ── Cards ── */
+    .rps-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 44px 48px;
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      overflow: hidden;
+    }
+    .rps-card::before {
+      content: '';
+      position: absolute; top:0; left:0; right:0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+    }
+    .card-title {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .card-sub {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    /* ── Inputs & buttons ── */
+    .rps-input {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 18px;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
+    .rps-input:focus {
+      border-color: rgba(201,165,90,0.4);
+      box-shadow: 0 0 0 3px rgba(201,165,90,0.08);
+    }
+    .rps-input::placeholder { color: var(--muted); }
+    .rps-input.code {
+      text-align: center;
+      font-size: 1.3rem;
+      letter-spacing: 0.25em;
+      font-family: var(--serif);
+      text-transform: uppercase;
+    }
+
+    .btn-gold {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), #b8943f);
+      border: none; border-radius: 10px;
+      padding: 13px 24px;
+      color: #0c0f1a;
+      font-family: var(--sans);
+      font-size: 0.88rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s;
+      margin-bottom: 10px;
+    }
+    .btn-gold:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,165,90,0.25); }
+    .btn-gold:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-ghost {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 24px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.88rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(201,165,90,0.3); color: var(--text); }
+
+    .divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 16px 0;
+      color: var(--muted); font-size: 0.75rem;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1;
+      height: 1px; background: var(--border);
+    }
+
+    /* ── Lobby screen ── */
+    .lobby-wrap {
+      display: flex; gap: 20px;
+      align-items: flex-start;
+    }
+    .lobby-main { flex: 1; }
+    .lobby-side { width: 260px; flex-shrink: 0; }
+
+    .room-code-display {
+      background: var(--bg3);
+      border: 1px solid rgba(201,165,90,0.2);
+      border-radius: 14px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .room-code-label {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px;
+    }
+    .room-code-val {
+      font-family: var(--serif);
+      font-size: 2.6rem; font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .room-code-hint {
+      margin-top: 10px;
+      font-size: 0.78rem; color: var(--muted);
+    }
+
+    .copy-btn {
+      background: var(--gold-dim);
+      border: 1px solid rgba(201,165,90,0.25);
+      border-radius: 8px;
+      padding: 8px 20px;
+      color: var(--gold);
+      font-family: var(--sans);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s;
+      margin-top: 12px;
+    }
+    .copy-btn:hover { background: rgba(201,165,90,0.22); }
+
+    .waiting-pulse {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--muted); font-size: 0.85rem;
+      padding: 14px 18px;
+      background: var(--bg3); border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .pulse-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 6px var(--teal);
+      animation: pulse 1.4s infinite;
+      flex-shrink: 0;
+    }
+
+    /* ── Game screen ── */
+    .game-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 24px;
+      margin-bottom: 20px;
+    }
+    .player-info { text-align: center; }
+    .player-name-lbl {
+      font-family: var(--serif);
+      font-size: 1.15rem; font-weight: 600;
+      color: var(--text);
+    }
+    .player-score-lbl {
+      font-family: var(--serif);
+      font-size: 2rem; font-weight: 700;
+      line-height: 1;
+    }
+    .score-you { color: var(--teal); }
+    .score-opp { color: var(--gold); }
+    .vs-badge {
+      font-family: var(--serif);
+      font-size: 1rem; color: var(--muted);
+      font-weight: 300; font-style: italic;
+    }
+
+    /* Choices */
+    .choices-area {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .choices-title {
+      font-family: var(--serif);
+      font-size: 1.4rem; font-weight: 600;
+      color: var(--text); margin-bottom: 24px;
+    }
+    .choices-title.waiting-title { color: var(--muted); font-style: italic; }
+
+    .choices-row {
+      display: flex; justify-content: center; gap: 16px;
+      flex-wrap: wrap;
+    }
+    .choice-btn {
+      background: var(--bg3);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 10px 14px;
+      width: 110px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .choice-btn:hover:not(:disabled) {
+      border-color: rgba(201,165,90,0.4);
+      background: var(--gold-dim);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+    }
+    .choice-btn.selected {
+      border-color: var(--teal);
+      background: var(--teal-dim);
+      transform: translateY(-4px);
+      box-shadow: 0 0 0 3px rgba(77,217,192,0.15);
+    }
+    .choice-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    .choice-emoji { font-size: 2.6rem; line-height: 1; }
+    .choice-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Result reveal */
+    .result-area {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .result-area.visible { display: block; animation: fadeUp 0.35s ease both; }
+
+    .result-choices {
+      display: flex; align-items: center;
+      justify-content: center; gap: 20px;
+      margin-bottom: 20px;
+    }
+    .result-player { text-align: center; }
+    .result-emoji {
+      font-size: 3.5rem; line-height: 1;
+      display: block; margin-bottom: 6px;
+    }
+    .result-name { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+    .result-vs { font-size: 1.2rem; color: var(--muted); font-style: italic; }
+
+    .result-banner {
+      font-family: var(--serif);
+      font-size: 1.8rem; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .result-banner.win  { color: var(--teal); }
+    .result-banner.lose { color: #e05c6e; }
+    .result-banner.draw { color: var(--gold); }
+
+    .result-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 18px; }
+
+    .btn-next {
+      background: linear-gradient(135deg, var(--teal), #2fb89e);
+      border: none; border-radius: 10px;
+      padding: 11px 32px;
+      color: #0c0f1a;
+      font-family: var(--sans);
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(77,217,192,0.2); }
+
+    /* Game over */
+    .gameover-area {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 24px;
+      text-align: center;
+      display: none;
+    }
+    .gameover-area.visible { display: block; animation: fadeUp 0.35s ease both; }
+    .gameover-trophy { font-size: 4rem; margin-bottom: 12px; }
+    .gameover-title {
+      font-family: var(--serif);
+      font-size: 2.2rem; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .gameover-title.win  { color: var(--teal); }
+    .gameover-title.lose { color: #e05c6e; }
+    .gameover-title.draw { color: var(--gold); }
+    .gameover-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+    /* Error toast */
+    .toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #2a0f14;
+      border: 1px solid #e05c6e;
+      border-radius: 10px;
+      padding: 12px 24px;
+      color: #e05c6e;
+      font-size: 0.85rem; font-weight: 500;
+      opacity: 0;
+      transition: all 0.3s;
+      pointer-events: none;
+      z-index: 999;
+      white-space: nowrap;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Connection status */
+    .conn-bar {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; color: var(--muted);
+      padding: 8px 16px;
+      background: var(--bg3);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .conn-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 5px var(--teal);
+    }
+    .conn-dot.off { background: #e05c6e; box-shadow: 0 0 5px #e05c6e; animation: none; }
+
+    /* Round counter */
+    .round-chips {
+      display: flex; justify-content: center; gap: 6px;
+      margin-bottom: 16px;
+    }
+    .round-chip {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700;
+      color: var(--muted);
+      transition: all 0.3s;
+    }
+    .round-chip.you  { border-color: var(--teal); background: var(--teal-dim); color: var(--teal); }
+    .round-chip.opp  { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
+    .round-chip.draw { border-color: var(--border); background: var(--bg3); color: var(--muted); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .rps-card { padding: 32px 20px; }
+      .lobby-wrap { flex-direction: column; }
+      .lobby-side { width: 100%; }
+      .choice-btn { width: 90px; }
+      .choice-emoji { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="avatar-wrap">
+    <img class="avatar" src="me.jpg" alt="Konstantinos Trachanas">
+  </div>
+  <div class="header-info">
+    <div class="header-name">Konstantinos Trachanas</div>
+    <div class="header-dept">Dept. of Computer Science &amp; Engineering &nbsp;·&nbsp; University of Ioannina</div>
+    <div class="header-meta">
+      <span class="meta-item"><span class="meta-icon">📍</span> GR-45110 Ioannina, Greece</span>
+      <span class="meta-item"><span class="meta-icon">✉️</span> cs05603@uoi.gr</span>
+    </div>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      3rd Year Undergraduate Student
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="Courses.html">Courses</a>
+  <a href="Projects.html">Projects</a>
+  <a href="Skills.html">Skills</a>
+  <a href="Interests.html">Interests</a>
+  <a href="Snake.html">🐍 Snake</a>
+  <a href="RPS.html" class="active">✊ RPS</a>
+</nav>
+
+<main>
+
+  <!-- ══ SCREEN 1: Nickname ══ -->
+  <div class="screen-center active" id="screen-nick">
+    <div class="rps-card">
+      <div class="card-title">Rock Paper Scissors</div>
+      <div class="card-sub">Challenge a friend in real-time.<br>Enter a nickname to get started.</div>
+      <input id="nick-input" class="rps-input" type="text" maxlength="16"
+             placeholder="Your nickname…" autocomplete="off" spellcheck="false">
+      <button class="btn-gold" id="nick-btn" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 2: Create or Join ══ -->
+  <div class="screen-center" id="screen-menu">
+    <div class="rps-card">
+      <div class="card-title">Ready, <span id="menu-name" style="color:var(--teal)"></span>!</div>
+      <div class="card-sub">Create a new room and share the code,<br>or join a friend's room.</div>
+      <button class="btn-gold" id="create-btn">✦ Create Room</button>
+      <div class="divider">or</div>
+      <input id="join-code-input" class="rps-input code" type="text" maxlength="6"
+             placeholder="ROOM CODE" autocomplete="off" spellcheck="false">
+      <button class="btn-ghost" id="join-btn" disabled>Join Room →</button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 3: Lobby / Waiting ══ -->
+  <div class="screen active" id="screen-lobby" style="display:none">
+    <div class="conn-bar">
+      <span class="conn-dot" id="conn-dot"></span>
+      <span id="conn-label">Connecting…</span>
+    </div>
+    <div class="lobby-wrap">
+      <div class="lobby-main">
+        <div class="room-code-display">
+          <div class="room-code-label">Room Code — Share this with your friend</div>
+          <div class="room-code-val" id="lobby-code">——</div>
+          <div class="room-code-hint">They enter this code on the Join screen</div>
+          <button class="copy-btn" id="copy-btn">📋 Copy Code</button>
+        </div>
+        <div class="waiting-pulse" id="waiting-msg">
+          <span class="pulse-dot"></span>
+          <span id="waiting-text">Waiting for your opponent to join…</span>
+        </div>
+      </div>
+      <div class="lobby-side">
+        <div class="panel-card" style="border-radius:14px;overflow:hidden">
+          <div class="panel-head"><span class="panel-head-icon">👥</span> Players</div>
+          <div style="padding:16px">
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:1.2rem">✅</span>
+              <span id="lobby-you" style="color:var(--teal);font-size:0.9rem;font-weight:600"></span>
+              <span style="margin-left:auto;font-size:0.72rem;color:var(--muted)">You</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0" id="lobby-opp-row">
+              <span style="font-size:1.2rem" id="lobby-opp-icon">⏳</span>
+              <span id="lobby-opp" style="color:var(--muted);font-size:0.9rem">Waiting…</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <button class="btn-ghost" id="leave-lobby-btn" style="font-size:0.8rem;padding:10px">← Leave Room</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 4: Game ══ -->
+  <div class="screen" id="screen-game">
+
+    <!-- Score header -->
+    <div class="game-header">
+      <div class="player-info">
+        <div class="player-name-lbl" id="game-you-name">You</div>
+        <div class="player-score-lbl score-you" id="score-you">0</div>
+      </div>
+      <div class="vs-badge">vs</div>
+      <div class="player-info">
+        <div class="player-name-lbl" id="game-opp-name">Opponent</div>
+        <div class="player-score-lbl score-opp" id="score-opp">0</div>
+      </div>
+    </div>
+
+    <!-- Round chips -->
+    <div class="round-chips" id="round-chips"></div>
+
+    <!-- Choices -->
+    <div class="choices-area" id="choices-area">
+      <div class="choices-title" id="choices-title">Choose your weapon</div>
+      <div class="choices-row">
+        <button class="choice-btn" data-choice="rock" id="btn-rock">
+          <span class="choice-emoji">✊</span>
+          <span class="choice-label">Rock</span>
+        </button>
+        <button class="choice-btn" data-choice="paper" id="btn-paper">
+          <span class="choice-emoji">✋</span>
+          <span class="choice-label">Paper</span>
+        </button>
+        <button class="choice-btn" data-choice="scissors" id="btn-scissors">
+          <span class="choice-emoji">✌️</span>
+          <span class="choice-label">Scissors</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Round result -->
+    <div class="result-area" id="result-area">
+      <div class="result-choices">
+        <div class="result-player">
+          <span class="result-emoji" id="result-you-emoji"></span>
+          <span class="result-name" id="result-you-name">You</span>
+        </div>
+        <span class="result-vs">vs</span>
+        <div class="result-player">
+          <span class="result-emoji" id="result-opp-emoji"></span>
+          <span class="result-name" id="result-opp-name">Opponent</span>
+        </div>
+      </div>
+      <div class="result-banner" id="result-banner"></div>
+      <div class="result-sub" id="result-sub"></div>
+      <button class="btn-next" id="next-round-btn">Next Round →</button>
+    </div>
+
+    <!-- Game over -->
+    <div class="gameover-area" id="gameover-area">
+      <div class="gameover-trophy" id="gameover-trophy"></div>
+      <div class="gameover-title" id="gameover-title"></div>
+      <div class="gameover-sub" id="gameover-sub"></div>
+      <button class="btn-gold" id="play-again-btn" style="max-width:240px;margin:0 auto">Play Again</button>
+      <br>
+      <button class="btn-ghost" id="leave-game-btn" style="max-width:240px;margin:8px auto 0">Leave Room</button>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 <span>Konstantinos Trachanas</span> &nbsp;·&nbsp; University of Ioannina &nbsp;·&nbsp; Computer Science &amp; Engineering
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  State
+// ══════════════════════════════════════════
+const ROUNDS_TO_WIN = 3;
+const EMOJIS = { rock:'✊', paper:'✋', scissors:'✌️' };
+const BEATS  = { rock:'scissors', scissors:'paper', paper:'rock' };
+
+let myName = '', oppName = '', roomCode = '';
+let peer = null, conn = null;
+let isHost = false;
+let myChoice = null, oppChoice = null;
+let scoreMe = 0, scoreOpp = 0;
+let roundHistory = [];
+let gameOver = false;
+
+// ══════════════════════════════════════════
+//  Screen helpers
+// ══════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen, .screen-center').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.style.display = '';
+  // force reflow for animation
+  void el.offsetWidth;
+  el.classList.add('active');
+}
+
+// ══════════════════════════════════════════
+//  Toast
+// ══════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ══════════════════════════════════════════
+//  Generate room code
+// ══════════════════════════════════════════
+function makeCode() {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+// ══════════════════════════════════════════
+//  SCREEN 1 — Nickname
+// ══════════════════════════════════════════
+const nickInput = document.getElementById('nick-input');
+const nickBtn   = document.getElementById('nick-btn');
+
+nickInput.addEventListener('input', () => {
+  nickBtn.disabled = nickInput.value.trim().length < 2;
+});
+nickInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !nickBtn.disabled) goToMenu();
+});
+nickBtn.addEventListener('click', goToMenu);
+
+function goToMenu() {
+  myName = nickInput.value.trim();
+  document.getElementById('menu-name').textContent = myName;
+  showScreen('screen-menu');
+}
+
+// ══════════════════════════════════════════
+//  SCREEN 2 — Create / Join
+// ══════════════════════════════════════════
+const joinCodeInput = document.getElementById('join-code-input');
+const joinBtn       = document.getElementById('join-btn');
+
+joinCodeInput.addEventListener('input', () => {
+  joinBtn.disabled = joinCodeInput.value.trim().length < 4;
+});
+joinCodeInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !joinBtn.disabled) doJoin();
+});
+
+document.getElementById('create-btn').addEventListener('click', doCreate);
+joinBtn.addEventListener('click', doJoin);
+
+function doCreate() {
+  isHost   = true;
+  roomCode = makeCode();
+  initPeer(roomCode);
+}
+
+function doJoin() {
+  isHost   = false;
+  roomCode = joinCodeInput.value.trim().toUpperCase();
+  initPeer(null); // random peer id, will connect to host
+}
+
+// ══════════════════════════════════════════
+//  PeerJS
+// ══════════════════════════════════════════
+function initPeer(id) {
+  // Show lobby immediately
+  document.getElementById('lobby-code').textContent  = isHost ? roomCode : roomCode;
+  document.getElementById('lobby-you').textContent   = myName;
+  document.getElementById('lobby-opp').textContent   = 'Waiting…';
+  document.getElementById('lobby-opp-icon').textContent = '⏳';
+  document.getElementById('conn-label').textContent  = 'Connecting to server…';
+  document.getElementById('conn-dot').classList.remove('off');
+
+  // Hide code display for joiner
+  if (!isHost) {
+    document.querySelector('.room-code-display').style.display = 'none';
+    document.getElementById('waiting-text').textContent = `Connecting to room ${roomCode}…`;
+  }
+
+  showScreen('screen-lobby');
+
+  const peerOpts = { debug: 0 };
+  peer = id ? new Peer(id, peerOpts) : new Peer(peerOpts);
+
+  peer.on('open', peerId => {
+    document.getElementById('conn-label').textContent = isHost
+      ? 'Room ready — waiting for opponent…'
+      : 'Connected to server, joining room…';
+
+    if (!isHost) {
+      // Joiner connects to host
+      conn = peer.connect(roomCode, { reliable: true });
+      setupConn(conn);
+    }
+  });
+
+  peer.on('connection', c => {
+    // Host receives connection
+    conn = c;
+    setupConn(conn);
+  });
+
+  peer.on('error', err => {
+    const msg = err.type === 'peer-unavailable'
+      ? 'Room not found — check the code and try again.'
+      : 'Connection error: ' + err.message;
+    showToast(msg);
+    document.getElementById('conn-dot').classList.add('off');
+    document.getElementById('conn-label').textContent = 'Error — ' + err.type;
+  });
+}
+
+function setupConn(c) {
+  c.on('open', () => {
+    document.getElementById('conn-label').textContent = 'Connected!';
+    // Exchange names
+    send({ type: 'hello', name: myName });
+  });
+
+  c.on('data', data => {
+    handleMsg(data);
+  });
+
+  c.on('close', () => {
+    if (!gameOver) {
+      showToast('Opponent disconnected.');
+      document.getElementById('conn-dot').classList.add('off');
+      document.getElementById('conn-label').textContent = 'Opponent disconnected';
+    }
+  });
+
+  c.on('error', err => {
+    showToast('Connection error.');
+    document.getElementById('conn-dot').classList.add('off');
+  });
+}
+
+function send(data) {
+  if (conn && conn.open) conn.send(data);
+}
+
+// ══════════════════════════════════════════
+//  Message handler
+// ══════════════════════════════════════════
+function handleMsg(data) {
+  switch (data.type) {
+
+    case 'hello':
+      oppName = data.name;
+      // Update lobby
+      document.getElementById('lobby-opp').textContent  = oppName;
+      document.getElementById('lobby-opp-icon').textContent = '✅';
+      document.getElementById('lobby-opp').style.color = 'var(--gold)';
+      document.getElementById('waiting-text').textContent = `${oppName} joined! Starting…`;
+      // Reply with own name if host (joiner already sent hello, host replies)
+      if (isHost) send({ type: 'hello', name: myName });
+      setTimeout(startGame, 900);
+      break;
+
+    case 'choice':
+      oppChoice = data.choice;
+      checkBothChosen();
+      break;
+
+    case 'next-round':
+      // Sync round restart
+      resetRound();
+      break;
+
+    case 'play-again':
+      resetGame();
+      break;
+  }
+}
+
+// ══════════════════════════════════════════
+//  Game logic
+// ══════════════════════════════════════════
+function startGame() {
+  scoreMe = 0; scoreOpp = 0;
+  roundHistory = [];
+  gameOver = false;
+  document.getElementById('game-you-name').textContent  = myName;
+  document.getElementById('game-opp-name').textContent  = oppName;
+  document.getElementById('result-you-name').textContent = myName;
+  document.getElementById('result-opp-name').textContent = oppName;
+  updateScoreDisplay();
+  updateRoundChips();
+  showScreen('screen-game');
+  resetRound();
+}
+
+function resetRound() {
+  myChoice = null; oppChoice = null;
+  document.getElementById('result-area').classList.remove('visible');
+  document.getElementById('gameover-area').classList.remove('visible');
+  document.getElementById('choices-area').style.display = '';
+  document.getElementById('choices-title').textContent = 'Choose your weapon';
+  document.getElementById('choices-title').classList.remove('waiting-title');
+
+  document.querySelectorAll('.choice-btn').forEach(b => {
+    b.disabled  = false;
+    b.classList.remove('selected');
+  });
+}
+
+function onChoicePicked(choice) {
+  myChoice = choice;
+  document.querySelectorAll('.choice-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.choice === choice) b.classList.add('selected');
+  });
+  document.getElementById('choices-title').textContent = 'Waiting for opponent…';
+  document.getElementById('choices-title').classList.add('waiting-title');
+  send({ type: 'choice', choice });
+  checkBothChosen();
+}
+
+function checkBothChosen() {
+  if (!myChoice || !oppChoice) return;
+  showResult();
+}
+
+function showResult() {
+  const result = getResult(myChoice, oppChoice);
+
+  if (result === 'win')       { scoreMe++;  roundHistory.push('you'); }
+  else if (result === 'lose') { scoreOpp++; roundHistory.push('opp'); }
+  else                        { roundHistory.push('draw'); }
+
+  updateScoreDisplay();
+  updateRoundChips();
+
+  document.getElementById('choices-area').style.display = 'none';
+
+  document.getElementById('result-you-emoji').textContent = EMOJIS[myChoice];
+  document.getElementById('result-opp-emoji').textContent = EMOJIS[oppChoice];
+
+  const banner = document.getElementById('result-banner');
+  const sub    = document.getElementById('result-sub');
+  banner.className = 'result-banner ' + result;
+
+  if (result === 'win') {
+    banner.textContent = '🎉 You Win!';
+    sub.textContent = `${EMOJIS[myChoice]} beats ${EMOJIS[oppChoice]}`;
+  } else if (result === 'lose') {
+    banner.textContent = '😔 You Lose';
+    sub.textContent = `${EMOJIS[oppChoice]} beats ${EMOJIS[myChoice]}`;
+  } else {
+    banner.textContent = '🤝 Draw!';
+    sub.textContent = 'Great minds think alike';
+  }
+
+  document.getElementById('result-area').classList.add('visible');
+
+  // Check if game over
+  if (scoreMe >= ROUNDS_TO_WIN || scoreOpp >= ROUNDS_TO_WIN) {
+    document.getElementById('next-round-btn').style.display = 'none';
+    setTimeout(showGameOver, 1200);
+  } else {
+    document.getElementById('next-round-btn').style.display = '';
+  }
+}
+
+function getResult(mine, theirs) {
+  if (mine === theirs) return 'draw';
+  return BEATS[mine] === theirs ? 'win' : 'lose';
+}
+
+function showGameOver() {
+  const iWon = scoreMe >= ROUNDS_TO_WIN;
+  const isDraw = scoreMe === scoreOpp;
+
+  document.getElementById('result-area').classList.remove('visible');
+  const ga = document.getElementById('gameover-area');
+  ga.classList.add('visible');
+
+  const title  = document.getElementById('gameover-title');
+  const trophy = document.getElementById('gameover-trophy');
+  const sub    = document.getElementById('gameover-sub');
+
+  if (iWon) {
+    trophy.textContent    = '🏆';
+    title.textContent     = 'Victory!';
+    title.className       = 'gameover-title win';
+    sub.textContent       = `You beat ${oppName} ${scoreMe}–${scoreOpp}. Impressive!`;
+  } else {
+    trophy.textContent    = '💀';
+    title.textContent     = 'Defeated!';
+    title.className       = 'gameover-title lose';
+    sub.textContent       = `${oppName} won ${scoreOpp}–${scoreMe}. Better luck next time!`;
+  }
+  gameOver = true;
+}
+
+function updateScoreDisplay() {
+  document.getElementById('score-you').textContent = scoreMe;
+  document.getElementById('score-opp').textContent = scoreOpp;
+}
+
+function updateRoundChips() {
+  const el = document.getElementById('round-chips');
+  const total = Math.max(roundHistory.length + 1, ROUNDS_TO_WIN * 2 - 1);
+  el.innerHTML = '';
+  for (let i = 0; i < ROUNDS_TO_WIN * 2 - 1; i++) {
+    const chip = document.createElement('div');
+    chip.className = 'round-chip';
+    if (roundHistory[i] === 'you')  chip.classList.add('you');
+    if (roundHistory[i] === 'opp')  chip.classList.add('opp');
+    if (roundHistory[i] === 'draw') chip.classList.add('draw');
+    chip.textContent = i + 1;
+    el.appendChild(chip);
+  }
+}
+
+// ══════════════════════════════════════════
+//  Button listeners
+// ══════════════════════════════════════════
+document.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', () => onChoicePicked(btn.dataset.choice));
+});
+
+document.getElementById('next-round-btn').addEventListener('click', () => {
+  send({ type: 'next-round' });
+  resetRound();
+});
+
+document.getElementById('play-again-btn').addEventListener('click', () => {
+  send({ type: 'play-again' });
+  resetGame();
+});
+
+function resetGame() {
+  gameOver = false;
+  scoreMe = 0; scoreOpp = 0;
+  roundHistory = [];
+  document.getElementById('gameover-area').classList.remove('visible');
+  document.getElementById('next-round-btn').style.display = '';
+  updateScoreDisplay();
+  updateRoundChips();
+  resetRound();
+}
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  navigator.clipboard.writeText(roomCode).then(() => {
+    document.getElementById('copy-btn').textContent = '✅ Copied!';
+    setTimeout(() => document.getElementById('copy-btn').textContent = '📋 Copy Code', 2000);
+  }).catch(() => showToast('Could not copy — copy the code manually.'));
+});
+
+function leaveAndReset() {
+  if (conn)  { conn.close();  conn  = null; }
+  if (peer)  { peer.destroy(); peer = null; }
+  myChoice = null; oppChoice = null;
+  scoreMe = 0; scoreOpp = 0; roundHistory = [];
+  gameOver = false;
+  joinCodeInput.value = '';
+  joinBtn.disabled = true;
+  document.querySelector('.room-code-display').style.display = '';
+  document.getElementById('waiting-text').textContent = 'Waiting for your opponent to join…';
+  showScreen('screen-menu');
+}
+
+document.getElementById('leave-lobby-btn').addEventListener('click', leaveAndReset);
+document.getElementById('leave-game-btn').addEventListener('click', leaveAndReset);
+</script>
+
+</body>
+</html>

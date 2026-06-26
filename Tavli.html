@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Τάβλι — Konstantinos Trachanas</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.2/peerjs.min.js"></script>
+  <style>
+    main { max-width: 1080px; }
+
+    /* ── Screens ── */
+    .screen { display: none; animation: fadeUp 0.4s ease both; }
+    .screen.active { display: block; }
+    .screen-center {
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 58vh; gap: 20px; animation: fadeUp 0.4s ease both;
+    }
+    .screen-center.active { display: flex; }
+
+    /* ── Cards (nick/menu) ── */
+    .rps-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 20px;
+      padding: 44px 48px; width: 100%; max-width: 440px; position: relative; overflow: hidden;
+    }
+    .rps-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--gold),var(--teal)); }
+    .rps-card::after { content:'⛁'; position:absolute; bottom:8px; right:18px; font-size:4.4rem; opacity:0.05; pointer-events:none; }
+    .card-title { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--text); margin-bottom: 6px; text-align: center; }
+    .card-sub { color: var(--muted); font-size: 0.85rem; text-align: center; margin-bottom: 30px; line-height: 1.6; }
+
+    .rps-input {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
+      padding: 13px 18px; color: var(--text); font-family: var(--sans); font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 12px; letter-spacing: 0.04em;
+    }
+    .rps-input:focus { border-color: rgba(201,165,90,0.4); box-shadow: 0 0 0 3px rgba(201,165,90,0.08); }
+    .rps-input::placeholder { color: var(--muted); }
+    .rps-input.code { text-align: center; font-size: 1.3rem; letter-spacing: 0.25em; font-family: var(--serif); text-transform: uppercase; }
+
+    .btn-gold {
+      width: 100%; background: linear-gradient(135deg, var(--gold), #b8943f); border: none; border-radius: 10px;
+      padding: 13px 24px; color: #0c0f1a; font-family: var(--sans); font-size: 0.88rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; margin-bottom: 10px;
+    }
+    .btn-gold:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,165,90,0.25); }
+    .btn-gold:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn-ghost {
+      width: 100%; background: transparent; border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 24px; color: var(--muted); font-family: var(--sans); font-size: 0.88rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(201,165,90,0.3); color: var(--text); }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; color: var(--muted); font-size: 0.75rem; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Lobby ── */
+    .lobby-wrap { display: flex; gap: 20px; align-items: flex-start; }
+    .lobby-main { flex: 1; }
+    .lobby-side { width: 260px; flex-shrink: 0; }
+    .room-code-display { background: var(--bg3); border: 1px solid rgba(201,165,90,0.2); border-radius: 14px; padding: 28px 24px; text-align: center; margin-bottom: 16px; }
+    .room-code-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .room-code-val { font-family: var(--serif); font-size: 2.6rem; font-weight: 700; letter-spacing: 0.22em; color: var(--gold); line-height: 1; }
+    .room-code-hint { margin-top: 10px; font-size: 0.78rem; color: var(--muted); }
+    .copy-btn { background: var(--gold-dim); border: 1px solid rgba(201,165,90,0.25); border-radius: 8px; padding: 8px 20px; color: var(--gold); font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
+    .copy-btn:hover { background: rgba(201,165,90,0.22); }
+    .waiting-pulse { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 0.85rem; padding: 14px 18px; background: var(--bg3); border-radius: 10px; border: 1px solid var(--border); }
+    .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 6px var(--teal); animation: pulse 1.4s infinite; flex-shrink: 0; }
+    .panel-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .panel-head { padding: 13px 18px; background: var(--bg3); border-bottom: 1px solid var(--border); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+    .conn-bar { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--muted); padding: 8px 16px; background: var(--bg3); border-radius: 8px; border: 1px solid var(--border); margin-bottom: 16px; }
+    .conn-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 5px var(--teal); }
+    .conn-dot.off { background: #e05c6e; box-shadow: 0 0 5px #e05c6e; animation: none; }
+
+    /* ── Game header ── */
+    .tv-header { display:flex; align-items:center; justify-content:space-between; gap:14px; background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:14px 22px; margin-bottom:16px; flex-wrap:wrap; }
+    .tv-pinfo { display:flex; align-items:center; gap:10px; padding:6px 14px; border-radius:10px; border:2px solid transparent; transition:all .3s; }
+    .tv-pinfo.cur { border-color: var(--gold); box-shadow:0 0 16px rgba(201,165,90,.18); background:var(--gold-dim); }
+    .tv-chip { width:18px; height:18px; border-radius:50%; flex-shrink:0; box-shadow:inset 0 -2px 4px rgba(0,0,0,.3), 0 0 6px rgba(0,0,0,.4); }
+    .tv-chip.gold { background:radial-gradient(circle at 32% 28%, #f3dca0, var(--gold) 60%, #8a6c30); }
+    .tv-chip.teal { background:radial-gradient(circle at 32% 28%, #b9fff0, var(--teal) 60%, #2a8c79); }
+    .tv-pname { font-size:0.88rem; font-weight:600; color:var(--text); }
+    .tv-pname.me::after { content:' (εσύ)'; color:var(--muted); font-weight:400; font-size:0.78rem; }
+    .tv-pips { font-size:0.68rem; color:var(--muted); margin-left:4px; }
+    .tv-vs { font-family: var(--serif); color: var(--muted); font-style: italic; font-size: 0.95rem; }
+
+    /* ── Status / controls ── */
+    .tv-status { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:11px 18px; font-size:0.85rem; color:var(--muted); text-align:center; min-height:42px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+    .tv-status b { color: var(--gold); }
+    .tv-controls { display:flex; align-items:center; justify-content:center; gap:18px; margin-top:16px; flex-wrap:wrap; }
+    .tv-dice-row { display:flex; gap:8px; min-height:46px; align-items:center; }
+    .tv-die { width:42px; height:42px; background:linear-gradient(145deg,#f5f0e4,#d9d2bf); border-radius:9px; box-shadow:0 4px 10px rgba(0,0,0,.4), inset 0 0 0 1px rgba(0,0,0,.08); display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); padding:6px; gap:1px; }
+    .tv-die .pip { width:100%; height:100%; border-radius:50%; background:#2b2118; align-self:center; justify-self:center; transform:scale(0.62); }
+    .tv-die.used { opacity:0.25; filter:grayscale(0.6); }
+    .tv-roll-btn { background:linear-gradient(135deg,var(--teal),#2fb89e); border:none; border-radius:10px; padding:12px 26px; color:#0c0f1a; font-family:var(--sans); font-size:0.85rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; }
+    .tv-roll-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(77,217,192,0.25); }
+    .tv-roll-btn:disabled { opacity:0.3; cursor:not-allowed; }
+
+    /* ── Board ── */
+    .tavli-board {
+      display:grid;
+      grid-template-columns: repeat(6,1fr) 0.62fr repeat(6,1fr) 0.92fr;
+      grid-template-rows: 1fr 1fr;
+      background:#0a0d16;
+      border:10px solid #2a2014;
+      border-radius:6px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(201,165,90,0.15);
+      aspect-ratio: 15 / 9.2;
+      position:relative;
+      gap:0;
+    }
+    .tv-pt { position:relative; min-width:0; }
+    .tv-tri { position:absolute; inset:0; }
+    .tv-pt.row1 .tv-tri { clip-path: polygon(8% 0%, 92% 0%, 50% 92%); top:0; }
+    .tv-pt.row2 .tv-tri { clip-path: polygon(8% 100%, 92% 100%, 50% 8%); bottom:0; }
+    .tv-pt.tri-a .tv-tri { background: rgba(201,165,90,0.16); }
+    .tv-pt.tri-b .tv-tri { background: rgba(77,217,192,0.10); }
+    .tv-pt-num { position:absolute; font-size:0.6rem; color:rgba(255,255,255,0.18); font-weight:600; left:50%; transform:translateX(-50%); }
+    .tv-pt.row1 .tv-pt-num { top:3px; }
+    .tv-pt.row2 .tv-pt-num { bottom:3px; }
+
+    .tv-checker { position:absolute; left:50%; width:78%; aspect-ratio:1/1; border-radius:50%; transform:translateX(-50%); z-index:2; box-shadow:0 2px 5px rgba(0,0,0,0.5), inset 0 -3px 5px rgba(0,0,0,0.35), inset 0 2px 3px rgba(255,255,255,0.25); }
+    .tv-checker.gold { background:radial-gradient(circle at 34% 26%, #f6e2ac, var(--gold) 55%, #7d5f29); }
+    .tv-checker.teal { background:radial-gradient(circle at 34% 26%, #c7fff2, var(--teal) 55%, #267565); }
+    .tv-checker .cnt { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:0.62rem; font-weight:800; color:#0c0f1a; text-shadow:0 1px 1px rgba(255,255,255,.3); }
+
+    .tv-pt.selectable { cursor:pointer; }
+    .tv-pt.selectable:hover .tv-tri { background: rgba(201,165,90,0.28); }
+    .tv-pt.sel-origin .tv-tri { background: rgba(77,217,192,0.32) !important; box-shadow: inset 0 0 0 2px var(--teal); }
+    .tv-pt.sel-dest { cursor:pointer; }
+    .tv-pt.sel-dest .tv-tri { background: rgba(201,165,90,0.34) !important; box-shadow: inset 0 0 0 2px var(--gold); animation: tvPulse 1s infinite; }
+    @keyframes tvPulse { 0%,100%{opacity:1;} 50%{opacity:0.55;} }
+    .tv-dest-badge { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--gold); color:#0c0f1a; font-weight:800; font-size:0.72rem; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; z-index:5; box-shadow:0 2px 8px rgba(0,0,0,.5); pointer-events:none; }
+
+    /* Bar */
+    .tv-bar { grid-column:7; grid-row:1/3; position:relative; background:linear-gradient(180deg, rgba(201,165,90,0.07), rgba(0,0,0,0.2), rgba(77,217,192,0.07)); border-left:3px solid #2a2014; border-right:3px solid #2a2014; display:flex; flex-direction:column; }
+    .tv-bar-half { flex:1; position:relative; }
+    .tv-bar-half.teal-half { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding-top:6%; gap:2%; }
+    .tv-bar-half.gold-half { display:flex; flex-direction:column-reverse; align-items:center; justify-content:flex-start; padding-bottom:6%; gap:2%; }
+    .tv-bar-half .tv-checker { position:relative; left:auto; transform:none; width:62%; }
+    .tv-bar-half.selectable { cursor:pointer; }
+    .tv-bar-half.sel-origin { background: rgba(77,217,192,0.18); box-shadow: inset 0 0 0 2px var(--teal); }
+    .tv-bar-lbl { position:absolute; left:50%; transform:translateX(-50%); font-size:0.58rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.08em; }
+    .teal-half .tv-bar-lbl { top:2px; }
+    .gold-half .tv-bar-lbl { bottom:2px; }
+
+    /* Off tray */
+    .tv-offtray { grid-column:14; grid-row:1/3; position:relative; background:rgba(255,255,255,0.02); border-left:3px solid #2a2014; display:flex; flex-direction:column; }
+    .tv-off-half { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; position:relative; padding:4px; }
+    .tv-off-count { font-family:var(--serif); font-size:1.3rem; font-weight:700; }
+    .tv-off-count.gold { color: var(--gold); }
+    .tv-off-count.teal { color: var(--teal); }
+    .tv-off-mini { display:flex; flex-wrap:wrap; gap:1px; justify-content:center; max-width:90%; }
+    .tv-off-mini .dot { width:7px; height:7px; border-radius:50%; }
+    .tv-off-mini .dot.gold { background:var(--gold); }
+    .tv-off-mini .dot.teal { background:var(--teal); }
+    .tv-off-half.sel-dest { background: rgba(201,165,90,0.18); box-shadow: inset 0 0 0 2px var(--gold); }
+    .tv-off-badges { display:flex; gap:4px; flex-wrap:wrap; justify-content:center; }
+    .tv-off-badge { background:var(--gold); color:#0c0f1a; font-weight:800; font-size:0.68rem; border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.4); animation: tvPulse 1s infinite; }
+
+    /* Game over */
+    .gameover-area { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 40px 24px; text-align: center; display: none; margin-top:18px; }
+    .gameover-area.visible { display: block; animation: fadeUp 0.35s ease both; }
+    .gameover-trophy { font-size: 4rem; margin-bottom: 12px; }
+    .gameover-title { font-family: var(--serif); font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; }
+    .gameover-title.win  { color: var(--teal); }
+    .gameover-title.lose { color: #e05c6e; }
+    .gameover-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px); background:#2a0f14; border:1px solid #e05c6e; border-radius: 10px; padding: 12px 24px; color:#e05c6e; font-size: 0.85rem; font-weight: 500; opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 999; white-space: nowrap; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .rps-card { padding: 32px 20px; }
+      .lobby-wrap { flex-direction: column; }
+      .lobby-side { width: 100%; }
+      .tv-header { padding:12px 14px; gap:8px; }
+      .tv-pname { font-size:0.78rem; }
+      .tv-pt-num { display:none; }
+      .tavli-board { aspect-ratio: 15/12; }
+      .tv-die { width:34px; height:34px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="avatar-wrap">
+    <img class="avatar" src="me.jpg" alt="Konstantinos Trachanas">
+  </div>
+  <div class="header-info">
+    <div class="header-name">Konstantinos Trachanas</div>
+    <div class="header-dept">Dept. of Computer Science &amp; Engineering &nbsp;·&nbsp; University of Ioannina</div>
+    <div class="header-meta">
+      <span class="meta-item"><span class="meta-icon">📍</span> GR-45110 Ioannina, Greece</span>
+      <span class="meta-item"><span class="meta-icon">✉️</span> cs05603@uoi.gr</span>
+    </div>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      3rd Year Undergraduate Student
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="Courses.html">Courses</a>
+  <a href="Projects.html">Projects</a>
+  <a href="Skills.html">Skills</a>
+  <a href="Interests.html">Interests</a>
+  <a href="Snake.html">🐍 Snake</a>
+  <a href="RPS.html">✊ RPS</a>
+  <a href="UNO.html">🃏 UNO</a>
+  <a href="Tavli.html" class="active">🎲 Τάβλι</a>
+</nav>
+
+<main>
+
+  <!-- ══ SCREEN 1: Nickname ══ -->
+  <div class="screen-center active" id="screen-nick">
+    <div class="rps-card">
+      <div class="card-title">🎲 Τάβλι — Πόρτες</div>
+      <div class="card-sub">Κλασικό backgammon για δύο παίκτες, σε πραγματικό χρόνο.<br>Γράψε ένα ψευδώνυμο για να ξεκινήσεις.</div>
+      <input id="nick-input" class="rps-input" type="text" maxlength="16" placeholder="Το όνομά σου…" autocomplete="off" spellcheck="false">
+      <button class="btn-gold" id="nick-btn" disabled>Συνέχεια →</button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 2: Create / Join ══ -->
+  <div class="screen-center" id="screen-menu">
+    <div class="rps-card">
+      <div class="card-title">Έτοιμος, <span id="menu-name" style="color:var(--teal)"></span>!</div>
+      <div class="card-sub">Δημιούργησε ένα δωμάτιο και μοιράσου τον κωδικό,<br>ή μπες σε δωμάτιο φίλου.</div>
+      <button class="btn-gold" id="create-btn">✦ Δημιουργία Δωματίου</button>
+      <div class="divider">ή</div>
+      <input id="join-code-input" class="rps-input code" type="text" maxlength="6" placeholder="ΚΩΔΙΚΟΣ" autocomplete="off" spellcheck="false">
+      <button class="btn-ghost" id="join-btn" disabled>Είσοδος στο Δωμάτιο →</button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 3: Lobby ══ -->
+  <div class="screen" id="screen-lobby" style="display:none">
+    <div class="conn-bar">
+      <span class="conn-dot" id="conn-dot"></span>
+      <span id="conn-label">Σύνδεση…</span>
+    </div>
+    <div class="lobby-wrap">
+      <div class="lobby-main">
+        <div class="room-code-display">
+          <div class="room-code-label">Κωδικός Δωματίου — Μοιράσου τον με τον φίλο σου</div>
+          <div class="room-code-val" id="lobby-code">——</div>
+          <div class="room-code-hint">Τον γράφει στην οθόνη "Είσοδος"</div>
+          <button class="copy-btn" id="copy-btn">📋 Αντιγραφή</button>
+        </div>
+        <div class="waiting-pulse" id="waiting-msg">
+          <span class="pulse-dot"></span>
+          <span id="waiting-text">Περιμένουμε τον αντίπαλο να μπει…</span>
+        </div>
+      </div>
+      <div class="lobby-side">
+        <div class="panel-card">
+          <div class="panel-head">👥 Παίκτες</div>
+          <div style="padding:16px">
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+              <span class="tv-chip gold"></span>
+              <span id="lobby-you" style="color:var(--teal);font-size:0.9rem;font-weight:600"></span>
+              <span style="margin-left:auto;font-size:0.72rem;color:var(--muted)">Εσύ</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 0" id="lobby-opp-row">
+              <span class="tv-chip teal" id="lobby-opp-icon" style="opacity:0.5"></span>
+              <span id="lobby-opp" style="color:var(--muted);font-size:0.9rem">Αναμονή…</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <button class="btn-ghost" id="leave-lobby-btn" style="font-size:0.8rem;padding:10px">← Έξοδος</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 4: Game ══ -->
+  <div class="screen" id="screen-game">
+
+    <div class="tv-header">
+      <div class="tv-pinfo" id="pinfo-p1">
+        <span class="tv-chip gold"></span>
+        <span class="tv-pname" id="name-p1">—</span>
+        <span class="tv-pips" id="pips-p1"></span>
+      </div>
+      <div class="tv-vs">vs</div>
+      <div class="tv-pinfo" id="pinfo-p2">
+        <span class="tv-chip teal"></span>
+        <span class="tv-pname" id="name-p2">—</span>
+        <span class="tv-pips" id="pips-p2"></span>
+      </div>
+    </div>
+
+    <div class="tv-status" id="tv-status">—</div>
+
+    <div class="tavli-board" id="tavli-board"></div>
+
+    <div class="tv-controls">
+      <div class="tv-dice-row" id="tv-dice-row"></div>
+      <button class="tv-roll-btn" id="roll-btn" disabled>🎲 Ρίξε Ζάρια</button>
+    </div>
+
+    <!-- Game over -->
+    <div class="gameover-area" id="gameover-area">
+      <div class="gameover-trophy" id="gameover-trophy"></div>
+      <div class="gameover-title" id="gameover-title"></div>
+      <div class="gameover-sub" id="gameover-sub"></div>
+      <button class="btn-gold" id="rematch-btn" style="max-width:240px;margin:0 auto">Νέο Παιχνίδι</button>
+      <br>
+      <button class="btn-ghost" id="leave-game-btn" style="max-width:240px;margin:8px auto 0">Έξοδος</button>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 <span>Konstantinos Trachanas</span> &nbsp;·&nbsp; University of Ioannina &nbsp;·&nbsp; Computer Science &amp; Engineering
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  ENGINE — Tavli (Portes / classic backgammon)
+//  player: 'p1' (Gold, moves 24→1, home 1-6) | 'p2' (Teal, moves 1→24, home 19-24)
+// ════════════════════════════════════════════════════════
+const E = (function(){
+  function otherP(p){ return p==='p1' ? 'p2' : 'p1'; }
+  function dir(p){ return p==='p1' ? -1 : 1; }
+  function homeRange(p){ return p==='p1' ? [1,6] : [19,24]; }
+  function isOwnHome(p, point){ const r=homeRange(p); return point>=r[0] && point<=r[1]; }
+  function entryPoint(p, die){ return p==='p1' ? 25-die : die; }
+  function distToOff(p, point){ return p==='p1' ? point : 25-point; }
+
+  function mkInitialPoints(){
+    const points = {};
+    for(let i=1;i<=24;i++) points[i] = {count:0, owner:null};
+    points[24] = {count:2, owner:'p1'};
+    points[13] = {count:5, owner:'p1'};
+    points[8]  = {count:3, owner:'p1'};
+    points[6]  = {count:5, owner:'p1'};
+    points[1]  = {count:2, owner:'p2'};
+    points[12] = {count:5, owner:'p2'};
+    points[17] = {count:3, owner:'p2'};
+    points[19] = {count:5, owner:'p2'};
+    return points;
+  }
+
+  function mkState(){
+    return { points: mkInitialPoints(), bar:{p1:0,p2:0}, off:{p1:0,p2:0},
+      turn:'p1', dice:[], phase:'pre-start', winner:null, lastMsg:'' };
+  }
+
+  function allInHome(state, player){
+    if(state.bar[player] > 0) return false;
+    for(let i=1;i<=24;i++){
+      const pt = state.points[i];
+      if(pt.owner===player && pt.count>0 && !isOwnHome(player,i)) return false;
+    }
+    return true;
+  }
+
+  function maxDistInHome(state, player){
+    let max = -1;
+    for(let i=1;i<=24;i++){
+      const pt = state.points[i];
+      if(pt.owner===player && pt.count>0){
+        const d = distToOff(player,i);
+        if(d>max) max = d;
+      }
+    }
+    return max;
+  }
+
+  function computeDest(state, player, origin, die){
+    let dest;
+    if(origin === 'bar'){
+      if(state.bar[player] <= 0) return null;
+      dest = entryPoint(player, die);
+    } else {
+      if(state.bar[player] > 0) return null;
+      const pt = state.points[origin];
+      if(!pt || pt.owner!==player || pt.count<=0) return null;
+      dest = origin + dir(player)*die;
+    }
+    if(dest >= 1 && dest <= 24){
+      const target = state.points[dest];
+      if(target.owner === otherP(player) && target.count >= 2) return null;
+      return {type:'point', point:dest};
+    }
+    if(origin === 'bar') return null;
+    if(!allInHome(state, player)) return null;
+    const distance = distToOff(player, origin);
+    if(die === distance) return {type:'off'};
+    if(die > distance && distance === maxDistInHome(state, player)) return {type:'off'};
+    return null;
+  }
+
+  function legalMoves(state, player, diceValues){
+    const moves = [];
+    const uniqueDice = [...new Set(diceValues)];
+    let origins;
+    if(state.bar[player] > 0){
+      origins = ['bar'];
+    } else {
+      origins = [];
+      for(let i=1;i<=24;i++){
+        if(state.points[i].owner===player && state.points[i].count>0) origins.push(i);
+      }
+    }
+    for(const origin of origins){
+      for(const die of uniqueDice){
+        const dest = computeDest(state, player, origin, die);
+        if(dest) moves.push({origin, die, dest});
+      }
+    }
+    return moves;
+  }
+
+  function hasAnyLegalMove(state, player, diceValues){ return legalMoves(state, player, diceValues).length > 0; }
+
+  function applyMove(state, player, origin, die){
+    const dest = computeDest(state, player, origin, die);
+    if(!dest) throw new Error('Illegal move applied');
+    if(origin === 'bar'){ state.bar[player]--; }
+    else { const o = state.points[origin]; o.count--; if(o.count===0) o.owner=null; }
+
+    let msg = '';
+    if(dest.type==='off'){
+      state.off[player]++;
+      msg = 'off';
+      if(state.off[player] === 15){ state.phase='game-over'; state.winner=player; }
+    } else {
+      const p = dest.point;
+      const t = state.points[p];
+      let hit=false;
+      if(t.owner === otherP(player) && t.count===1){ state.bar[otherP(player)]++; t.count=0; t.owner=null; hit=true; }
+      t.count++; t.owner = player;
+      msg = hit ? 'hit:'+p : 'move:'+p;
+    }
+    const idx = state.dice.indexOf(die);
+    if(idx>=0) state.dice.splice(idx,1);
+    state.lastMsg = msg;
+    return dest;
+  }
+
+  function rollDice(){
+    const d1 = 1+Math.floor(Math.random()*6);
+    const d2 = 1+Math.floor(Math.random()*6);
+    return d1===d2 ? [d1,d1,d1,d1] : [d1,d2];
+  }
+
+  function pipCount(state, player){
+    let n = state.bar[player]*25;
+    for(let i=1;i<=24;i++){ const pt=state.points[i]; if(pt.owner===player) n += pt.count*distToOff(player,i); }
+    return n;
+  }
+
+  return { otherP, dir, homeRange, isOwnHome, entryPoint, distToOff, mkInitialPoints, mkState,
+    allInHome, maxDistInHome, computeDest, legalMoves, hasAnyLegalMove, applyMove, rollDice, pipCount };
+})();
+
+// ════════════════════════════════════════════════════════
+//  NETWORK STATE
+// ════════════════════════════════════════════════════════
+let myName='', oppName='', roomCode='';
+let peer=null, conn=null, isHost=false;
+let myPlayer='p1', oppPlayer='p2';
+let state=null;
+let selOrigin=null, selMoves=[];
+let gameOver=false;
+
+function showScreen(id){
+  document.querySelectorAll('.screen, .screen-center').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  el.style.display='';
+  void el.offsetWidth;
+  el.classList.add('active');
+}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+function makeCode(){ return Math.random().toString(36).substring(2,8).toUpperCase(); }
+
+// ── SCREEN 1: Nickname ──
+const nickInput=document.getElementById('nick-input'), nickBtn=document.getElementById('nick-btn');
+nickInput.addEventListener('input', ()=>{ nickBtn.disabled = nickInput.value.trim().length<2; });
+nickInput.addEventListener('keydown', e=>{ if(e.key==='Enter' && !nickBtn.disabled) goToMenu(); });
+nickBtn.addEventListener('click', goToMenu);
+function goToMenu(){ myName=nickInput.value.trim(); document.getElementById('menu-name').textContent=myName; showScreen('screen-menu'); }
+
+// ── SCREEN 2: Create / Join ──
+const joinCodeInput=document.getElementById('join-code-input'), joinBtn=document.getElementById('join-btn');
+joinCodeInput.addEventListener('input', ()=>{ joinBtn.disabled = joinCodeInput.value.trim().length<4; });
+joinCodeInput.addEventListener('keydown', e=>{ if(e.key==='Enter' && !joinBtn.disabled) doJoin(); });
+document.getElementById('create-btn').addEventListener('click', doCreate);
+joinBtn.addEventListener('click', doJoin);
+
+function doCreate(){ isHost=true; myPlayer='p1'; oppPlayer='p2'; roomCode=makeCode(); initPeer(roomCode); }
+function doJoin(){ isHost=false; myPlayer='p2'; oppPlayer='p1'; roomCode=joinCodeInput.value.trim().toUpperCase(); initPeer(null); }
+
+// ── PeerJS ──
+function initPeer(id){
+  document.getElementById('lobby-code').textContent = roomCode;
+  document.getElementById('lobby-you').textContent = myName;
+  document.getElementById('lobby-opp').textContent = 'Αναμονή…';
+  document.getElementById('conn-label').textContent = 'Σύνδεση…';
+  document.getElementById('conn-dot').classList.remove('off');
+
+  if(!isHost){
+    document.querySelector('.room-code-display').style.display='none';
+    document.getElementById('waiting-text').textContent = `Σύνδεση στο δωμάτιο ${roomCode}…`;
+  }
+  showScreen('screen-lobby');
+
+  const peerOpts = { debug:0 };
+  peer = id ? new Peer(id, peerOpts) : new Peer(peerOpts);
+
+  peer.on('open', () => {
+    document.getElementById('conn-label').textContent = isHost ? 'Το δωμάτιο είναι έτοιμο — αναμονή αντιπάλου…' : 'Σύνδεση με τον server, είσοδος στο δωμάτιο…';
+    if(!isHost){
+      conn = peer.connect(roomCode, {reliable:true});
+      setupConn(conn);
+    }
+  });
+  peer.on('connection', c => { conn=c; setupConn(conn); });
+  peer.on('error', err => {
+    const msg = err.type==='peer-unavailable' ? 'Δεν βρέθηκε το δωμάτιο — έλεγξε τον κωδικό.' : 'Σφάλμα σύνδεσης: '+err.type;
+    showToast(msg);
+    document.getElementById('conn-dot').classList.add('off');
+    document.getElementById('conn-label').textContent = msg;
+  });
+}
+
+function setupConn(c){
+  c.on('open', () => { document.getElementById('conn-label').textContent='Συνδέθηκε!'; send({type:'hello', name:myName}); });
+  c.on('data', data => handleMsg(data));
+  c.on('close', () => {
+    if(!gameOver){
+      showToast('Ο αντίπαλος αποσυνδέθηκε.');
+      document.getElementById('conn-dot').classList.add('off');
+      document.getElementById('conn-label').textContent='Ο αντίπαλος αποσυνδέθηκε';
+    }
+  });
+  c.on('error', () => { showToast('Σφάλμα σύνδεσης.'); document.getElementById('conn-dot').classList.add('off'); });
+}
+
+function send(data){ if(conn && conn.open) conn.send(data); }
+
+// ── Message handling ──
+function handleMsg(data){
+  switch(data.type){
+    case 'hello':
+      oppName = data.name;
+      document.getElementById('lobby-opp').textContent = oppName;
+      document.getElementById('lobby-opp').style.color = 'var(--gold)';
+      document.getElementById('lobby-opp-icon').style.opacity = '1';
+      document.getElementById('waiting-text').textContent = `${oppName} μπήκε! Ξεκινάμε…`;
+      if(isHost) send({type:'hello', name:myName});
+      if(isHost) setTimeout(hostStartGame, 900);
+      break;
+    case 'game-start':
+      state = data.state;
+      gameOver = false;
+      showScreen('screen-game');
+      renderAll();
+      break;
+    case 'state':
+      state = data.state;
+      selOrigin=null; selMoves=[];
+      renderAll();
+      if(state.phase==='game-over') showGameOver();
+      break;
+    case 'req-roll':
+      if(isHost) hostDoRoll(oppPlayer);
+      break;
+    case 'req-move':
+      if(isHost) hostDoMove(oppPlayer, data.origin, data.die);
+      break;
+    case 'rematch-req':
+      if(isHost) hostStartGame();
+      break;
+    case 'err':
+      showToast(data.msg);
+      break;
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  HOST — authoritative actions
+// ════════════════════════════════════════════════════════
+function hostStartGame(){
+  state = E.mkState();
+  let r1,r2;
+  do{ r1=1+Math.floor(Math.random()*6); r2=1+Math.floor(Math.random()*6); } while(r1===r2);
+  state.turn = r1>r2 ? 'p1' : 'p2';
+  state.dice = r1>r2 ? [r1,r2] : [r2,r1];
+  state.phase='playing';
+  const starterName = state.turn==='p1' ? (isHost?myName:oppName) : (isHost?oppName:myName);
+  state.lastMsg = `Άνοιγμα: ${r1} — ${r2}. Ξεκινάει ο/η ${starterName}!`;
+  gameOver = false;
+  send({type:'game-start', state});
+  showScreen('screen-game');
+  renderAll();
+}
+
+function hostDoRoll(player){
+  if(state.turn!==player || state.dice.length>0 || state.phase!=='playing') return;
+  state.dice = E.rollDice();
+  const pname = player==='p1' ? (isHost?myName:oppName) : (isHost?oppName:myName);
+  if(!E.hasAnyLegalMove(state, player, state.dice)){
+    state.lastMsg = `${pname} έφερε ${state.dice.join('-')} — καμία νόμιμη κίνηση, η σειρά περνάει.`;
+    state.dice = [];
+    state.turn = E.otherP(player);
+  } else {
+    state.lastMsg = `${pname} έφερε ${state.dice.slice().sort().join('-')}.`;
+  }
+  pushState();
+}
+
+function hostDoMove(player, origin, die){
+  if(state.turn!==player || state.phase!=='playing') return;
+  if(state.dice.indexOf(die)===-1) return;
+  const dest = E.computeDest(state, player, origin, die);
+  if(!dest) return;
+  E.applyMove(state, player, origin, die);
+  if(state.phase!=='game-over'){
+    if(state.dice.length===0 || !E.hasAnyLegalMove(state, player, state.dice)){
+      const stuck = state.dice.length>0;
+      state.dice = [];
+      state.turn = E.otherP(player);
+      if(stuck){
+        const pname = player==='p1' ? (isHost?myName:oppName) : (isHost?oppName:myName);
+        state.lastMsg = `${pname}: καμία άλλη νόμιμη κίνηση — η σειρά περνάει.`;
+      }
+    }
+  }
+  pushState();
+}
+
+function pushState(){
+  send({type:'state', state});
+  selOrigin=null; selMoves=[];
+  renderAll();
+  if(state.phase==='game-over') showGameOver();
+}
+
+// Dispatchers used by UI — route to host logic directly or via network
+function doRoll(){ if(isHost) hostDoRoll(myPlayer); else send({type:'req-roll'}); }
+function doMove(origin, die){ if(isHost) hostDoMove(myPlayer, origin, die); else send({type:'req-move', origin, die}); }
+
+// ════════════════════════════════════════════════════════
+//  BOARD GEOMETRY
+// ════════════════════════════════════════════════════════
+function pointGridPos(p){
+  if(p>=13 && p<=18) return {row:1, col:p-12};
+  if(p>=19 && p<=24) return {row:1, col:(p-19)+8};
+  if(p>=7  && p<=12) return {row:2, col:(12-p)+1};
+  return {row:2, col:(6-p)+8}; // 1..6
+}
+
+const PIP_POS = {
+  1:[[2,2]],
+  2:[[1,1],[3,3]],
+  3:[[1,1],[2,2],[3,3]],
+  4:[[1,1],[1,3],[3,1],[3,3]],
+  5:[[1,1],[1,3],[2,2],[3,1],[3,3]],
+  6:[[1,1],[1,3],[2,1],[2,3],[3,1],[3,3]]
+};
+
+const OVERLAP = 16; // % of cell height between stacked checkers
+const MAX_VISIBLE = 5;
+
+const boardEl = document.getElementById('tavli-board');
+
+function initBoardSkeleton(){
+  let html = '';
+  for(let p=1; p<=24; p++){
+    const pos = pointGridPos(p);
+    const rowClass = pos.row===1 ? 'row1' : 'row2';
+    const triClass = (p%2===0) ? 'tri-a' : 'tri-b';
+    html += `<div class="tv-pt ${rowClass} ${triClass}" data-point="${p}" style="grid-row:${pos.row};grid-column:${pos.col}">
+      <div class="tv-tri"></div>
+      <div class="tv-pt-num">${p}</div>
+    </div>`;
+  }
+  html += `<div class="tv-bar">
+    <div class="tv-bar-half teal-half" data-bar="p2"></div>
+    <div class="tv-bar-half gold-half" data-bar="p1"></div>
+  </div>`;
+  html += `<div class="tv-offtray">
+    <div class="tv-off-half" data-off="p2"></div>
+    <div class="tv-off-half" data-off="p1"></div>
+  </div>`;
+  boardEl.innerHTML = html;
+
+  boardEl.addEventListener('click', e => {
+    const badge = e.target.closest('.tv-off-badge');
+    if(badge){ handleOffBadgeClick(parseInt(badge.dataset.die,10)); return; }
+    const ptEl = e.target.closest('.tv-pt');
+    if(ptEl){ handleCellClick('point', parseInt(ptEl.dataset.point,10)); return; }
+    const barEl = e.target.closest('.tv-bar-half');
+    if(barEl){
+      const owner = barEl.dataset.bar;
+      if(owner===myPlayer) handleCellClick('bar','bar');
+      return;
+    }
+  });
+}
+initBoardSkeleton();
+
+// ════════════════════════════════════════════════════════
+//  SELECTION / INTERACTION
+// ════════════════════════════════════════════════════════
+function handleCellClick(kind, key){
+  if(!state) return;
+  const myTurnDice = state.turn===myPlayer && state.dice.length>0 && state.phase==='playing';
+  if(!myTurnDice) return;
+
+  if(selOrigin!=null){
+    if(kind==='point'){
+      const dm = selMoves.find(m => m.dest.type==='point' && m.dest.point===key && m.origin===selOrigin);
+      if(dm){ doMove(selOrigin, dm.die); return; }
+    }
+    if(selOrigin===key){ selOrigin=null; selMoves=[]; renderAll(); return; }
+  }
+
+  if(state.bar[myPlayer]>0 && key!=='bar'){
+    showToast('Πρέπει πρώτα να μπεις από τη μπάρα!');
+    return;
+  }
+  if(key==='bar'){
+    if(state.bar[myPlayer]<=0) return;
+  } else {
+    const pt = state.points[key];
+    if(!pt || pt.owner!==myPlayer || pt.count<=0) return;
+  }
+
+  const moves = E.legalMoves(state, myPlayer, state.dice).filter(m=>m.origin===key);
+  if(moves.length===0){ showToast('Δεν υπάρχει νόμιμη κίνηση από εδώ.'); return; }
+  selOrigin = key; selMoves = moves;
+  renderAll();
+}
+
+function handleOffBadgeClick(die){
+  if(selOrigin==null) return;
+  doMove(selOrigin, die);
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDERING
+// ════════════════════════════════════════════════════════
+function renderAll(){
+  if(!state) return;
+  if(state.phase==='playing') document.getElementById('gameover-area').classList.remove('visible');
+  renderHeader();
+  renderBoard();
+  renderDice();
+  renderStatus();
+}
+
+function renderHeader(){
+  const hostName = isHost ? myName : oppName;
+  const joinName = isHost ? oppName : myName;
+  const n1 = document.getElementById('name-p1'), n2 = document.getElementById('name-p2');
+  n1.textContent = hostName || '—'; n1.classList.toggle('me', myPlayer==='p1');
+  n2.textContent = joinName || '—'; n2.classList.toggle('me', myPlayer==='p2');
+  document.getElementById('pinfo-p1').classList.toggle('cur', state.turn==='p1' && state.phase==='playing');
+  document.getElementById('pinfo-p2').classList.toggle('cur', state.turn==='p2' && state.phase==='playing');
+  document.getElementById('pips-p1').textContent = '· '+E.pipCount(state,'p1')+' pips';
+  document.getElementById('pips-p2').textContent = '· '+E.pipCount(state,'p2')+' pips';
+}
+
+function renderBoard(){
+  const myTurnDice = state.turn===myPlayer && state.dice.length>0 && state.phase==='playing';
+  const allMyMoves = myTurnDice ? E.legalMoves(state, myPlayer, state.dice) : [];
+  const originsWithMoves = new Set(allMyMoves.map(m=>m.origin));
+
+  for(let p=1; p<=24; p++){
+    const ptEl = boardEl.querySelector(`.tv-pt[data-point="${p}"]`);
+    const pt = state.points[p];
+    const isTop = ptEl.classList.contains('row1');
+
+    let checkersHtml = '';
+    if(pt.count>0){
+      const shown = Math.min(pt.count, MAX_VISIBLE);
+      for(let i=0;i<shown;i++){
+        const off = i*OVERLAP;
+        const posStyle = isTop ? `top:${off}%;` : `bottom:${off}%;`;
+        const last = i===shown-1;
+        const badge = (last && pt.count>MAX_VISIBLE) ? `<span class="cnt">${pt.count}</span>` : '';
+        checkersHtml += `<div class="tv-checker ${pt.owner==='p1'?'gold':'teal'}" style="${posStyle}z-index:${i+1}">${badge}</div>`;
+      }
+    }
+
+    ptEl.classList.remove('selectable','sel-origin','sel-dest');
+    let destBadge = '';
+    if(myTurnDice){
+      if(selOrigin===p){
+        ptEl.classList.add('sel-origin','selectable');
+      } else if(selOrigin!=null){
+        const dm = selMoves.find(m => m.dest.type==='point' && m.dest.point===p);
+        if(dm){ ptEl.classList.add('sel-dest','selectable'); destBadge = `<div class="tv-dest-badge">${dm.die}</div>`; }
+      } else if(originsWithMoves.has(p)){
+        ptEl.classList.add('selectable');
+      }
+    }
+
+    ptEl.querySelectorAll('.tv-checker, .tv-dest-badge').forEach(n=>n.remove());
+    ptEl.insertAdjacentHTML('beforeend', checkersHtml + destBadge);
+  }
+
+  renderBarHalf('p1', myTurnDice, originsWithMoves);
+  renderBarHalf('p2', myTurnDice, originsWithMoves);
+  renderOffHalf('p1');
+  renderOffHalf('p2');
+}
+
+function renderBarHalf(player, myTurnDice, originsWithMoves){
+  const el = boardEl.querySelector(`.tv-bar-half[data-bar="${player}"]`);
+  const cnt = state.bar[player];
+  const lbl = `<span class="tv-bar-lbl">${player==='p1'?'GOLD':'TEAL'}</span>`;
+  let checkers = '';
+  for(let i=0;i<cnt;i++) checkers += `<div class="tv-checker ${player==='p1'?'gold':'teal'}"></div>`;
+  el.innerHTML = lbl + checkers;
+
+  el.classList.remove('selectable','sel-origin');
+  if(player===myPlayer && myTurnDice && cnt>0){
+    if(selOrigin==='bar') el.classList.add('sel-origin','selectable');
+    else if(selOrigin==null && originsWithMoves.has('bar')) el.classList.add('selectable');
+  }
+}
+
+function renderOffHalf(player){
+  const el = boardEl.querySelector(`.tv-off-half[data-off="${player}"]`);
+  const cnt = state.off[player];
+  const colorCls = player==='p1' ? 'gold' : 'teal';
+  let dots = '';
+  for(let i=0;i<cnt;i++) dots += `<span class="dot ${colorCls}"></span>`;
+
+  let badges = '';
+  el.classList.remove('sel-dest');
+  if(player===myPlayer && selOrigin!=null){
+    const offMoves = selMoves.filter(m=>m.dest.type==='off');
+    if(offMoves.length>0){
+      el.classList.add('sel-dest');
+      badges = `<div class="tv-off-badges">` + offMoves.map(m=>`<div class="tv-off-badge" data-die="${m.die}">${m.die}</div>`).join('') + `</div>`;
+    }
+  }
+
+  el.innerHTML = `<div class="tv-off-count ${colorCls}">${cnt}/15</div><div class="tv-off-mini">${dots}</div>${badges}`;
+}
+
+function renderDieHTML(value){
+  const pos = PIP_POS[value] || [];
+  const pips = pos.map(([r,c]) => `<span class="pip" style="grid-row:${r};grid-column:${c}"></span>`).join('');
+  return `<div class="tv-die">${pips}</div>`;
+}
+
+function renderDice(){
+  const row = document.getElementById('tv-dice-row');
+  const myTurn = state.turn===myPlayer;
+  if(state.dice.length===0){
+    let hint = '';
+    if(state.phase==='playing') hint = myTurn ? 'Πάτα «Ρίξε Ζάρια»' : 'Αναμονή αντιπάλου…';
+    row.innerHTML = `<span style="color:var(--muted);font-size:0.82rem">${hint}</span>`;
+  } else {
+    row.innerHTML = state.dice.map(renderDieHTML).join('');
+  }
+  document.getElementById('roll-btn').disabled = !(myTurn && state.dice.length===0 && state.phase==='playing');
+}
+
+function renderStatus(){
+  document.getElementById('tv-status').innerHTML = state.lastMsg || '—';
+}
+
+function showGameOver(){
+  gameOver = true;
+  const iWon = state.winner===myPlayer;
+  document.getElementById('gameover-trophy').textContent = iWon ? '🏆' : '💀';
+  const title = document.getElementById('gameover-title');
+  title.textContent = iWon ? 'Νίκη!' : 'Ήττα!';
+  title.className = 'gameover-title ' + (iWon ? 'win' : 'lose');
+  document.getElementById('gameover-sub').textContent = iWon
+    ? `Μάζεψες πρώτος όλα τα πούλια — νίκησες τον/την ${oppName}!`
+    : `Ο/Η ${oppName} μάζεψε πρώτος όλα τα πούλια. Ξαναπροσπάθησε!`;
+  document.getElementById('gameover-area').classList.add('visible');
+}
+
+// ════════════════════════════════════════════════════════
+//  CONTROLS
+// ════════════════════════════════════════════════════════
+document.getElementById('roll-btn').addEventListener('click', doRoll);
+
+document.getElementById('rematch-btn').addEventListener('click', () => {
+  if(isHost) hostStartGame();
+  else send({type:'rematch-req'});
+});
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  navigator.clipboard.writeText(roomCode).then(() => {
+    document.getElementById('copy-btn').textContent = '✅ Αντιγράφηκε!';
+    setTimeout(() => document.getElementById('copy-btn').textContent = '📋 Αντιγραφή', 2000);
+  }).catch(() => showToast('Αποτυχία αντιγραφής — αντιγράψτε χειροκίνητα.'));
+});
+
+function leaveAndReset(){
+  if(conn){ conn.close(); conn=null; }
+  if(peer){ peer.destroy(); peer=null; }
+  state=null; selOrigin=null; selMoves=[]; gameOver=false;
+  document.getElementById('gameover-area').classList.remove('visible');
+  joinCodeInput.value=''; joinBtn.disabled=true;
+  document.querySelector('.room-code-display').style.display='';
+  document.getElementById('waiting-text').textContent='Περιμένουμε τον αντίπαλο να μπει…';
+  document.getElementById('lobby-opp-icon').style.opacity='0.5';
+  showScreen('screen-menu');
+}
+
+document.getElementById('leave-lobby-btn').addEventListener('click', leaveAndReset);
+document.getElementById('leave-game-btn').addEventListener('click', leaveAndReset);
+</script>
+</body>
+</html>

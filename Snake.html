@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake — Konstantinos Trachanas</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Game page overrides ── */
+    main { max-width: 1000px; }
+
+    /* ── Nickname screen ── */
+    #nick-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 28px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .nick-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 52px;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .nick-card::before {
+      content: '';
+      position: absolute; top:0; left:0; right:0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--teal));
+    }
+    .nick-card::after {
+      content: '🐍';
+      position: absolute; bottom: 12px; right: 24px;
+      font-size: 4rem; opacity: 0.06;
+      pointer-events: none;
+    }
+    .nick-title {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .nick-sub {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 32px;
+    }
+    .nick-input {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 18px;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-bottom: 16px;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+    .nick-input:focus {
+      border-color: rgba(201,165,90,0.4);
+      box-shadow: 0 0 0 3px rgba(201,165,90,0.08);
+    }
+    .nick-input::placeholder { color: var(--muted); }
+
+    .btn-gold {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), #b8943f);
+      border: none;
+      border-radius: 10px;
+      padding: 13px 24px;
+      color: #0c0f1a;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,165,90,0.25); }
+    .btn-gold:active { transform: translateY(0); }
+    .btn-gold:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* ── Game layout ── */
+    #game-screen { display: none; }
+    #game-screen.visible { display: block; animation: fadeUp 0.4s ease both; }
+
+    .game-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ── Canvas area ── */
+    .canvas-wrap {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+    .canvas-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+    .player-tag {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--teal);
+      letter-spacing: 0.06em;
+    }
+    .player-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 6px var(--teal);
+    }
+    .score-display {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .score-display span { font-size: 0.72rem; color: var(--muted); font-family: var(--sans); margin-right: 4px; }
+
+    #gameCanvas {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      image-rendering: pixelated;
+      cursor: none;
+      touch-action: none;
+    }
+
+    /* Overlay on canvas */
+    .canvas-overlay {
+      position: absolute;
+      inset: 52px 0 0 0; /* below topbar */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(12,15,26,0.88);
+      backdrop-filter: blur(4px);
+      gap: 16px;
+      transition: opacity 0.3s;
+    }
+    .canvas-overlay.hidden { opacity: 0; pointer-events: none; }
+
+    .overlay-title {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .overlay-score {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .overlay-score strong { color: var(--gold); }
+    .overlay-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .btn-play {
+      background: linear-gradient(135deg, var(--teal), #2fb89e);
+      border: none; border-radius: 10px;
+      padding: 12px 36px;
+      color: #0c0f1a;
+      font-family: var(--sans);
+      font-size: 0.88rem; font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-play:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(77,217,192,0.25); }
+
+    /* Level badge */
+    .level-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--teal-dim);
+      border: 1px solid rgba(77,217,192,0.2);
+      border-radius: 20px; padding: 4px 14px;
+      font-size: 0.78rem; color: var(--teal); font-weight: 500;
+    }
+
+    /* ── Side panel ── */
+    .side-panel { display: flex; flex-direction: column; gap: 16px; }
+
+    .panel-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 13px 18px;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .panel-head-icon { color: var(--gold); }
+
+    /* Stats */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+    .stat-cell {
+      background: var(--bg2);
+      padding: 16px 16px 14px;
+      text-align: center;
+    }
+    .stat-val {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* Controls */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      padding: 16px;
+    }
+    .key-btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    .key-btn.center { grid-column: 2; }
+    .key-label {
+      font-size: 0.62rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      text-align: center; padding: 0 16px 12px;
+    }
+
+    /* Speed selector */
+    .speed-wrap { padding: 14px 16px; display: flex; gap: 8px; }
+    .speed-btn {
+      flex: 1;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 4px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.18s;
+    }
+    .speed-btn.active {
+      background: var(--gold-dim);
+      border-color: rgba(201,165,90,0.3);
+      color: var(--gold);
+    }
+
+    /* Leaderboard */
+    .lb-list { padding: 8px 0; }
+    .lb-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 18px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .lb-row:last-child { border-bottom: none; }
+    .lb-row:hover { background: rgba(255,255,255,0.02); }
+    .lb-rank {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      min-width: 24px;
+      line-height: 1;
+    }
+    .lb-rank.r1 { color: #ffd700; }
+    .lb-rank.r2 { color: #c0c0c0; }
+    .lb-rank.r3 { color: #cd7f32; }
+    .lb-rank { color: var(--muted); }
+    .lb-name {
+      flex: 1;
+      font-size: 0.85rem;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .lb-name.you { color: var(--teal); font-weight: 600; }
+    .lb-score {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .lb-empty {
+      padding: 24px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    /* ── On-screen D-pad (touch only) ── */
+    .dpad {
+      display: none;
+      grid-template-columns: repeat(3, 64px);
+      grid-template-rows: repeat(2, 64px);
+      gap: 8px;
+      justify-content: center;
+      margin: 14px auto 4px;
+    }
+    .dpad-btn {
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      transition: background 0.1s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .dpad-btn:active {
+      background: var(--gold-dim);
+      border-color: rgba(201,165,90,0.35);
+      transform: scale(0.9);
+    }
+    .dpad-up    { grid-column: 2; grid-row: 1; }
+    .dpad-left  { grid-column: 1; grid-row: 2; }
+    .dpad-down  { grid-column: 2; grid-row: 2; }
+    .dpad-right { grid-column: 3; grid-row: 2; }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      main { padding: 24px 4% 60px; }
+      .game-layout { grid-template-columns: 1fr; }
+      .side-panel { flex-direction: row; flex-wrap: wrap; }
+      .panel-card { flex: 1 1 160px; }
+      .controls-desktop { display: none; }
+      .nick-card { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="avatar-wrap">
+    <img class="avatar" src="me.jpg" alt="Konstantinos Trachanas">
+  </div>
+  <div class="header-info">
+    <div class="header-name">Konstantinos Trachanas</div>
+    <div class="header-dept">Dept. of Computer Science &amp; Engineering &nbsp;·&nbsp; University of Ioannina</div>
+    <div class="header-meta">
+      <span class="meta-item"><span class="meta-icon">📍</span> GR-45110 Ioannina, Greece</span>
+      <span class="meta-item"><span class="meta-icon">✉️</span> cs05603@uoi.gr</span>
+    </div>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      3rd Year Undergraduate Student
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="Courses.html">Courses</a>
+  <a href="Projects.html">Projects</a>
+  <a href="Skills.html">Skills</a>
+  <a href="Interests.html">Interests</a>
+  <a href="Snake.html" class="active">🐍 Snake</a>
+</nav>
+
+<main>
+
+  <!-- ── NICKNAME SCREEN ── -->
+  <div id="nick-screen">
+    <div class="nick-card">
+      <div class="nick-title">Snake</div>
+      <div class="nick-sub">Enter a nickname to join the leaderboard</div>
+      <input id="nick-input" class="nick-input" type="text" maxlength="16"
+             placeholder="Your nickname…" autocomplete="off" spellcheck="false">
+      <button class="btn-gold" id="nick-btn" disabled>Play →</button>
+    </div>
+  </div>
+
+  <!-- ── GAME SCREEN ── -->
+  <div id="game-screen">
+    <div class="game-layout">
+
+      <!-- Canvas -->
+      <div>
+        <div class="canvas-wrap">
+          <div class="canvas-topbar">
+            <div class="player-tag">
+              <span class="player-dot"></span>
+              <span id="player-label">Player</span>
+            </div>
+            <div class="score-display"><span>Score</span><span id="score-val">0</span></div>
+          </div>
+          <canvas id="gameCanvas" width="400" height="400"></canvas>
+          <div class="canvas-overlay" id="overlay">
+            <div class="overlay-title" id="overlay-title">Ready?</div>
+            <div class="overlay-score" id="overlay-score"></div>
+            <button class="btn-play" id="overlay-btn">Start Game</button>
+            <div class="overlay-hint" id="overlay-hint">Arrow keys · WASD · Swipe</div>
+          </div>
+        </div>
+        <!-- On-screen D-pad (shown on touch devices via JS) -->
+        <div class="dpad" id="dpad">
+          <button class="dpad-btn dpad-up"    data-dir="up">↑</button>
+          <button class="dpad-btn dpad-left"  data-dir="left">←</button>
+          <button class="dpad-btn dpad-down"  data-dir="down">↓</button>
+          <button class="dpad-btn dpad-right" data-dir="right">→</button>
+        </div>
+      </div>
+
+      <!-- Side panel -->
+      <div class="side-panel">
+
+        <!-- Stats -->
+        <div class="panel-card">
+          <div class="panel-head"><span class="panel-head-icon">📊</span> Stats</div>
+          <div class="stat-grid">
+            <div class="stat-cell">
+              <div class="stat-val" id="stat-best">0</div>
+              <div class="stat-lbl">Best</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-val" id="stat-games">0</div>
+              <div class="stat-lbl">Games</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-val" id="stat-level">1</div>
+              <div class="stat-lbl">Level</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-val" id="stat-streak">0</div>
+              <div class="stat-lbl">Streak</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speed -->
+
+        <!-- Controls (desktop only) -->
+        <div class="panel-card controls-desktop">
+          <div class="panel-head"><span class="panel-head-icon">🎮</span> Controls</div>
+          <div class="controls-grid">
+            <div></div>
+            <div class="key-btn center">↑</div>
+            <div></div>
+            <div class="key-btn">←</div>
+            <div class="key-btn center">↓</div>
+            <div class="key-btn">→</div>
+          </div>
+          <div class="key-label">or W A S D</div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="panel-card">
+          <div class="panel-head"><span class="panel-head-icon">🏆</span> Leaderboard</div>
+          <div class="lb-list" id="lb-list">
+            <div class="lb-empty">No scores yet — be the first!</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 <span>Konstantinos Trachanas</span> &nbsp;·&nbsp; University of Ioannina &nbsp;·&nbsp; Computer Science &amp; Engineering
+</footer>
+
+<script>
+// ── Storage helpers ──
+const STORAGE_KEY = 'snake_leaderboard';
+
+function loadLeaderboard() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch { return []; }
+}
+
+function saveLeaderboard(lb) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(lb));
+}
+
+function addScore(name, score) {
+  const lb = loadLeaderboard();
+  // Keep best score per player
+  const idx = lb.findIndex(e => e.name === name);
+  if (idx >= 0) {
+    if (score > lb[idx].score) lb[idx].score = score;
+  } else {
+    lb.push({ name, score });
+  }
+  lb.sort((a, b) => b.score - a.score);
+  saveLeaderboard(lb.slice(0, 10));
+  return lb.slice(0, 10);
+}
+
+function renderLeaderboard(currentPlayer) {
+  const lb = loadLeaderboard();
+  const el = document.getElementById('lb-list');
+  if (!lb.length) { el.innerHTML = '<div class="lb-empty">No scores yet — be the first!</div>'; return; }
+  const medals = ['🥇','🥈','🥉'];
+  el.innerHTML = lb.map((e, i) => `
+    <div class="lb-row">
+      <span class="lb-rank r${i+1}">${medals[i] || (i+1)}</span>
+      <span class="lb-name${e.name === currentPlayer ? ' you' : ''}">${e.name}${e.name === currentPlayer ? ' (you)' : ''}</span>
+      <span class="lb-score">${e.score}</span>
+    </div>
+  `).join('');
+}
+
+// ── Nickname screen ──
+const nickInput = document.getElementById('nick-input');
+const nickBtn   = document.getElementById('nick-btn');
+let playerName  = '';
+
+nickInput.addEventListener('input', () => {
+  nickBtn.disabled = nickInput.value.trim().length < 2;
+});
+nickInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !nickBtn.disabled) startWithNick();
+});
+nickBtn.addEventListener('click', startWithNick);
+
+function startWithNick() {
+  playerName = nickInput.value.trim();
+  document.getElementById('nick-screen').style.display = 'none';
+  document.getElementById('game-screen').classList.add('visible');
+  document.getElementById('player-label').textContent = playerName;
+  renderLeaderboard(playerName);
+  updateStats();
+}
+
+// ── Snake Game ──
+const canvas  = document.getElementById('gameCanvas');
+const ctx     = canvas.getContext('2d');
+const GRID    = 20;           // cells
+const CELL    = canvas.width / GRID;
+
+let snake, dir, nextDir, food, score, gameLoop, running, gamesPlayed, bestScore, streak, baseSpeed;
+baseSpeed = 220;
+
+function initGame() {
+  snake   = [{ x:10, y:10 }, { x:9, y:10 }, { x:8, y:10 }];
+  dir     = { x:1, y:0 };
+  nextDir = { x:1, y:0 };
+  food    = spawnFood();
+  score   = 0;
+  running = false;
+  document.getElementById('score-val').textContent = '0';
+  drawFrame();
+}
+
+function spawnFood() {
+  let pos;
+  do {
+    pos = {
+      x: Math.floor(Math.random() * GRID),
+      y: Math.floor(Math.random() * GRID)
+    };
+  } while (snake.some(s => s.x === pos.x && s.y === pos.y));
+  return pos;
+}
+
+function drawFrame() {
+  // Background
+  ctx.fillStyle = '#0c0f1a';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Grid dots
+  ctx.fillStyle = 'rgba(255,255,255,0.03)';
+  for (let x = 0; x < GRID; x++)
+    for (let y = 0; y < GRID; y++)
+      ctx.fillRect(x * CELL + CELL/2 - 1, y * CELL + CELL/2 - 1, 2, 2);
+
+  // Food — glowing circle
+  const fc = (food.x + 0.5) * CELL;
+  const fr = (food.y + 0.5) * CELL;
+  const grd = ctx.createRadialGradient(fc, fr, 0, fc, fr, CELL * 0.55);
+  grd.addColorStop(0,   '#ff6b6b');
+  grd.addColorStop(0.6, '#e63946');
+  grd.addColorStop(1,   'rgba(230,57,70,0)');
+  ctx.fillStyle = grd;
+  ctx.beginPath();
+  ctx.arc(fc, fr, CELL * 0.55, 0, Math.PI * 2);
+  ctx.fill();
+  // Food core
+  ctx.fillStyle = '#ff6b6b';
+  ctx.beginPath();
+  ctx.arc(fc, fr, CELL * 0.28, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Snake
+  snake.forEach((seg, i) => {
+    const t  = i / (snake.length - 1 || 1);
+    const r1 = 2, r2 = Math.max(2, CELL * 0.4);
+    const radius = r1 + (r2 - r1) * (1 - t * 0.5);
+
+    // Body gradient (head = teal, tail = dimmer)
+    const alpha = 1 - t * 0.55;
+    ctx.fillStyle = i === 0
+      ? `rgba(77,217,192,${alpha})`
+      : `rgba(45,180,155,${alpha})`;
+
+    const x = seg.x * CELL + 1;
+    const y = seg.y * CELL + 1;
+    const w = CELL - 2;
+
+    roundRect(ctx, x, y, w, w, radius);
+    ctx.fill();
+
+    // Eyes on head
+    if (i === 0) {
+      ctx.fillStyle = '#0c0f1a';
+      const ex = (seg.x + 0.5 + dir.x * 0.25) * CELL;
+      const ey = (seg.y + 0.5 + dir.y * 0.25) * CELL;
+      const perp = { x: dir.y, y: dir.x };
+      [1, -1].forEach(s => {
+        ctx.beginPath();
+        ctx.arc(ex + perp.x * CELL * 0.18 * s, ey + perp.y * CELL * 0.18 * s, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function tick() {
+  dir = { ...nextDir };
+  const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+  // Wall portal — wrap around to opposite side
+  head.x = (head.x + GRID) % GRID;
+  head.y = (head.y + GRID) % GRID;
+  // Self collision
+  if (snake.some(s => s.x === head.x && s.y === head.y)) return gameOver();
+
+  snake.unshift(head);
+
+  if (head.x === food.x && head.y === food.y) {
+    score++;
+    document.getElementById('score-val').textContent = score;
+    food = spawnFood();
+    updateLevelStat();
+  } else {
+    snake.pop();
+  }
+  drawFrame();
+}
+
+function gameOver() {
+  clearInterval(gameLoop);
+  running = false;
+  gamesPlayed = (gamesPlayed || 0) + 1;
+  if (score > 0 && score >= (bestScore || 0)) streak = (streak || 0) + 1;
+  else streak = 0;
+  if (score > (bestScore || 0)) bestScore = score;
+
+  addScore(playerName, score);
+  renderLeaderboard(playerName);
+  updateStats();
+
+  const overlay = document.getElementById('overlay');
+  document.getElementById('overlay-title').textContent = score > 0 ? 'Game Over' : 'Oops!';
+  document.getElementById('overlay-score').innerHTML =
+    score > 0 ? `You scored <strong>${score}</strong> point${score !== 1 ? 's' : ''}` : '';
+  document.getElementById('overlay-btn').textContent = 'Play Again';
+  overlay.classList.remove('hidden');
+}
+
+function startGame() {
+  if (gameLoop) clearInterval(gameLoop);
+  initGame();
+  document.getElementById('overlay').classList.add('hidden');
+  running = true;
+  gameLoop = setInterval(tick, baseSpeed);
+}
+
+function updateStats() {
+  document.getElementById('stat-best').textContent   = bestScore || 0;
+  document.getElementById('stat-games').textContent  = gamesPlayed || 0;
+  document.getElementById('stat-streak').textContent = streak || 0;
+  updateLevelStat();
+}
+
+function updateLevelStat() {
+  const lv = Math.floor((score || 0) / 5) + 1;
+  document.getElementById('stat-level').textContent = lv;
+}
+
+// Overlay button
+document.getElementById('overlay-btn').addEventListener('click', startGame);
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (!running) {
+    if ([' ', 'Enter'].includes(e.key)) { startGame(); return; }
+  }
+  const map = {
+    ArrowUp:    { x:0,  y:-1 }, w: { x:0,  y:-1 },
+    ArrowDown:  { x:0,  y:1  }, s: { x:0,  y:1  },
+    ArrowLeft:  { x:-1, y:0  }, a: { x:-1, y:0  },
+    ArrowRight: { x:1,  y:0  }, d: { x:1,  y:0  },
+  };
+  const d = map[e.key] || map[e.key.toLowerCase()];
+  if (d && !(d.x === -dir.x && d.y === -dir.y)) {
+    nextDir = d;
+    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+  }
+});
+
+// ── Touch / swipe support ──
+let touchStartX = 0, touchStartY = 0;
+
+canvas.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  e.preventDefault();
+}, { passive: false });
+
+canvas.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+    // Tap = start/restart
+    if (!running) startGame();
+    return;
+  }
+  let d;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    d = dx > 0 ? { x:1, y:0 } : { x:-1, y:0 };
+  } else {
+    d = dy > 0 ? { x:0, y:1 } : { x:0, y:-1 };
+  }
+  if (!(d.x === -dir.x && d.y === -dir.y)) nextDir = d;
+  e.preventDefault();
+}, { passive: false });
+
+// ── D-pad buttons ──
+const dirMap = { up:{x:0,y:-1}, down:{x:0,y:1}, left:{x:-1,y:0}, right:{x:1,y:0} };
+document.querySelectorAll('.dpad-btn').forEach(btn => {
+  btn.addEventListener('touchstart', e => {
+    const d = dirMap[btn.dataset.dir];
+    if (d && !(d.x === -dir.x && d.y === -dir.y)) nextDir = d;
+    e.preventDefault();
+  }, { passive: false });
+  // Also support mouse click for testing
+  btn.addEventListener('click', () => {
+    const d = dirMap[btn.dataset.dir];
+    if (d && !(d.x === -dir.x && d.y === -dir.y)) nextDir = d;
+  });
+});
+
+// ── Show D-pad on touch devices ──
+function isTouchDevice() {
+  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+}
+if (isTouchDevice()) {
+  document.getElementById('dpad').style.display = 'grid';
+}
+
+
+gamesPlayed = 0; bestScore = 0; streak = 0;
+initGame();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konstantinos Trachanas — CS @ UoI</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Index-specific: hero intro text */
+    .intro-block {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 40px;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .intro-block::after {
+      content: '</>';
+      position: absolute;
+      right: 32px; bottom: 12px;
+      font-family: var(--serif);
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.06;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .intro-text {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+    .intro-text strong {
+      color: var(--text);
+      font-style: normal;
+      font-weight: 600;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .q-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.22s;
+    }
+    .q-link:hover {
+      background: var(--gold-dim);
+      border-color: rgba(201,165,90,0.3);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+    .q-link-icon { font-size: 1.2rem; }
+    .arrow { color: var(--muted); font-size: 0.75rem; transition: transform 0.2s; }
+    .q-link:hover .arrow { transform: translateX(3px); color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="avatar-wrap">
+    <img class="avatar" src="me.jpg" alt="Konstantinos Trachanas">
+  </div>
+  <div class="header-info">
+    <div class="header-name">Konstantinos Trachanas</div>
+    <div class="header-dept">Dept. of Computer Science &amp; Engineering &nbsp;·&nbsp; University of Ioannina</div>
+    <div class="header-meta">
+      <span class="meta-item"><span class="meta-icon">📍</span> GR-45110 Ioannina, Greece</span>
+      <span class="meta-item"><span class="meta-icon">✉️</span> cs05603@uoi.gr</span>
+    </div>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      3rd Year Undergraduate Student
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html" class="active">Home</a>
+  <a href="Courses.html">Courses</a>
+  <a href="Projects.html">Projects</a>
+  <a href="Skills.html">Skills</a>
+  <a href="Interests.html">Interests</a>
+  <a href="Games.html">🎮 Games</a>
+</nav>
+
+<main>
+
+  <div class="section">
+    <div class="intro-block">
+      <p class="intro-text">
+        Welcome to my academic homepage. I am a <strong>first-year student</strong> in the
+        Department of <strong>Computer Science &amp; Engineering</strong> at the
+        <strong>University of Ioannina</strong>. This page collects my coursework,
+        personal projects, technical skills, and interests as I navigate the world of computing.
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🗂</div>
+      <h2 class="section-title">Quick Navigation</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="quick-links">
+      <a class="q-link" href="Courses.html">
+        <span><span class="q-link-icon">📚</span>&nbsp; Courses</span>
+        <span class="arrow">→</span>
+      </a>
+      <a class="q-link" href="Projects.html">
+        <span><span class="q-link-icon">🛠</span>&nbsp; Projects</span>
+        <span class="arrow">→</span>
+      </a>
+      <a class="q-link" href="Skills.html">
+        <span><span class="q-link-icon">⚡</span>&nbsp; Skills</span>
+        <span class="arrow">→</span>
+      </a>
+      <a class="q-link" href="Interests.html">
+        <span><span class="q-link-icon">✦</span>&nbsp; Interests</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">📚</div>
+      <h2 class="section-title">Courses</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="semester-block">
+      <div class="semester-title">1st Semester</div>
+      <ul class="course-list">
+        <li class="course-item">
+          <span class="course-code">MYY101</span>
+          <span class="course-name">Linear Algebra</span>
+        </li>
+        <li class="course-item">
+          <span class="course-code">MYY102</span>
+          <span class="course-name">Introduction to Programming</span>
+        </li>
+        <li class="course-item">
+          <span class="course-code">MYY103</span>
+          <span class="course-name">Introduction to Computer Science</span>
+        </li>
+        <li class="course-item">
+          <span class="course-code">MYY104</span>
+          <span class="course-name">Calculus I</span>
+        </li>
+        <li class="course-item">
+          <span class="course-code">MYY105</span>
+          <span class="course-name">General Physics (Electromagnetism)</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="semester-block">
+      <div class="semester-title">2nd Semester</div>
+      <ul class="course-list">
+        <li class="course-item">
+          <span class="course-code">MYY201</span>
+          <span class="course-name">Discrete Mathematics</span>
+        </li>
+        <li class="course-item">
+          <span class="course-code">MYY202</span>
+          <span class="course-name">Introduction to Programming II</span>
+        </li>
+        <li class="course-item">
+          <span class="course-code">MYY203</span>
+          <span class="course-name">Introduction to Computer Science II</span>
+        </li>
+        <li class="course-item">
+          <span class="course-code">MYY204</span>
+          <span class="course-name">Calculus II</span>
+        </li>
+        <li class="course-item">
+          <span class="course-code">MYY205</span>
+          <span class="course-name">Introduction to Circuits</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🛠</div>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Python · Game</div>
+        <div class="card-title">Word Guessing Game</div>
+        <div class="card-desc">A terminal-based game where the player guesses a hidden word one letter at a time. Built in Python for an Introduction to Programming course.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Project 2</div>
+        <div class="card-title">Coming Soon</div>
+        <div class="card-desc">Next project in development. Stay tuned for updates.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">⚡</div>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div>
+      <span class="skill-tag"><span class="dot"></span> Basic Unix Commands</span>
+      <span class="skill-tag"><span class="dot"></span> Python Programming</span>
+      <span class="skill-tag"><span class="dot"></span> HTML &amp; Web Markup</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">✦</div>
+      <h2 class="section-title">Interests</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="interest-card"><span class="interest-num">01</span><span>Add your interest here</span></div>
+    <div class="interest-card"><span class="interest-num">02</span><span>Add your interest here</span></div>
+    <div class="interest-card"><span class="interest-num">03</span><span>Add your interest here</span></div>
+    <div class="interest-card"><span class="interest-num">04</span><span>Add your interest here</span></div>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 <span>Konstantinos Trachanas</span> &nbsp;·&nbsp; University of Ioannina &nbsp;·&nbsp; Computer Science &amp; Engineering
+</footer>
+
+</body>
+</html>
