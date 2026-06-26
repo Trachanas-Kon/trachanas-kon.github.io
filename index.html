@@ -366,38 +366,114 @@
       margin-bottom: 0.6rem;
     }
 
-    /* ── WEATHER WIDGET ── */
-    .weather-widget {
-      position: relative; z-index: 1;
-      margin-top: 2.2rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      background: rgba(13, 42, 74, 0.55);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(90, 171, 220, 0.3);
-      border-radius: 50px;
-      padding: 0.6rem 1.4rem;
-      color: rgba(220, 240, 255, 0.92);
+    /* ── WEATHER SECTION ── */
+    #weather { background: #0a1e36; }
+    #weather h2 { color: #e8f4ff; }
+    #weather .section-label { color: var(--blue-lt); }
+    #weather .divider { background: linear-gradient(to right, var(--blue), var(--blue-lt)); }
+    #weather .lead { color: #6a90b0; }
+
+    .wx-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .wx-controls {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;
+      padding-top: 0.4rem;
+    }
+    .wx-updated {
+      font-family: sans-serif; font-size: 0.75rem; color: #4a6880;
+    }
+    .wx-btn {
+      background: rgba(26,110,181,0.22);
+      border: 1px solid rgba(90,171,220,0.3);
+      color: var(--blue-lt); padding: 0.5rem 1.2rem;
+      border-radius: 6px; cursor: pointer;
+      font-family: sans-serif; font-size: 0.85rem;
+      transition: background .2s, transform .1s;
+    }
+    .wx-btn:hover { background: rgba(26,110,181,0.4); }
+    .wx-btn:active { transform: scale(0.97); }
+    .wx-btn:disabled { opacity: 0.45; cursor: wait; }
+
+    .wx-body { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    .wx-main {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    }
+    .wx-current {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(90,171,220,0.14);
+      border-radius: 14px; padding: 2rem 2rem 1.8rem;
+    }
+    .wx-big-icon { font-size: 4rem; line-height: 1; margin-bottom: 0.5rem; display: block; }
+    .wx-big-temp { font-size: 3.8rem; font-weight: 700; color: #fff; line-height: 1; }
+    .wx-desc-text { font-size: 1.1rem; color: #a8c8e8; margin-top: 0.35rem; }
+    .wx-feels { font-size: 0.82rem; color: #4a6880; margin-top: 0.2rem; font-family: sans-serif; }
+
+    .wx-details {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(90,171,220,0.14);
+      border-radius: 14px; padding: 1.6rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem;
+      align-content: center;
+    }
+    .wx-det {
+      display: flex; flex-direction: column; gap: 0.15rem;
+    }
+    .wx-det .di { font-size: 1.4rem; }
+    .wx-det .dv { font-size: 1.1rem; font-weight: 600; color: #e8f4ff; font-family: sans-serif; }
+    .wx-det .dl { font-size: 0.72rem; color: #4a6880; font-family: sans-serif; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .wx-days {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.6rem;
+    }
+    .wx-day {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(90,171,220,0.1);
+      border-radius: 10px; padding: 0.9rem 0.4rem;
+      text-align: center; cursor: pointer;
+      transition: background .18s, border-color .18s;
       font-family: sans-serif;
-      font-size: 0.85rem;
     }
-    .weather-widget .w-temp {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.02em;
+    .wx-day:hover { background: rgba(26,110,181,0.2); }
+    .wx-day.active {
+      background: rgba(26,110,181,0.32);
+      border-color: var(--blue);
     }
-    .weather-widget .w-icon { font-size: 1.6rem; line-height: 1; }
-    .weather-widget .w-desc { font-size: 0.78rem; opacity: 0.8; }
-    .weather-widget .w-meta {
-      font-size: 0.75rem;
-      opacity: 0.65;
-      border-left: 1px solid rgba(90,171,220,0.3);
-      padding-left: 0.9rem;
-      line-height: 1.6;
+    .wx-day .dn { font-size: 0.68rem; color: #4a6880; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.35rem; }
+    .wx-day.active .dn { color: var(--blue-lt); }
+    .wx-day .di2 { font-size: 1.5rem; line-height: 1; margin-bottom: 0.35rem; }
+    .wx-day .dm { font-size: 0.92rem; font-weight: 600; color: #e8f4ff; }
+    .wx-day .dl2 { font-size: 0.78rem; color: #4a6880; }
+
+    .wx-day-bar {
+      background: rgba(26,110,181,0.14);
+      border: 1px solid rgba(90,171,220,0.18);
+      border-radius: 10px; padding: 1.1rem 1.4rem;
+      display: flex; align-items: center; gap: 1.2rem;
+      flex-wrap: wrap; font-family: sans-serif;
     }
-    .weather-widget.loading { opacity: 0.5; }
+    .wx-day-bar .wdb-title { color: var(--gold-lt); font-size: 0.9rem; flex: 1 1 100%; }
+    .wx-day-bar .wdb-item { font-size: 0.85rem; color: #a8c8e8; white-space: nowrap; }
+    .wx-day-bar .wdb-item strong { color: #fff; }
+
+    .wx-loading {
+      text-align: center; padding: 4rem 2rem;
+      color: #4a6880; font-family: sans-serif; font-style: italic;
+    }
+    .wx-error { color: #e87070; }
+
+    @media (max-width: 800px) {
+      .wx-main { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .wx-days { gap: 0.35rem; }
+      .wx-day { padding: 0.7rem 0.25rem; }
+      .wx-day .dn { font-size: 0.6rem; }
+      .wx-day .di2 { font-size: 1.2rem; }
+      .wx-day .dm { font-size: 0.8rem; }
+    }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
@@ -415,6 +491,7 @@
     <li><a href="#about">Η Πόλη</a></li>
     <li><a href="#attractions">Αξιοθέατα</a></li>
     <li><a href="#activities">Δραστηριότητες</a></li>
+    <li><a href="#weather">Καιρός</a></li>
     <li><a href="#route">Πώς να Φτάσετε</a></li>
   </ul>
 </nav>
@@ -424,12 +501,6 @@
   <div class="hero-badge">Βοιωτία · Κεντρική Ελλάδα</div>
   <h1>Ακραίφνιο <span>Βοιωτίας</span></h1>
   <p class="hero-sub">Ένας τόπος όπου η αρχαία ιστορία αναπνέει ανάμεσα σε λίμνες και βουνά, μακριά από τα μεγάλα τουριστικά μονοπάτια.</p>
-  <div id="weather" class="weather-widget loading">
-    <span class="w-icon">⏳</span>
-    <span class="w-temp">—°</span>
-    <span class="w-desc">Φόρτωση καιρού…</span>
-  </div>
-
   <div class="hero-scroll">Ανακαλύψτε</div>
 </section>
 
@@ -589,6 +660,26 @@
   </div>
 </section>
 
+<!-- WEATHER -->
+<section id="weather">
+  <div class="container">
+    <div class="wx-header">
+      <div>
+        <span class="section-label">Ζωντανά Δεδομένα · Open-Meteo</span>
+        <h2>Καιρός Ακραίφνιου</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="wx-controls">
+        <span id="wx-updated" class="wx-updated">—</span>
+        <button id="wx-refresh" class="wx-btn">↻ Ανανέωση</button>
+      </div>
+    </div>
+    <div id="wx-body" class="wx-body">
+      <div class="wx-loading">Φόρτωση καιρικών δεδομένων…</div>
+    </div>
+  </div>
+</section>
+
 <!-- ROUTE -->
 <section id="route">
   <div class="container">
@@ -636,57 +727,115 @@
 
 <script>
 (function(){
-  const WMO = {
-    0:  ['☀️','Αίθριος'],
-    1:  ['🌤','Σχεδόν αίθριος'],
-    2:  ['⛅','Μερικώς συννεφιά'],
-    3:  ['☁️','Συννεφιά'],
-    45: ['🌫','Ομίχλη'],
-    48: ['🌫','Ομίχλη με πάγο'],
-    51: ['🌦','Ψιχάλες'],
-    53: ['🌦','Ψιχάλες'],
-    55: ['🌦','Έντονες ψιχάλες'],
-    61: ['🌧','Βροχή'],
-    63: ['🌧','Μέτρια βροχή'],
-    65: ['🌧','Έντονη βροχή'],
-    71: ['❄️','Χιόνι'],
-    73: ['❄️','Μέτριο χιόνι'],
-    75: ['❄️','Έντονο χιόνι'],
-    80: ['🌦','Μπόρα'],
-    81: ['🌦','Μπόρες'],
-    82: ['⛈','Έντονες μπόρες'],
-    95: ['⛈','Καταιγίδα'],
-    96: ['⛈','Καταιγίδα με χαλάζι'],
-    99: ['⛈','Έντονη καταιγίδα'],
+  var LAT=38.41,LON=23.22,REFRESH_SEC=600;
+  var API='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON
+    +'&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,relative_humidity_2m'
+    +'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,precipitation_sum'
+    +'&wind_speed_unit=kmh&timezone=Europe%2FAthens&forecast_days=7';
+  var WMO={
+    0:['☀️','Αίθριος'],1:['🌤','Σχεδόν αίθριος'],2:['⛅','Μερικώς συννεφιά'],3:['☁️','Συννεφιά'],
+    45:['🌫','Ομίχλη'],48:['🌫','Παγωμένη ομίχλη'],
+    51:['🌦','Ψιχάλες'],53:['🌦','Ψιχάλες'],55:['🌧','Έντονες ψιχάλες'],
+    61:['🌧','Βροχή'],63:['🌧','Μέτρια βροχή'],65:['🌧','Έντονη βροχή'],
+    71:['❄️','Χιόνι'],73:['❄️','Μέτριο χιόνι'],75:['❄️','Έντονο χιόνι'],
+    80:['🌦','Μπόρες'],81:['🌦','Μπόρες'],82:['⛈','Έντονες μπόρες'],
+    85:['🌨','Χιονοθύελλα'],86:['🌨','Έντονη χιονοθύελλα'],
+    95:['⛈','Καταιγίδα'],96:['⛈','Καταιγίδα με χαλάζι'],99:['⛈','Έντονη καταιγίδα']
   };
-  function getWMO(code){
-    return WMO[code] || WMO[Math.floor(code/10)*10] || ['🌡️','—'];
+  var DAYS=['Κυρ','Δευ','Τρί','Τετ','Πέμ','Παρ','Σαβ'];
+  var MONTHS=['Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
+  function wmo(c){return WMO[c]||WMO[Math.floor(c/10)*10]||['🌡️','—'];}
+  function p(n){return n<10?'0'+n:''+n;}
+  function fmtDate(s){var d=new Date(s+'T12:00:00');return DAYS[d.getDay()]+' '+d.getDate()+' '+MONTHS[d.getMonth()];}
+  var wxData=null,selDay=0,countdown=REFRESH_SEC,countTimer=null;
+
+  function render(){
+    if(!wxData)return;
+    var c=wxData.current,d=wxData.daily,si=selDay;
+    var mIcon,mDesc,mTemp,mFeels,mWind,mHum;
+    if(si===0){
+      var r=wmo(c.weather_code);mIcon=r[0];mDesc=r[1];
+      mTemp=Math.round(c.temperature_2m);mFeels=Math.round(c.apparent_temperature);
+      mWind=Math.round(c.wind_speed_10m);mHum=c.relative_humidity_2m+'%';
+    }else{
+      var r2=wmo(d.weather_code[si]);mIcon=r2[0];mDesc=r2[1];
+      mTemp=Math.round((d.temperature_2m_max[si]+d.temperature_2m_min[si])/2);mFeels=mTemp-2;
+      mWind=Math.round(d.wind_speed_10m_max[si]);mHum='—';
+    }
+    var mainHTML=
+      '<div class="wx-main">'+
+        '<div class="wx-current">'+
+          '<span class="wx-big-icon">'+mIcon+'</span>'+
+          '<div class="wx-big-temp">'+mTemp+'°C</div>'+
+          '<div class="wx-desc-text">'+mDesc+'</div>'+
+          '<div class="wx-feels">Αισθητή: '+mFeels+'°C</div>'+
+        '</div>'+
+        '<div class="wx-details">'+
+          '<div class="wx-det"><span class="di">💨</span><span class="dv">'+mWind+' km/h</span><span class="dl">Άνεμος</span></div>'+
+          '<div class="wx-det"><span class="di">💧</span><span class="dv">'+mHum+'</span><span class="dl">Υγρασία</span></div>'+
+          '<div class="wx-det"><span class="di">🌧</span><span class="dv">'+d.precipitation_probability_max[si]+'%</span><span class="dl">Πιθανότητα βροχής</span></div>'+
+          '<div class="wx-det"><span class="di">🌡</span><span class="dv">'+Math.round(d.temperature_2m_max[si])+'° / '+Math.round(d.temperature_2m_min[si])+'°</span><span class="dl">Μέγ. / Ελάχ.</span></div>'+
+        '</div>'+
+      '</div>';
+    var daysHTML='<div class="wx-days">';
+    for(var i=0;i<7;i++){
+      var r3=wmo(d.weather_code[i]);
+      var lbl=i===0?'Σήμερα':i===1?'Αύριο':DAYS[new Date(d.time[i]+'T12:00:00').getDay()];
+      daysHTML+='<div class="wx-day'+(i===si?' active':'')+'" onclick="wxDay('+i+')">'+
+        '<div class="dn">'+lbl+'</div><div class="di2">'+r3[0]+'</div>'+
+        '<div class="dm">'+Math.round(d.temperature_2m_max[i])+'°</div>'+
+        '<div class="dl2">'+Math.round(d.temperature_2m_min[i])+'°</div></div>';
+    }
+    daysHTML+='</div>';
+    var selLabel=si===0?'Σήμερα':si===1?'Αύριο':fmtDate(d.time[si]);
+    var barHTML=
+      '<div class="wx-day-bar">'+
+        '<div class="wdb-title">'+selLabel+' &nbsp;·&nbsp; '+wmo(d.weather_code[si])[1]+'</div>'+
+        '<span class="wdb-item">🌡 <strong>'+Math.round(d.temperature_2m_max[si])+'° / '+Math.round(d.temperature_2m_min[si])+'°</strong></span>'+
+        '<span class="wdb-item">☔ <strong>'+d.precipitation_probability_max[si]+'%</strong> βροχή</span>'+
+        '<span class="wdb-item">💧 <strong>'+(Math.round(d.precipitation_sum[si]*10)/10)+' mm</strong></span>'+
+        '<span class="wdb-item">💨 <strong>'+Math.round(d.wind_speed_10m_max[si])+' km/h</strong></span>'+
+      '</div>';
+    document.getElementById('wx-body').innerHTML=mainHTML+daysHTML+barHTML;
+    var now=new Date();
+    document.getElementById('wx-updated').innerHTML=
+      'Ενημερώθηκε: '+p(now.getHours())+':'+p(now.getMinutes())+
+      ' &nbsp;·&nbsp; Επόμενη: <span id="wx-cd">'+p(Math.floor(countdown/60))+':'+p(countdown%60)+'</span>';
   }
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=38.41&longitude=23.22&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m&wind_speed_unit=kmh&timezone=Europe%2FAthens')
-    .then(r => r.json())
-    .then(data => {
-      const c = data.current;
-      const [icon, desc] = getWMO(c.weather_code);
-      const temp = Math.round(c.temperature_2m);
-      const wind = Math.round(c.wind_speed_10m);
-      const hum  = c.relative_humidity_2m;
-      const w = document.getElementById('weather');
-      w.classList.remove('loading');
-      w.innerHTML =
-        '<span class="w-icon">' + icon + '</span>' +
-        '<div>' +
-          '<div class="w-temp">' + temp + '°C</div>' +
-          '<div class="w-desc">' + desc + '</div>' +
-        '</div>' +
-        '<div class="w-meta">' +
-          '💨 ' + wind + ' km/h<br>' +
-          '💧 ' + hum + '%' +
-        '</div>';
-    })
-    .catch(() => {
-      const w = document.getElementById('weather');
-      w.style.display = 'none';
+
+  window.wxDay=function(i){selDay=i;render();};
+
+  function startCountdown(){
+    clearInterval(countTimer);countdown=REFRESH_SEC;
+    countTimer=setInterval(function(){
+      countdown--;
+      var el=document.getElementById('wx-cd');
+      if(el)el.textContent=p(Math.floor(countdown/60))+':'+p(countdown%60);
+      if(countdown<=0){clearInterval(countTimer);doFetch();}
+    },1000);
+  }
+
+  function doFetch(){
+    var btn=document.getElementById('wx-refresh');
+    if(btn){btn.disabled=true;btn.textContent='⏳ Φόρτωση…';}
+    fetch(API)
+      .then(function(r){return r.json();})
+      .then(function(json){
+        wxData=json;selDay=0;render();startCountdown();
+        if(btn){btn.disabled=false;btn.textContent='↻ Ανανέωση';}
+      })
+      .catch(function(){
+        document.getElementById('wx-body').innerHTML='<div class="wx-loading wx-error">⚠ Αδυναμία σύνδεσης. Δοκιμάστε ξανά.</div>';
+        if(btn){btn.disabled=false;btn.textContent='↻ Ανανέωση';}
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    document.getElementById('wx-refresh').addEventListener('click',function(){
+      clearInterval(countTimer);doFetch();
     });
+    doFetch();
+  });
 })();
 </script>
 </body>
