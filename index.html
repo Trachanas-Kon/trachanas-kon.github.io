@@ -901,8 +901,9 @@
   var wxData=null,selDay=0,countdown=REFRESH_SEC,countTimer=null;
 
   /* ── Smooth SVG curve (Catmull-Rom → cubic Bezier) ── */
-  function buildChart(temps,curHour){
-    var VW=520,VH=200,PL=34,PR=10,PT=22,PB=28;
+  function buildChart(temps,curHour,containerW){
+    var VW=containerW||520,VH=200;
+    var PL=Math.max(28,Math.round(VW*34/520)),PR=Math.max(8,Math.round(VW*10/520)),PT=22,PB=28;
     var CW=VW-PL-PR,CH=VH-PT-PB;
     var minT=temps[0],maxT=temps[0];
     for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
@@ -980,7 +981,8 @@
     var th=document.getElementById('wx-th');
     if(!svg||!over||!cur)return;
 
-    var VW=520,VH=200,PL=34,PR=10,PT=22,PB=28;
+    var VW=svg.viewBox.baseVal.width,VH=svg.viewBox.baseVal.height;
+    var PL=Math.max(28,Math.round(VW*34/520)),PR=Math.max(8,Math.round(VW*10/520)),PT=22,PB=28;
     var CW=VW-PL-PR,CH=VH-PT-PB;
     var minT=temps[0],maxT=temps[0];
     for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
@@ -1101,10 +1103,12 @@
     /* hourly temp chart */
     var dayTemps=h.temperature_2m.slice(si*24,si*24+24);
     var curHour=si===0?new Date().getHours():-1;
+    var wxBodyEl=document.getElementById('wx-body');
+    var containerW=wxBodyEl?Math.max(280,wxBodyEl.clientWidth):520;
     var chartHTML=
       '<div class="wx-chart-wrap">'+
         '<div class="wx-chart-title">Θερμοκρασία ανά ώρα</div>'+
-        buildChart(dayTemps,curHour)+
+        buildChart(dayTemps,curHour,containerW)+
       '</div>';
 
     document.getElementById('wx-body').innerHTML=mainHTML+sunHTML+daysHTML+barHTML+chartHTML;
