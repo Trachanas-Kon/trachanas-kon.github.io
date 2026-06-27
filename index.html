@@ -902,7 +902,7 @@
 
   /* ── Smooth SVG curve (Catmull-Rom → cubic Bezier) ── */
   function buildChart(temps,curHour){
-    var VW=520,VH=140,PL=34,PR=10,PT=22,PB=28;
+    var VW=520,VH=200,PL=34,PR=10,PT=22,PB=28;
     var CW=VW-PL-PR,CH=VH-PT-PB;
     var minT=temps[0],maxT=temps[0];
     for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
@@ -959,7 +959,7 @@
       /* transparent overlay that captures all pointer/touch events */
       '<rect id="wx-over" x="'+PL+'" y="'+PT+'" width="'+CW+'" height="'+CH+'" fill="transparent" style="cursor:crosshair;touch-action:none"/>';
 
-    return '<svg id="wx-svg" viewBox="0 0 '+VW+' '+VH+'" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:140px;display:block;">'+
+    return '<svg id="wx-svg" viewBox="0 0 '+VW+' '+VH+'" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:200px;display:block;">'+
       '<defs><linearGradient id="wxG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a6eb5" stop-opacity="0.42"/><stop offset="100%" stop-color="#1a6eb5" stop-opacity="0"/></linearGradient></defs>'+
       grid+
       '<path d="'+fillPath+'" fill="url(#wxG)"/>'+
@@ -980,7 +980,7 @@
     var th=document.getElementById('wx-th');
     if(!svg||!over||!cur)return;
 
-    var VW=520,VH=140,PL=34,PR=10,PT=22,PB=28;
+    var VW=520,VH=200,PL=34,PR=10,PT=22,PB=28;
     var CW=VW-PL-PR,CH=VH-PT-PB;
     var minT=temps[0],maxT=temps[0];
     for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
