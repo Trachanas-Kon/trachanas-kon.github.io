@@ -959,7 +959,7 @@
       /* transparent overlay that captures all pointer/touch events */
       '<rect id="wx-over" x="'+PL+'" y="'+PT+'" width="'+CW+'" height="'+CH+'" fill="transparent" style="cursor:crosshair;touch-action:none"/>';
 
-    return '<svg id="wx-svg" viewBox="0 0 '+VW+' '+VH+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:140px;display:block;">'+
+    return '<svg id="wx-svg" viewBox="0 0 '+VW+' '+VH+'" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:140px;display:block;">'+
       '<defs><linearGradient id="wxG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a6eb5" stop-opacity="0.42"/><stop offset="100%" stop-color="#1a6eb5" stop-opacity="0"/></linearGradient></defs>'+
       grid+
       '<path d="'+fillPath+'" fill="url(#wxG)"/>'+
