@@ -495,14 +495,14 @@
 
     /* hourly chart */
     .wx-chart-wrap {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(90,171,220,0.14);
-      border-radius: 14px; padding: 1.2rem 1.2rem 0.7rem;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(90,171,220,0.12);
+      border-radius: 16px; padding: 0.9rem 1rem 0.55rem;
       overflow: hidden;
     }
     .wx-chart-title {
-      font-family: sans-serif; font-size: 0.75rem; color: #4a6880;
-      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;
+      font-family: sans-serif; font-size: 0.68rem; color: rgba(140,185,220,0.62);
+      text-transform: uppercase; letter-spacing: 0.13em; margin-bottom: 0.28rem;
     }
 
     @media (max-width: 800px) {
@@ -902,17 +902,19 @@
 
   /* ── Smooth SVG curve (Catmull-Rom → cubic Bezier) ── */
   function buildChart(temps,curHour,containerW){
-    var VW=containerW||520,VH=200;
-    var PL=Math.max(28,Math.round(VW*34/520)),PR=Math.max(8,Math.round(VW*10/520)),PT=22,PB=28;
+    var VW=containerW||520,VH=224;
+    var PL=Math.max(12,Math.round(VW*14/520)),PR=Math.max(12,Math.round(VW*14/520)),PT=30,PB=38;
     var CW=VW-PL-PR,CH=VH-PT-PB;
     var minT=temps[0],maxT=temps[0];
     for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
-    var range=maxT-minT; if(range<4){var mid=(maxT+minT)/2;minT=mid-2;maxT=mid+2;range=4;}
+    var range=maxT-minT;if(range<4){var mid=(maxT+minT)/2;minT=mid-2;maxT=mid+2;range=4;}
+    /* breathing room: curve never touches top/bottom edges */
+    var pad=Math.max(range*0.10,0.5);
+    var dMin=minT-pad,dMax=maxT+pad,dRange=dMax-dMin;
     function xp(i){return PL+CW*i/23;}
-    function yp(t){return PT+CH*(1-(t-minT)/range);}
+    function yp(t){return PT+CH*(1-(t-dMin)/dRange);}
     var pts=[];for(var i=0;i<24;i++)pts.push([xp(i),yp(temps[i])]);
 
-    /* smooth path */
     function seg(i){
       var p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(23,i+2)];
       return 'C '+(p1[0]+(p2[0]-p0[0])/6).toFixed(1)+' '+(p1[1]+(p2[1]-p0[1])/6).toFixed(1)+' '+
@@ -921,51 +923,66 @@
     }
     var linePath='M '+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1);
     for(var i=0;i<23;i++)linePath+=' '+seg(i);
-    var fillPath=linePath+' L '+pts[23][0].toFixed(1)+' '+(PT+CH)+' L '+pts[0][0].toFixed(1)+' '+(PT+CH)+' Z';
+    var fillPath=linePath+' L '+(PL+CW)+' '+(PT+CH)+' L '+PL+' '+(PT+CH)+' Z';
 
-    /* grid */
+    /* subtle grid */
     var grid='';
-    for(var g=1;g<4;g++){var gy=(PT+CH*g/4).toFixed(1);grid+='<line x1="'+PL+'" y1="'+gy+'" x2="'+(VW-PR)+'" y2="'+gy+'" stroke="rgba(90,171,220,0.07)" stroke-width="1"/>';}
-
-    /* current-hour marker */
-    var curLine='';
-    if(curHour>=0&&curHour<24){
-      var cx=xp(curHour).toFixed(1);
-      curLine='<line x1="'+cx+'" y1="'+(PT-2)+'" x2="'+cx+'" y2="'+(PT+CH)+'" stroke="rgba(240,204,120,0.55)" stroke-width="1.5" stroke-dasharray="3,3"/>'+
-              '<text x="'+cx+'" y="'+(PT-6)+'" text-anchor="middle" fill="rgba(240,204,120,0.9)" font-size="8.5" font-family="sans-serif">Τώρα</text>';
+    for(var g=1;g<=3;g++){
+      var gy=(PT+CH*g/4).toFixed(1);
+      grid+='<line x1="'+PL+'" y1="'+gy+'" x2="'+(VW-PR)+'" y2="'+gy+'" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>';
     }
 
-    /* x-axis labels + temp callouts */
+    /* "Now" indicator: subtle dashed line + pill badge */
+    var curEl='';
+    if(curHour>=0&&curHour<24){
+      var nx=xp(curHour);
+      curEl=
+        '<line x1="'+nx.toFixed(1)+'" y1="'+PT+'" x2="'+nx.toFixed(1)+'" y2="'+(PT+CH)+'" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-dasharray="2,5"/>'+
+        '<rect x="'+(nx-17).toFixed(1)+'" y="'+(PT+CH+7)+'" width="34" height="15" rx="7.5" fill="rgba(210,165,60,0.11)" stroke="rgba(210,165,60,0.42)" stroke-width="0.8"/>'+
+        '<text x="'+nx.toFixed(1)+'" y="'+(PT+CH+17.5)+'" text-anchor="middle" fill="rgba(225,180,75,0.85)" font-size="8.5" font-family="sans-serif">Τώρα</text>';
+    }
+
+    /* x-axis time labels — skip labels that would collide with "Now" pill */
     var marks='';
     [0,4,8,12,16,20,23].forEach(function(h){
-      var x=xp(h).toFixed(1),lbl=p(h)+':00';
-      marks+='<text x="'+x+'" y="'+(VH-6)+'" text-anchor="middle" fill="#4a6880" font-size="9" font-family="sans-serif">'+lbl+'</text>';
-      marks+='<line x1="'+x+'" y1="'+(PT+CH)+'" x2="'+x+'" y2="'+(PT+CH+3)+'" stroke="#4a6880" stroke-width="1"/>';
-      marks+='<text x="'+x+'" y="'+(yp(temps[h])-5).toFixed(1)+'" text-anchor="middle" fill="rgba(220,240,255,0.8)" font-size="8.5" font-family="sans-serif">'+Math.round(temps[h])+'°</text>';
+      if(curHour>=0&&Math.abs(h-curHour)<1.6)return;
+      var x=xp(h).toFixed(1);
+      marks+='<text x="'+x+'" y="'+(VH-9)+'" text-anchor="middle" fill="rgba(140,185,220,0.55)" font-size="9.5" font-family="sans-serif">'+p(h)+':00</text>';
     });
 
-    /* y-axis labels */
-    var yLbls='<text x="'+(PL-4)+'" y="'+(PT+4)+'" text-anchor="end" fill="#4a6880" font-size="9" font-family="sans-serif">'+Math.round(maxT)+'°</text>'+
-              '<text x="'+(PL-4)+'" y="'+(PT+CH)+'" text-anchor="end" fill="#4a6880" font-size="9" font-family="sans-serif">'+Math.round(minT)+'°</text>';
+    /* peak and trough temperature callouts */
+    var minH=0,maxH=0;
+    for(var i=1;i<24;i++){if(temps[i]<temps[minH])minH=i;if(temps[i]>temps[maxH])maxH=i;}
+    var tempLbls=
+      '<text x="'+xp(maxH).toFixed(1)+'" y="'+(yp(temps[maxH])-7).toFixed(1)+'" text-anchor="middle" fill="rgba(200,230,255,0.82)" font-size="10" font-family="sans-serif" font-weight="600">'+Math.round(temps[maxH])+'°</text>'+
+      '<text x="'+xp(minH).toFixed(1)+'" y="'+(yp(temps[minH])+15).toFixed(1)+'" text-anchor="middle" fill="rgba(140,190,230,0.52)" font-size="9.5" font-family="sans-serif">'+Math.round(temps[minH])+'°</text>';
 
-    /* interactive cursor group (hidden until hover/touch) */
+    /* interactive cursor group */
     var cursorG=
       '<g id="wx-cur" style="display:none" pointer-events="none">'+
-        '<line id="wx-cl" x1="0" y1="'+PT+'" x2="0" y2="'+(PT+CH)+'" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="4,3"/>'+
-        '<circle id="wx-dot" cx="0" cy="0" r="5" fill="#5aabdc" stroke="rgba(255,255,255,0.92)" stroke-width="2"/>'+
-        '<rect id="wx-tb" rx="6" ry="6" fill="rgba(8,24,46,0.94)" stroke="rgba(90,171,220,0.5)" stroke-width="1"/>'+
-        '<text id="wx-tt" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="12" font-family="sans-serif" font-weight="700"/>'+
-        '<text id="wx-th" text-anchor="middle" dominant-baseline="middle" fill="#a8c8e8" font-size="9.5" font-family="sans-serif"/>'+
+        '<line id="wx-cl" x1="0" y1="'+PT+'" x2="0" y2="'+(PT+CH)+'" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>'+
+        '<circle id="wx-halo" cx="0" cy="0" r="10" fill="none" stroke="rgba(90,171,220,0.28)" stroke-width="1.5"/>'+
+        '<circle id="wx-dot" cx="0" cy="0" r="4.5" fill="#ffffff" stroke="#5aabdc" stroke-width="2"/>'+
+        '<rect id="wx-tb" rx="10" ry="10" fill="rgba(7,17,40,0.93)"/>'+
+        '<polygon id="wx-tri" fill="rgba(7,17,40,0.93)"/>'+
+        '<text id="wx-tt" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="13" font-family="sans-serif" font-weight="700"/>'+
+        '<text id="wx-th" text-anchor="middle" dominant-baseline="middle" fill="rgba(140,185,220,0.85)" font-size="10" font-family="sans-serif"/>'+
       '</g>'+
-      /* transparent overlay that captures all pointer/touch events */
       '<rect id="wx-over" x="'+PL+'" y="'+PT+'" width="'+CW+'" height="'+CH+'" fill="transparent" style="cursor:crosshair;touch-action:none"/>';
 
-    return '<svg id="wx-svg" viewBox="0 0 '+VW+' '+VH+'" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:200px;display:block;">'+
-      '<defs><linearGradient id="wxG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a6eb5" stop-opacity="0.42"/><stop offset="100%" stop-color="#1a6eb5" stop-opacity="0"/></linearGradient></defs>'+
+    return '<svg id="wx-svg" viewBox="0 0 '+VW+' '+VH+'" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:224px;display:block;">'+
+      '<defs>'+
+        '<linearGradient id="wxG" x1="0" y1="0" x2="0" y2="1">'+
+          '<stop offset="0%" stop-color="#5aabdc" stop-opacity="0.22"/>'+
+          '<stop offset="75%" stop-color="#5aabdc" stop-opacity="0.04"/>'+
+          '<stop offset="100%" stop-color="#5aabdc" stop-opacity="0"/>'+
+        '</linearGradient>'+
+      '</defs>'+
       grid+
       '<path d="'+fillPath+'" fill="url(#wxG)"/>'+
-      '<path d="'+linePath+'" fill="none" stroke="#5aabdc" stroke-width="2"/>'+
-      curLine+yLbls+marks+cursorG+
+      '<path d="'+linePath+'" fill="none" stroke="#5aabdc" stroke-opacity="0.18" stroke-width="4" stroke-linecap="round"/>'+
+      '<path d="'+linePath+'" fill="none" stroke="#5aabdc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'+
+      curEl+tempLbls+marks+cursorG+
     '</svg>';
   }
 
@@ -975,43 +992,57 @@
     var over=document.getElementById('wx-over');
     var cur=document.getElementById('wx-cur');
     var cl=document.getElementById('wx-cl');
+    var halo=document.getElementById('wx-halo');
     var dot=document.getElementById('wx-dot');
     var tb=document.getElementById('wx-tb');
+    var tri=document.getElementById('wx-tri');
     var tt=document.getElementById('wx-tt');
     var th=document.getElementById('wx-th');
     if(!svg||!over||!cur)return;
 
     var VW=svg.viewBox.baseVal.width,VH=svg.viewBox.baseVal.height;
-    var PL=Math.max(28,Math.round(VW*34/520)),PR=Math.max(8,Math.round(VW*10/520)),PT=22,PB=28;
+    var PL=Math.max(12,Math.round(VW*14/520)),PR=Math.max(12,Math.round(VW*14/520)),PT=30,PB=38;
     var CW=VW-PL-PR,CH=VH-PT-PB;
     var minT=temps[0],maxT=temps[0];
     for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
     var range=maxT-minT;if(range<4){var mid=(maxT+minT)/2;minT=mid-2;maxT=mid+2;range=4;}
-    function xp(i){return PL+CW*i/23;}
-    function yp(t){return PT+CH*(1-(t-minT)/range);}
+    var pad=Math.max(range*0.10,0.5);
+    var dMin=minT-pad,dMax=maxT+pad,dRange=dMax-dMin;
+    function yp(t){return PT+CH*(1-(t-dMin)/dRange);}
 
     function update(svgX){
-      /* clamp to chart area */
       var cx=Math.max(PL,Math.min(PL+CW,svgX));
       var hourF=(cx-PL)/CW*23;
-      /* interpolate temperature between adjacent hours */
       var h0=Math.min(22,Math.floor(hourF));
       var frac=hourF-h0;
       var temp=temps[h0]*(1-frac)+temps[h0+1]*frac;
-      /* tooltip shows nearest full hour */
       var hour=Math.max(0,Math.min(23,Math.round(hourF)));
-      /* dot follows cursor exactly (no snap) */
-      var x=cx, y=yp(temp);
+      var x=cx,y=yp(temp);
       cl.setAttribute('x1',x.toFixed(1));cl.setAttribute('x2',x.toFixed(1));
       dot.setAttribute('cx',x.toFixed(1));dot.setAttribute('cy',y.toFixed(1));
-      /* tooltip: 66×34, above dot, edge-aware */
-      var TW=66,TH=34,tx=x+10;
-      if(tx+TW>VW-PR-2)tx=x-TW-10;
-      var ty=y-TH-10;if(ty<PT)ty=PT+2;
+      if(halo){halo.setAttribute('cx',x.toFixed(1));halo.setAttribute('cy',y.toFixed(1));}
+
+      /* tooltip: 76×44 centered above dot, with downward tail pointer */
+      var TW=76,TH=44,tailH=6;
+      var tx=x-TW/2;
+      if(tx<PL)tx=PL;
+      if(tx+TW>VW-PR)tx=VW-PR-TW;
+      var tailAbove=false;
+      var ty=y-TH-tailH-8;
+      if(ty<PT+2){ty=y+8+tailH;tailAbove=true;}
+
       tb.setAttribute('x',tx.toFixed(1));tb.setAttribute('y',ty.toFixed(1));
       tb.setAttribute('width',TW);tb.setAttribute('height',TH);
-      tt.setAttribute('x',(tx+TW/2).toFixed(1));tt.setAttribute('y',(ty+12).toFixed(1));
-      th.setAttribute('x',(tx+TW/2).toFixed(1));th.setAttribute('y',(ty+26).toFixed(1));
+
+      var tailCx=Math.max(tx+12,Math.min(x,tx+TW-12));
+      if(tri){
+        tri.setAttribute('points',tailAbove
+          ?(tailCx-5).toFixed(1)+','+ty+' '+(tailCx+5).toFixed(1)+','+ty+' '+tailCx.toFixed(1)+','+(ty-tailH)
+          :(tailCx-5).toFixed(1)+','+(ty+TH)+' '+(tailCx+5).toFixed(1)+','+(ty+TH)+' '+tailCx.toFixed(1)+','+(ty+TH+tailH));
+      }
+
+      tt.setAttribute('x',(tx+TW/2).toFixed(1));tt.setAttribute('y',(ty+15).toFixed(1));
+      th.setAttribute('x',(tx+TW/2).toFixed(1));th.setAttribute('y',(ty+32).toFixed(1));
       tt.textContent=Math.round(temp)+'°C';
       th.textContent=p(hour)+':00';
       cur.style.display='';
