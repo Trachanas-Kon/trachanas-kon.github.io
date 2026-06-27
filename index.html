@@ -989,9 +989,17 @@
     function yp(t){return PT+CH*(1-(t-minT)/range);}
 
     function update(svgX){
-      var hourF=(svgX-PL)/CW*23;
+      /* clamp to chart area */
+      var cx=Math.max(PL,Math.min(PL+CW,svgX));
+      var hourF=(cx-PL)/CW*23;
+      /* interpolate temperature between adjacent hours */
+      var h0=Math.min(22,Math.floor(hourF));
+      var frac=hourF-h0;
+      var temp=temps[h0]*(1-frac)+temps[h0+1]*frac;
+      /* tooltip shows nearest full hour */
       var hour=Math.max(0,Math.min(23,Math.round(hourF)));
-      var x=xp(hour),y=yp(temps[hour]);
+      /* dot follows cursor exactly (no snap) */
+      var x=cx, y=yp(temp);
       cl.setAttribute('x1',x.toFixed(1));cl.setAttribute('x2',x.toFixed(1));
       dot.setAttribute('cx',x.toFixed(1));dot.setAttribute('cy',y.toFixed(1));
       /* tooltip: 66×34, above dot, edge-aware */
@@ -1002,7 +1010,7 @@
       tb.setAttribute('width',TW);tb.setAttribute('height',TH);
       tt.setAttribute('x',(tx+TW/2).toFixed(1));tt.setAttribute('y',(ty+12).toFixed(1));
       th.setAttribute('x',(tx+TW/2).toFixed(1));th.setAttribute('y',(ty+26).toFixed(1));
-      tt.textContent=Math.round(temps[hour])+'°C';
+      tt.textContent=Math.round(temp)+'°C';
       th.textContent=p(hour)+':00';
       cur.style.display='';
     }
