@@ -45,12 +45,20 @@ jobs:
                   title   = item.findtext('title', '')
                   pubDate = item.findtext('pubDate', '')
                   desc    = item.findtext('description', '')
-                  guid    = item.findtext('guid', '')
+                  guid    = item.findtext('guid', '').strip()
 
                   source_el = item.find('source')
                   source = source_el.text.strip() if source_el is not None else ''
 
-                  link = guid or ''
+                  link_text = item.findtext('link', '').strip()
+                  if link_text.startswith('http'):
+                      link = link_text
+                  elif guid.startswith('http'):
+                      link = guid
+                  elif guid:
+                      link = 'https://news.google.com/articles/' + guid
+                  else:
+                      link = ''
 
                   # Extract thumbnail URL from description HTML
                   thumb_local = None
