@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Καιρός Ακραίφνιου – akraifnio.gr</title>
+  <meta name="description" content="7ήμερη πρόγνωση καιρού για το Ακραίφνιο Βοιωτίας. Θερμοκρασία, βροχή, άνεμος και κίνδυνος πυρκαγιάς.">
+  <link rel="canonical" href="https://akraifnio.gr/weather/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://akraifnio.gr/weather/">
+  <meta property="og:title" content="Καιρός Ακραίφνιου">
+  <meta property="og:description" content="7ήμερη πρόγνωση καιρού για το Ακραίφνιο Βοιωτίας.">
+  <meta property="og:locale" content="el_GR">
+
+  <link rel="icon" type="image/png" sizes="64x64" href="../favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192.png">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #1a6eb5;
+      --blue-lt: #5aabdc;
+      --navy:    #0d2a4a;
+      --gold:    #d4a843;
+      --gold-lt: #f0cc78;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #0a1e36;
+      color: #e8f4ff;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7, 17, 40, 0.97);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      border-bottom: 1px solid rgba(90,171,220,0.18);
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: #a8c8e8;
+      text-decoration: none;
+      font-family: sans-serif; font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      transition: color .18s;
+    }
+    .nav-back:hover { color: var(--gold-lt); }
+    .nav-back svg { width: 16px; height: 16px; }
+    .nav-title {
+      color: var(--gold-lt);
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+    }
+    .nav-spacer { width: 120px; }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 2rem;
+    }
+    .page-header .section-label {
+      display: inline-block;
+      font-family: sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--blue-lt);
+      margin-bottom: 0.5rem;
+    }
+    .page-header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: #e8f4ff;
+      margin-bottom: 0.5rem;
+    }
+    .divider {
+      width: 56px; height: 3px;
+      background: linear-gradient(to right, var(--blue), var(--blue-lt));
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+
+    /* ── WEATHER CONTROLS ── */
+    .wx-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 0;
+    }
+    .wx-controls {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem;
+      padding-top: 0.4rem;
+    }
+    .wx-updated {
+      font-family: sans-serif; font-size: 0.75rem; color: #4a6880;
+    }
+    .wx-btn {
+      background: rgba(26,110,181,0.22);
+      border: 1px solid rgba(90,171,220,0.3);
+      color: var(--blue-lt); padding: 0.5rem 1.2rem;
+      border-radius: 6px; cursor: pointer;
+      font-family: sans-serif; font-size: 0.85rem;
+      transition: background .2s, transform .1s;
+    }
+    .wx-btn:hover { background: rgba(26,110,181,0.4); }
+    .wx-btn:active { transform: scale(0.97); }
+    .wx-btn:disabled { opacity: 0.45; cursor: wait; }
+
+    /* ── WEATHER BODY ── */
+    .wx-body { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    .wx-main {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    }
+    .wx-current {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(90,171,220,0.14);
+      border-radius: 14px; padding: 2rem 2rem 1.8rem;
+    }
+    .wx-big-icon { font-size: 4rem; line-height: 1; margin-bottom: 0.5rem; display: block; }
+    .wx-big-temp { font-size: 3.8rem; font-weight: 700; color: #fff; line-height: 1; }
+    .wx-desc-text { font-size: 1.1rem; color: #a8c8e8; margin-top: 0.35rem; }
+    .wx-feels { font-size: 0.82rem; color: #4a6880; margin-top: 0.2rem; font-family: sans-serif; }
+
+    .wx-details {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(90,171,220,0.14);
+      border-radius: 14px; padding: 1.6rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem;
+      align-content: center;
+    }
+    .wx-det {
+      display: flex; flex-direction: column; gap: 0.15rem;
+    }
+    .wx-det .di { font-size: 1.4rem; }
+    .wx-det .dv { font-size: 1.1rem; font-weight: 600; color: #e8f4ff; font-family: sans-serif; }
+    .wx-det .dl { font-size: 0.72rem; color: #4a6880; font-family: sans-serif; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .wx-days {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.6rem;
+    }
+    .wx-day {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(90,171,220,0.1);
+      border-radius: 10px; padding: 0.9rem 0.4rem;
+      text-align: center; cursor: pointer;
+      transition: background .18s, border-color .18s;
+      font-family: sans-serif;
+    }
+    .wx-day:hover { background: rgba(26,110,181,0.2); }
+    .wx-day.active {
+      background: rgba(26,110,181,0.32);
+      border-color: var(--blue);
+    }
+    .wx-day .dn { font-size: 0.68rem; color: #4a6880; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.35rem; }
+    .wx-day.active .dn { color: var(--blue-lt); }
+    .wx-day .di2 { font-size: 1.5rem; line-height: 1; margin-bottom: 0.35rem; }
+    .wx-day .dm { font-size: 0.92rem; font-weight: 600; color: #e8f4ff; }
+    .wx-day .dl2 { font-size: 0.78rem; color: #4a6880; }
+    .wx-day .df { font-size: 0.7rem; margin-top: 0.3rem; }
+
+    .wx-day-bar {
+      background: rgba(26,110,181,0.14);
+      border: 1px solid rgba(90,171,220,0.18);
+      border-radius: 10px; padding: 1.1rem 1.4rem;
+      display: flex; align-items: center; gap: 1.2rem;
+      flex-wrap: wrap; font-family: sans-serif;
+    }
+    .wx-day-bar .wdb-title { color: var(--gold-lt); font-size: 0.9rem; flex: 1 1 100%; }
+    .wx-day-bar .wdb-item { font-size: 0.85rem; color: #a8c8e8; white-space: nowrap; }
+    .wx-day-bar .wdb-item strong { color: #fff; }
+
+    .wx-loading {
+      text-align: center; padding: 4rem 2rem;
+      color: #4a6880; font-family: sans-serif; font-style: italic;
+    }
+    .wx-error { color: #e87070; }
+
+    /* sun bar */
+    .wx-sun-bar {
+      background: rgba(212,168,67,0.07);
+      border: 1px solid rgba(212,168,67,0.18);
+      border-radius: 12px; padding: 1rem 1.4rem;
+      display: flex; align-items: center; gap: 0.6rem 2rem; flex-wrap: wrap;
+      font-family: sans-serif;
+    }
+    .wx-sun-item { display: flex; align-items: center; gap: 0.55rem; }
+    .wx-sun-item .si { font-size: 1.5rem; }
+    .wx-sun-item .sv { font-size: 1.05rem; font-weight: 600; color: #f0cc78; }
+    .wx-sun-item .sl { font-size: 0.72rem; color: #4a6880; text-transform: uppercase; letter-spacing: 0.06em; }
+    .wx-sun-sep { color: rgba(90,171,220,0.18); font-size: 1.4rem; align-self: center; }
+
+    /* hourly chart */
+    .wx-chart-wrap {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(90,171,220,0.12);
+      border-radius: 16px; padding: 0.9rem 1rem 0.55rem;
+      overflow: hidden;
+    }
+    .wx-chart-title {
+      font-family: sans-serif; font-size: 0.68rem; color: rgba(140,185,220,0.62);
+      text-transform: uppercase; letter-spacing: 0.13em; margin-bottom: 0.28rem;
+    }
+
+    /* ── FIRE DANGER SECTION ── */
+    .fire-section {
+      margin-top: 2.2rem;
+    }
+    .fire-section-title {
+      font-family: sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,140,60,0.7);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .fire-section-title::before {
+      content: '';
+      display: inline-block; width: 24px; height: 1px;
+      background: rgba(255,140,60,0.4);
+    }
+    .fire-today {
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center;
+      gap: 1.4rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,140,60,0.15);
+      border-radius: 14px; padding: 1.6rem 2rem;
+      margin-bottom: 1rem;
+    }
+    .fire-today-icon { font-size: 3rem; line-height: 1; }
+    .fire-today-info {}
+    .fire-today-label { font-family: sans-serif; font-size: 0.72rem; color: #4a6880; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+    .fire-today-level { font-size: 1.8rem; font-weight: 700; }
+    .fire-today-desc { font-family: sans-serif; font-size: 0.82rem; color: #6a90b0; margin-top: 0.2rem; }
+    .fire-today-badge {
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    }
+    .fire-gauge {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: sans-serif; font-size: 0.75rem; font-weight: 700;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.12);
+    }
+    .fire-gauge-label { font-family: sans-serif; font-size: 0.65rem; color: #4a6880; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .fire-week {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.6rem;
+    }
+    .fire-day {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,140,60,0.1);
+      border-radius: 10px; padding: 0.9rem 0.4rem 0.75rem;
+      text-align: center; font-family: sans-serif;
+    }
+    .fire-day .fd-name { font-size: 0.65rem; color: #4a6880; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+    .fire-day .fd-icon { font-size: 1.4rem; line-height: 1; margin-bottom: 0.35rem; }
+    .fire-day .fd-level { font-size: 0.72rem; font-weight: 600; }
+
+    .fire-note {
+      margin-top: 0.9rem;
+      background: rgba(255,140,60,0.05);
+      border: 1px solid rgba(255,140,60,0.12);
+      border-radius: 8px; padding: 0.75rem 1rem;
+      font-family: sans-serif; font-size: 0.75rem; color: #6a8090; line-height: 1.6;
+    }
+    .fire-note strong { color: #a08060; }
+
+    @media (max-width: 800px) {
+      .wx-main { grid-template-columns: 1fr; }
+      .fire-today { grid-template-columns: auto 1fr; }
+      .fire-today-badge { display: none; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1.5rem 1rem 3rem; }
+      .wx-days { gap: 0.35rem; }
+      .wx-day { padding: 0.7rem 0.25rem; }
+      .wx-day .dn { font-size: 0.6rem; }
+      .wx-day .di2 { font-size: 1.2rem; }
+      .wx-day .dm { font-size: 0.8rem; }
+      .fire-week { gap: 0.3rem; }
+      .fire-day { padding: 0.7rem 0.2rem; }
+      .fire-day .fd-name { font-size: 0.58rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 3L5 8l5 5"/>
+    </svg>
+    Αρχική
+  </a>
+  <span class="nav-title">Ακραίφνιο</span>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="container">
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+    <div class="page-header" style="margin-bottom:0;">
+      <span class="section-label">Ζωντανά Δεδομένα · Open-Meteo</span>
+      <h1>Καιρός Ακραίφνιου</h1>
+      <div class="divider"></div>
+    </div>
+    <div class="wx-controls">
+      <span id="wx-updated" class="wx-updated">—</span>
+      <button id="wx-refresh" class="wx-btn">↻ Ανανέωση</button>
+    </div>
+  </div>
+
+  <div id="wx-body" class="wx-body">
+    <div class="wx-loading">Φόρτωση καιρικών δεδομένων…</div>
+  </div>
+
+  <div id="fire-section" class="fire-section" style="display:none;">
+    <div class="fire-section-title">Κίνδυνος Πυρκαγιάς</div>
+    <div id="fire-body"></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var LAT=38.41,LON=23.22,REFRESH_SEC=600;
+  var API='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON
+    +'&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,relative_humidity_2m'
+    +'&hourly=temperature_2m'
+    +'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,precipitation_sum,sunrise,sunset,relative_humidity_2m_min'
+    +'&wind_speed_unit=kmh&timezone=Europe%2FAthens&forecast_days=7';
+
+  var WMO={
+    0:['☀️','Αίθριος'],1:['🌤','Σχεδόν αίθριος'],2:['⛅','Μερικώς συννεφιά'],3:['☁️','Συννεφιά'],
+    45:['🌫','Ομίχλη'],48:['🌫','Παγωμένη ομίχλη'],
+    51:['🌦','Ψιχάλες'],53:['🌦','Ψιχάλες'],55:['🌧','Έντονες ψιχάλες'],
+    61:['🌧','Βροχή'],63:['🌧','Μέτρια βροχή'],65:['🌧','Έντονη βροχή'],
+    71:['❄️','Χιόνι'],73:['❄️','Μέτριο χιόνι'],75:['❄️','Έντονο χιόνι'],
+    80:['🌦','Μπόρες'],81:['🌦','Μπόρες'],82:['⛈','Έντονες μπόρες'],
+    85:['🌨','Χιονοθύελλα'],86:['🌨','Έντονη χιονοθύελλα'],
+    95:['⛈','Καταιγίδα'],96:['⛈','Καταιγίδα με χαλάζι'],99:['⛈','Έντονη καταιγίδα']
+  };
+  var DAYS=['Κυρ','Δευ','Τρί','Τετ','Πέμ','Παρ','Σαβ'];
+  var MONTHS=['Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
+  function wmo(c){return WMO[c]||WMO[Math.floor(c/10)*10]||['🌡️','—'];}
+  function p(n){return n<10?'0'+n:''+n;}
+  function fmtDate(s){var d=new Date(s+'T12:00:00');return DAYS[d.getDay()]+' '+d.getDate()+' '+MONTHS[d.getMonth()];}
+  var wxData=null,selDay=0,countdown=REFRESH_SEC,countTimer=null;
+
+  /* ── Fire danger calculation ── */
+  function calcFire(tMax,precipSum,windMax,humMin){
+    /* Each factor scored 0-1, weighted sum → 0-100 index */
+    var tempScore = Math.min(1, Math.max(0, (tMax - 15) / 25));
+    var rainScore = Math.max(0, 1 - Math.min(precipSum, 5) / 5);
+    var windScore = Math.min(1, windMax / 70);
+    var humScore  = humMin != null ? Math.max(0, 1 - Math.min(humMin, 60) / 60) : 0.5;
+    var idx = (tempScore * 0.40 + rainScore * 0.30 + windScore * 0.15 + humScore * 0.15) * 100;
+
+    if(idx < 25) return {label:'Χαμηλός',   short:'ΧΑΜ', color:'#22c55e', bg:'rgba(34,197,94,0.12)',  emoji:'🟢', desc:'Οι συνθήκες δεν ευνοούν εκδήλωση πυρκαγιάς. Κανονική επαγρύπνηση.'};
+    if(idx < 50) return {label:'Μέτριος',    short:'ΜΕΤ', color:'#eab308', bg:'rgba(234,179,8,0.12)',   emoji:'🟡', desc:'Μέτριος κίνδυνος. Αποφύγετε καύση υπολειμμάτων σε ανοιχτό χώρο.'};
+    if(idx < 72) return {label:'Υψηλός',     short:'ΥΨΗ', color:'#f97316', bg:'rgba(249,115,22,0.12)',  emoji:'🟠', desc:'Υψηλός κίνδυνος. Απαγορεύεται η καύση. Αυξημένη προσοχή.'};
+    return              {label:'Πολύ Υψηλός',short:'ΠΥΨ', color:'#ef4444', bg:'rgba(239,68,68,0.12)',   emoji:'🔴', desc:'Πολύ υψηλός κίνδυνος. Πλήρης απαγόρευση κάθε δραστηριότητας με φλόγα.'};
+  }
+
+  /* ── Smooth SVG curve (Catmull-Rom → cubic Bezier) ── */
+  function buildChart(temps,curHour,containerW){
+    var VW=containerW||520,VH=224;
+    var PL=Math.max(12,Math.round(VW*14/520)),PR=Math.max(12,Math.round(VW*14/520)),PT=30,PB=38;
+    var CW=VW-PL-PR,CH=VH-PT-PB;
+    var minT=temps[0],maxT=temps[0];
+    for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
+    var range=maxT-minT;if(range<4){var mid=(maxT+minT)/2;minT=mid-2;maxT=mid+2;range=4;}
+    var pad=Math.max(range*0.10,0.5);
+    var dMin=minT-pad,dMax=maxT+pad,dRange=dMax-dMin;
+    function xp(i){return PL+CW*i/23;}
+    function yp(t){return PT+CH*(1-(t-dMin)/dRange);}
+    var pts=[];for(var i=0;i<24;i++)pts.push([xp(i),yp(temps[i])]);
+
+    function seg(i){
+      var p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(23,i+2)];
+      return 'C '+(p1[0]+(p2[0]-p0[0])/6).toFixed(1)+' '+(p1[1]+(p2[1]-p0[1])/6).toFixed(1)+' '+
+                  (p2[0]-(p3[0]-p1[0])/6).toFixed(1)+' '+(p2[1]-(p3[1]-p1[1])/6).toFixed(1)+' '+
+                  p2[0].toFixed(1)+' '+p2[1].toFixed(1);
+    }
+    var linePath='M '+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1);
+    for(var i=0;i<23;i++)linePath+=' '+seg(i);
+    var fillPath=linePath+' L '+(PL+CW)+' '+(PT+CH)+' L '+PL+' '+(PT+CH)+' Z';
+
+    var grid='';
+    for(var g=1;g<=3;g++){
+      var gy=(PT+CH*g/4).toFixed(1);
+      grid+='<line x1="'+PL+'" y1="'+gy+'" x2="'+(VW-PR)+'" y2="'+gy+'" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>';
+    }
+
+    var curEl='';
+    if(curHour>=0&&curHour<24){
+      var nx=xp(curHour);
+      curEl=
+        '<line x1="'+nx.toFixed(1)+'" y1="'+PT+'" x2="'+nx.toFixed(1)+'" y2="'+(PT+CH)+'" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-dasharray="2,5"/>'+
+        '<rect x="'+(nx-17).toFixed(1)+'" y="'+(PT+CH+7)+'" width="34" height="15" rx="7.5" fill="rgba(210,165,60,0.11)" stroke="rgba(210,165,60,0.42)" stroke-width="0.8"/>'+
+        '<text x="'+nx.toFixed(1)+'" y="'+(PT+CH+17.5)+'" text-anchor="middle" fill="rgba(225,180,75,0.85)" font-size="8.5" font-family="sans-serif">Τώρα</text>';
+    }
+
+    var marks='';
+    [0,4,8,12,16,20,23].forEach(function(h){
+      if(curHour>=0&&Math.abs(h-curHour)<1.6)return;
+      var x=xp(h).toFixed(1);
+      marks+='<text x="'+x+'" y="'+(VH-9)+'" text-anchor="middle" fill="rgba(140,185,220,0.55)" font-size="9.5" font-family="sans-serif">'+p(h)+':00</text>';
+    });
+
+    var minH=0,maxH=0;
+    for(var i=1;i<24;i++){if(temps[i]<temps[minH])minH=i;if(temps[i]>temps[maxH])maxH=i;}
+    var tempLbls=
+      '<text x="'+xp(maxH).toFixed(1)+'" y="'+(yp(temps[maxH])-7).toFixed(1)+'" text-anchor="middle" fill="rgba(200,230,255,0.82)" font-size="10" font-family="sans-serif" font-weight="600">'+Math.round(temps[maxH])+'°</text>'+
+      '<text x="'+xp(minH).toFixed(1)+'" y="'+(yp(temps[minH])+15).toFixed(1)+'" text-anchor="middle" fill="rgba(140,190,230,0.52)" font-size="9.5" font-family="sans-serif">'+Math.round(temps[minH])+'°</text>';
+
+    var cursorG=
+      '<g id="wx-cur" style="display:none" pointer-events="none">'+
+        '<line id="wx-cl" x1="0" y1="'+PT+'" x2="0" y2="'+(PT+CH)+'" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>'+
+        '<circle id="wx-halo" cx="0" cy="0" r="10" fill="none" stroke="rgba(90,171,220,0.28)" stroke-width="1.5"/>'+
+        '<circle id="wx-dot" cx="0" cy="0" r="4.5" fill="#ffffff" stroke="#5aabdc" stroke-width="2"/>'+
+        '<rect id="wx-tb" rx="10" ry="10" fill="rgba(7,17,40,0.93)"/>'+
+        '<polygon id="wx-tri" fill="rgba(7,17,40,0.93)"/>'+
+        '<text id="wx-tt" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="13" font-family="sans-serif" font-weight="700"/>'+
+        '<text id="wx-th" text-anchor="middle" dominant-baseline="middle" fill="rgba(140,185,220,0.85)" font-size="10" font-family="sans-serif"/>'+
+      '</g>'+
+      '<rect id="wx-over" x="'+PL+'" y="'+PT+'" width="'+CW+'" height="'+CH+'" fill="transparent" style="cursor:crosshair;touch-action:none"/>';
+
+    return '<svg id="wx-svg" viewBox="0 0 '+VW+' '+VH+'" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:224px;display:block;">'+
+      '<defs>'+
+        '<linearGradient id="wxG" x1="0" y1="0" x2="0" y2="1">'+
+          '<stop offset="0%" stop-color="#5aabdc" stop-opacity="0.22"/>'+
+          '<stop offset="75%" stop-color="#5aabdc" stop-opacity="0.04"/>'+
+          '<stop offset="100%" stop-color="#5aabdc" stop-opacity="0"/>'+
+        '</linearGradient>'+
+      '</defs>'+
+      grid+
+      '<path d="'+fillPath+'" fill="url(#wxG)"/>'+
+      '<path d="'+linePath+'" fill="none" stroke="#5aabdc" stroke-opacity="0.18" stroke-width="4" stroke-linecap="round"/>'+
+      '<path d="'+linePath+'" fill="none" stroke="#5aabdc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'+
+      curEl+tempLbls+marks+cursorG+
+    '</svg>';
+  }
+
+  /* ── Interactive chart cursor ── */
+  function initChart(temps){
+    var svg=document.getElementById('wx-svg');
+    var over=document.getElementById('wx-over');
+    var cur=document.getElementById('wx-cur');
+    var cl=document.getElementById('wx-cl');
+    var halo=document.getElementById('wx-halo');
+    var dot=document.getElementById('wx-dot');
+    var tb=document.getElementById('wx-tb');
+    var tri=document.getElementById('wx-tri');
+    var tt=document.getElementById('wx-tt');
+    var th=document.getElementById('wx-th');
+    if(!svg||!over||!cur)return;
+
+    var VW=svg.viewBox.baseVal.width,VH=svg.viewBox.baseVal.height;
+    var PL=Math.max(12,Math.round(VW*14/520)),PR=Math.max(12,Math.round(VW*14/520)),PT=30,PB=38;
+    var CW=VW-PL-PR,CH=VH-PT-PB;
+    var minT=temps[0],maxT=temps[0];
+    for(var i=1;i<24;i++){if(temps[i]<minT)minT=temps[i];if(temps[i]>maxT)maxT=temps[i];}
+    var range=maxT-minT;if(range<4){var mid=(maxT+minT)/2;minT=mid-2;maxT=mid+2;range=4;}
+    var pad=Math.max(range*0.10,0.5);
+    var dMin=minT-pad,dMax=maxT+pad,dRange=dMax-dMin;
+    function yp(t){return PT+CH*(1-(t-dMin)/dRange);}
+
+    function update(svgX){
+      var cx=Math.max(PL,Math.min(PL+CW,svgX));
+      var hourF=(cx-PL)/CW*23;
+      var h0=Math.min(22,Math.floor(hourF));
+      var frac=hourF-h0;
+      var temp=temps[h0]*(1-frac)+temps[h0+1]*frac;
+      var hour=Math.max(0,Math.min(23,Math.round(hourF)));
+      var x=cx,y=yp(temp);
+      cl.setAttribute('x1',x.toFixed(1));cl.setAttribute('x2',x.toFixed(1));
+      dot.setAttribute('cx',x.toFixed(1));dot.setAttribute('cy',y.toFixed(1));
+      if(halo){halo.setAttribute('cx',x.toFixed(1));halo.setAttribute('cy',y.toFixed(1));}
+
+      var TW=76,TH=44,tailH=6;
+      var tx=x-TW/2;
+      if(tx<PL)tx=PL;
+      if(tx+TW>VW-PR)tx=VW-PR-TW;
+      var tailAbove=false;
+      var ty=y-TH-tailH-8;
+      if(ty<PT+2){ty=y+8+tailH;tailAbove=true;}
+
+      tb.setAttribute('x',tx.toFixed(1));tb.setAttribute('y',ty.toFixed(1));
+      tb.setAttribute('width',TW);tb.setAttribute('height',TH);
+
+      var tailCx=Math.max(tx+12,Math.min(x,tx+TW-12));
+      if(tri){
+        tri.setAttribute('points',tailAbove
+          ?(tailCx-5).toFixed(1)+','+ty+' '+(tailCx+5).toFixed(1)+','+ty+' '+tailCx.toFixed(1)+','+(ty-tailH)
+          :(tailCx-5).toFixed(1)+','+(ty+TH)+' '+(tailCx+5).toFixed(1)+','+(ty+TH)+' '+tailCx.toFixed(1)+','+(ty+TH+tailH));
+      }
+
+      tt.setAttribute('x',(tx+TW/2).toFixed(1));tt.setAttribute('y',(ty+15).toFixed(1));
+      th.setAttribute('x',(tx+TW/2).toFixed(1));th.setAttribute('y',(ty+32).toFixed(1));
+      tt.textContent=Math.round(temp)+'°C';
+      th.textContent=p(hour)+':00';
+      cur.style.display='';
+    }
+
+    function toSvgX(e){
+      var rect=svg.getBoundingClientRect();
+      var cx=e.touches?e.touches[0].clientX:e.clientX;
+      return (cx-rect.left)*(VW/rect.width);
+    }
+
+    over.addEventListener('mousemove',function(e){update(toSvgX(e));});
+    over.addEventListener('mouseleave',function(){cur.style.display='none';});
+    over.addEventListener('touchstart',function(e){e.preventDefault();update(toSvgX(e));},{passive:false});
+    over.addEventListener('touchmove',function(e){e.preventDefault();update(toSvgX(e));},{passive:false});
+  }
+
+  /* ── Sunrise / sunset bar ── */
+  function buildSunBar(rise,set){
+    function fmtT(iso){return iso.slice(11,16);}
+    var rDate=new Date(rise),sDate=new Date(set);
+    var mins=Math.round((sDate-rDate)/60000);
+    var dur=Math.floor(mins/60)+'ω '+(mins%60)+'λ';
+    return '<div class="wx-sun-bar">'+
+      '<div class="wx-sun-item"><span class="si">🌅</span><div><span class="sv">'+fmtT(rise)+'</span><br><span class="sl">Ανατολή</span></div></div>'+
+      '<span class="wx-sun-sep">·</span>'+
+      '<div class="wx-sun-item"><span class="si">🌇</span><div><span class="sv">'+fmtT(set)+'</span><br><span class="sl">Δύση</span></div></div>'+
+      '<span class="wx-sun-sep">·</span>'+
+      '<div class="wx-sun-item"><span class="si">☀️</span><div><span class="sv">'+dur+'</span><br><span class="sl">Διάρκεια ημέρας</span></div></div>'+
+    '</div>';
+  }
+
+  /* ── Render fire danger section ── */
+  function renderFire(d){
+    var humArr=d.relative_humidity_2m_min||[];
+    /* today's card */
+    var f0=calcFire(d.temperature_2m_max[0],d.precipitation_sum[0],d.wind_speed_10m_max[0],humArr[0]||null);
+    var todayCard=
+      '<div class="fire-today" style="border-color:'+f0.color+'33;background:'+f0.bg+';">'+
+        '<div class="fire-today-icon">🔥</div>'+
+        '<div class="fire-today-info">'+
+          '<div class="fire-today-label">Σήμερα · Εκτίμηση κινδύνου</div>'+
+          '<div class="fire-today-level" style="color:'+f0.color+'">'+f0.label+'</div>'+
+          '<div class="fire-today-desc">'+f0.desc+'</div>'+
+        '</div>'+
+        '<div class="fire-today-badge">'+
+          '<div class="fire-gauge" style="background:'+f0.color+'22;border-color:'+f0.color+'55;">'+
+            '<span style="color:'+f0.color+';font-size:1.5rem;">'+f0.emoji+'</span>'+
+          '</div>'+
+          '<div class="fire-gauge-label">Επίπεδο</div>'+
+        '</div>'+
+      '</div>';
+
+    /* 7-day grid */
+    var weekGrid='<div class="fire-week">';
+    for(var i=0;i<7;i++){
+      var fi=calcFire(d.temperature_2m_max[i],d.precipitation_sum[i],d.wind_speed_10m_max[i],humArr[i]||null);
+      var lbl=i===0?'Σήμερα':i===1?'Αύριο':DAYS[new Date(d.time[i]+'T12:00:00').getDay()];
+      weekGrid+=
+        '<div class="fire-day" style="border-color:'+fi.color+'33;">'+
+          '<div class="fd-name">'+lbl+'</div>'+
+          '<div class="fd-icon">'+fi.emoji+'</div>'+
+          '<div class="fd-level" style="color:'+fi.color+'">'+fi.label+'</div>'+
+        '</div>';
+    }
+    weekGrid+='</div>';
+
+    var note=
+      '<div class="fire-note">'+
+        '<strong>Σημείωση:</strong> Η εκτίμηση κινδύνου υπολογίζεται αυτόματα βάσει θερμοκρασίας, βροχόπτωσης, ανέμου και υγρασίας. '+
+        'Για επίσημη πρόγνωση επικοινωνήστε με την <strong>Πυροσβεστική Υπηρεσία (199)</strong>.'+
+      '</div>';
+
+    document.getElementById('fire-body').innerHTML=todayCard+weekGrid+note;
+    document.getElementById('fire-section').style.display='';
+  }
+
+  function render(){
+    if(!wxData)return;
+    var c=wxData.current,d=wxData.daily,h=wxData.hourly,si=selDay;
+    var mIcon,mDesc,mTemp,mFeels,mWind,mHum;
+    if(si===0){
+      var r=wmo(c.weather_code);mIcon=r[0];mDesc=r[1];
+      mTemp=Math.round(c.temperature_2m);mFeels=Math.round(c.apparent_temperature);
+      mWind=Math.round(c.wind_speed_10m);mHum=c.relative_humidity_2m+'%';
+    }else{
+      var r2=wmo(d.weather_code[si]);mIcon=r2[0];mDesc=r2[1];
+      mTemp=Math.round((d.temperature_2m_max[si]+d.temperature_2m_min[si])/2);mFeels=mTemp-2;
+      mWind=Math.round(d.wind_speed_10m_max[si]);mHum='—';
+    }
+
+    var mainHTML=
+      '<div class="wx-main">'+
+        '<div class="wx-current">'+
+          '<span class="wx-big-icon">'+mIcon+'</span>'+
+          '<div class="wx-big-temp">'+mTemp+'°C</div>'+
+          '<div class="wx-desc-text">'+mDesc+'</div>'+
+          '<div class="wx-feels">Αισθητή: '+mFeels+'°C</div>'+
+        '</div>'+
+        '<div class="wx-details">'+
+          '<div class="wx-det"><span class="di">💨</span><span class="dv">'+mWind+' km/h</span><span class="dl">Άνεμος</span></div>'+
+          '<div class="wx-det"><span class="di">💧</span><span class="dv">'+mHum+'</span><span class="dl">Υγρασία</span></div>'+
+          '<div class="wx-det"><span class="di">🌧</span><span class="dv">'+d.precipitation_probability_max[si]+'%</span><span class="dl">Πιθ. βροχής</span></div>'+
+          '<div class="wx-det"><span class="di">🌡</span><span class="dv">'+Math.round(d.temperature_2m_max[si])+'° / '+Math.round(d.temperature_2m_min[si])+'°</span><span class="dl">Μέγ. / Ελάχ.</span></div>'+
+        '</div>'+
+      '</div>';
+
+    var sunHTML=buildSunBar(d.sunrise[si],d.sunset[si]);
+
+    var daysHTML='<div class="wx-days">';
+    for(var i=0;i<7;i++){
+      var r3=wmo(d.weather_code[i]);
+      var lbl=i===0?'Σήμερα':i===1?'Αύριο':DAYS[new Date(d.time[i]+'T12:00:00').getDay()];
+      var fi=calcFire(d.temperature_2m_max[i],d.precipitation_sum[i],d.wind_speed_10m_max[i],(d.relative_humidity_2m_min||[])[i]||null);
+      daysHTML+='<div class="wx-day'+(i===si?' active':'')+'" onclick="wxDay('+i+')">'+
+        '<div class="dn">'+lbl+'</div><div class="di2">'+r3[0]+'</div>'+
+        '<div class="dm">'+Math.round(d.temperature_2m_max[i])+'°</div>'+
+        '<div class="dl2">'+Math.round(d.temperature_2m_min[i])+'°</div>'+
+        '<div class="df" title="Κίνδυνος πυρκαγιάς: '+fi.label+'">'+fi.emoji+'</div>'+
+      '</div>';
+    }
+    daysHTML+='</div>';
+
+    var selLabel=si===0?'Σήμερα':si===1?'Αύριο':fmtDate(d.time[si]);
+    var barHTML=
+      '<div class="wx-day-bar">'+
+        '<div class="wdb-title">'+selLabel+' &nbsp;·&nbsp; '+wmo(d.weather_code[si])[1]+'</div>'+
+        '<span class="wdb-item">🌡 <strong>'+Math.round(d.temperature_2m_max[si])+'° / '+Math.round(d.temperature_2m_min[si])+'°</strong></span>'+
+        '<span class="wdb-item">☔ <strong>'+d.precipitation_probability_max[si]+'%</strong> βροχή</span>'+
+        '<span class="wdb-item">💧 <strong>'+(Math.round(d.precipitation_sum[si]*10)/10)+' mm</strong></span>'+
+        '<span class="wdb-item">💨 <strong>'+Math.round(d.wind_speed_10m_max[si])+' km/h</strong></span>'+
+      '</div>';
+
+    var dayTemps=h.temperature_2m.slice(si*24,si*24+24);
+    var curHour=si===0?new Date().getHours():-1;
+    var wxBodyEl=document.getElementById('wx-body');
+    var containerW=wxBodyEl?Math.max(280,wxBodyEl.clientWidth):520;
+    var chartHTML=
+      '<div class="wx-chart-wrap">'+
+        '<div class="wx-chart-title">Θερμοκρασία ανά ώρα</div>'+
+        buildChart(dayTemps,curHour,containerW)+
+      '</div>';
+
+    document.getElementById('wx-body').innerHTML=mainHTML+sunHTML+daysHTML+barHTML+chartHTML;
+    initChart(dayTemps);
+    renderFire(d);
+
+    var now=new Date();
+    document.getElementById('wx-updated').innerHTML=
+      'Ενημερώθηκε: '+p(now.getHours())+':'+p(now.getMinutes())+
+      ' &nbsp;·&nbsp; Επόμενη: <span id="wx-cd">'+p(Math.floor(countdown/60))+':'+p(countdown%60)+'</span>';
+  }
+
+  window.wxDay=function(i){selDay=i;render();};
+
+  function startCountdown(){
+    clearInterval(countTimer);countdown=REFRESH_SEC;
+    countTimer=setInterval(function(){
+      countdown--;
+      var el=document.getElementById('wx-cd');
+      if(el)el.textContent=p(Math.floor(countdown/60))+':'+p(countdown%60);
+      if(countdown<=0){clearInterval(countTimer);doFetch();}
+    },1000);
+  }
+
+  function doFetch(){
+    var btn=document.getElementById('wx-refresh');
+    if(btn){btn.disabled=true;btn.textContent='⏳ Φόρτωση…';}
+    fetch(API)
+      .then(function(r){return r.json();})
+      .then(function(json){
+        wxData=json;selDay=0;render();startCountdown();
+        if(btn){btn.disabled=false;btn.textContent='↻ Ανανέωση';}
+      })
+      .catch(function(){
+        document.getElementById('wx-body').innerHTML='<div class="wx-loading wx-error">⚠ Αδυναμία σύνδεσης. Δοκιμάστε ξανά.</div>';
+        if(btn){btn.disabled=false;btn.textContent='↻ Ανανέωση';}
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    document.getElementById('wx-refresh').addEventListener('click',function(){
+      clearInterval(countTimer);doFetch();
+    });
+    doFetch();
+  });
+})();
+</script>
+</body>
+</html>
