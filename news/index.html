@@ -188,13 +188,6 @@
     var m=title.match(/^(.*)\s-\s[^-]+$/); return m?m[1]:title;
   }
 
-  function extractThumb(descHtml){
-    if(!descHtml)return null;
-    var m=descHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
-    if(!m)return null;
-    return m[1].replace(/=w\d+-h\d+(-[a-z-]+)?/,'=w200-h200-p-df-rw');
-  }
-
   function render(items){
     var feed=document.getElementById('news-feed');
     if(!items||!items.length){
@@ -204,7 +197,7 @@
     var html='';
     items.forEach(function(item){
       var cleanT=cleanTitle(item.title||'', item.source||'');
-      var thumb=extractThumb(item.description||'');
+      var thumb=item.thumb||null;
       var thumbHtml=thumb
         ? '<img class="news-thumb" src="'+thumb+'" alt="" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=news-thumb-placeholder>📰</div>\'">'
         : '<div class="news-thumb-placeholder">📰</div>';

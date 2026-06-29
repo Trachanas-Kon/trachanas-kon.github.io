@@ -22,11 +22,17 @@ jobs:
             -o /tmp/feed.xml
           echo "Feed size: $(wc -c < /tmp/feed.xml) bytes"
 
-      - name: Convert RSS to JSON
+      - name: Parse RSS, download thumbnails, write feed.json
         run: |
+          # Clean previous thumbnails so stale files don't accumulate
+          rm -rf news/thumbs && mkdir -p news/thumbs
+
           python3 << 'PYEOF'
           import xml.etree.ElementTree as ET
           import json
+          import re
+          import subprocess
+          import os
           from datetime import datetime, timezone
 
           try:
@@ -34,7 +40,8 @@ jobs:
               root = tree.getroot()
               channel = root.find('channel')
               items = []
-              for item in channel.findall('item'):
+
+              for i, item in enumerate(channel.findall('item')):
                   title   = item.findtext('title', '')
                   pubDate = item.findtext('pubDate', '')
                   desc    = item.findtext('description', '')
@@ -43,38 +50,58 @@ jobs:
                   source_el = item.find('source')
                   source = source_el.text.strip() if source_el is not None else ''
 
-                  # <link> in RSS 2.0 is a text node after the element, not element text;
-                  # fall back to guid which is the article URL in Google News RSS
                   link = guid or ''
 
+                  # Extract thumbnail URL from description HTML
+                  thumb_local = None
+                  m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', desc, re.IGNORECASE)
+                  if m:
+                      img_url = m.group(1)
+                      # Request a larger size from Google CDN
+                      img_url = re.sub(r'=w\d+-h\d+(-[a-z-]+)?', '=w200-h200-p-df-rw', img_url)
+                      local_path = f'news/thumbs/{i}.jpg'
+                      # Download with Referer header to bypass hotlink protection
+                      result = subprocess.run([
+                          'curl', '-s', '-L', '--max-time', '10',
+                          '-H', 'Referer: https://news.google.com/',
+                          '-H', 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36',
+                          '-o', local_path, img_url
+                      ], capture_output=True)
+                      if result.returncode == 0 and os.path.exists(local_path) and os.path.getsize(local_path) > 500:
+                          thumb_local = f'/news/thumbs/{i}.jpg'
+                          print(f'  [{i}] thumb ok ({os.path.getsize(local_path)} bytes)')
+                      else:
+                          try: os.remove(local_path)
+                          except: pass
+                          print(f'  [{i}] thumb failed')
+
                   items.append({
-                      'title':       title,
-                      'link':        link,
-                      'pubDate':     pubDate,
-                      'source':      source,
-                      'description': desc
+                      'title':   title,
+                      'link':    link,
+                      'pubDate': pubDate,
+                      'source':  source,
+                      'thumb':   thumb_local,
                   })
 
               output = {
                   'updated': datetime.now(timezone.utc).isoformat(),
                   'count':   len(items),
-                  'items':   items
+                  'items':   items,
               }
-              print(f"Parsed {len(items)} items")
+              print(f'Parsed {len(items)} items')
 
           except Exception as e:
-              print(f"Error: {e}", flush=True)
-              # Keep existing feed if parse fails
+              print(f'Error: {e}')
               import sys; sys.exit(1)
 
           with open('news/feed.json', 'w', encoding='utf-8') as f:
               json.dump(output, f, ensure_ascii=False, indent=2)
           PYEOF
 
-      - name: Commit and push if feed changed
+      - name: Commit and push if anything changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add news/feed.json
+          git add news/feed.json news/thumbs/
           git diff --cached --quiet && echo "No changes." || \
-            git commit -m "chore: update news feed [skip ci]" && git push
+            (git commit -m "chore: update news feed [skip ci]" && git push)
