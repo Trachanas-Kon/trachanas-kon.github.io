@@ -1,0 +1,80 @@
+name: Fetch News Feed
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'   # every 2 hours
+  workflow_dispatch:          # allow manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch RSS feed from Google News
+        run: |
+          curl -s --max-time 20 \
+            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR&ceid=GR:el" \
+            -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" \
+            -o /tmp/feed.xml
+          echo "Feed size: $(wc -c < /tmp/feed.xml) bytes"
+
+      - name: Convert RSS to JSON
+        run: |
+          python3 << 'PYEOF'
+          import xml.etree.ElementTree as ET
+          import json
+          from datetime import datetime, timezone
+
+          try:
+              tree = ET.parse('/tmp/feed.xml')
+              root = tree.getroot()
+              channel = root.find('channel')
+              items = []
+              for item in channel.findall('item'):
+                  title   = item.findtext('title', '')
+                  pubDate = item.findtext('pubDate', '')
+                  desc    = item.findtext('description', '')
+                  guid    = item.findtext('guid', '')
+
+                  source_el = item.find('source')
+                  source = source_el.text.strip() if source_el is not None else ''
+
+                  # <link> in RSS 2.0 is a text node after the element, not element text;
+                  # fall back to guid which is the article URL in Google News RSS
+                  link = guid or ''
+
+                  items.append({
+                      'title':       title,
+                      'link':        link,
+                      'pubDate':     pubDate,
+                      'source':      source,
+                      'description': desc
+                  })
+
+              output = {
+                  'updated': datetime.now(timezone.utc).isoformat(),
+                  'count':   len(items),
+                  'items':   items
+              }
+              print(f"Parsed {len(items)} items")
+
+          except Exception as e:
+              print(f"Error: {e}", flush=True)
+              # Keep existing feed if parse fails
+              import sys; sys.exit(1)
+
+          with open('news/feed.json', 'w', encoding='utf-8') as f:
+              json.dump(output, f, ensure_ascii=False, indent=2)
+          PYEOF
+
+      - name: Commit and push if feed changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add news/feed.json
+          git diff --cached --quiet && echo "No changes." || \
+            git commit -m "chore: update news feed [skip ci]" && git push

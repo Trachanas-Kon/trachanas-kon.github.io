@@ -11,12 +11,6 @@
   <meta property="og:title" content="Νέα Ακραίφνιου">
   <meta property="og:description" content="Τελευταίες ειδήσεις για το Ακραίφνιο Βοιωτίας.">
   <meta property="og:locale" content="el_GR">
-
-  <!-- Performance: early connections to proxy fallback chain -->
-  <link rel="preconnect" href="https://corsproxy.io">
-  <link rel="dns-prefetch" href="https://api.allorigins.win">
-  <link rel="dns-prefetch" href="https://api.codetabs.com">
-  <link rel="dns-prefetch" href="https://news.google.com">
   <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
 
   <link rel="icon" type="image/png" sizes="64x64" href="../favicon-64.png">
@@ -26,27 +20,17 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --blue:    #1a6eb5;
-      --blue-lt: #5aabdc;
-      --gold-lt: #f0cc78;
-    }
-
+    :root { --blue: #1a6eb5; --blue-lt: #5aabdc; --gold-lt: #f0cc78; }
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Georgia', 'Times New Roman', serif;
-      background: #07111f;
-      color: #e8f4ff;
-      min-height: 100vh;
-      line-height: 1.7;
+      background: #07111f; color: #e8f4ff;
+      min-height: 100vh; line-height: 1.7;
     }
 
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(7, 17, 40, 0.97);
-      backdrop-filter: blur(8px);
+      background: rgba(7,17,40,0.97); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem; height: 56px;
       border-bottom: 1px solid rgba(90,171,220,0.18);
@@ -65,8 +49,7 @@
     .container { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 
     .section-label {
-      display: inline-block;
-      font-family: sans-serif; font-size: 0.72rem;
+      display: inline-block; font-family: sans-serif; font-size: 0.72rem;
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--blue-lt); margin-bottom: 0.5rem;
     }
@@ -80,18 +63,7 @@
       display: flex; justify-content: space-between; align-items: flex-end;
       flex-wrap: wrap; gap: 1rem; margin-bottom: 1.8rem;
     }
-    .refresh-btn {
-      background: rgba(26,110,181,0.22);
-      border: 1px solid rgba(90,171,220,0.3);
-      color: var(--blue-lt); padding: 0.45rem 1.1rem;
-      border-radius: 6px; cursor: pointer;
-      font-family: sans-serif; font-size: 0.82rem;
-      transition: background .2s, transform .1s;
-    }
-    .refresh-btn:hover { background: rgba(26,110,181,0.4); }
-    .refresh-btn:active { transform: scale(0.97); }
-    .refresh-btn:disabled { opacity: 0.45; cursor: wait; }
-    .last-updated { font-family: sans-serif; font-size: 0.72rem; color: #3a5870; align-self: center; }
+    .last-updated { font-family: sans-serif; font-size: 0.72rem; color: #3a5870; }
 
     /* ── NEWS CARDS ── */
     #news-feed { display: flex; flex-direction: column; }
@@ -100,73 +72,54 @@
       display: flex; align-items: flex-start; gap: 1rem;
       padding: 1.2rem 0.6rem;
       border-bottom: 1px solid rgba(90,171,220,0.08);
-      text-decoration: none;
-      border-radius: 8px;
+      text-decoration: none; border-radius: 8px;
       transition: background .15s;
     }
     .news-card:hover { background: rgba(26,110,181,0.07); }
 
-    /* thumbnail */
     .news-thumb-wrap {
-      flex-shrink: 0;
-      width: 88px; height: 88px;
-      border-radius: 8px;
-      overflow: hidden;
+      flex-shrink: 0; width: 88px; height: 88px;
+      border-radius: 8px; overflow: hidden;
       background: rgba(26,110,181,0.08);
       border: 1px solid rgba(90,171,220,0.1);
     }
-    .news-thumb {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+    .news-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
     .news-thumb-placeholder {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
       font-size: 2rem; opacity: 0.25;
     }
 
-    /* text content */
     .news-content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.28rem; }
-
     .news-meta {
       display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
       font-family: sans-serif; font-size: 0.72rem;
     }
     .news-source { color: var(--blue-lt); font-weight: 600; }
-    .news-dot { color: rgba(90,171,220,0.25); }
+    .news-dot { color: rgba(90,171,220,0.3); }
     .news-date { color: #3a6080; }
-
     .news-title {
       font-size: 1rem; font-weight: 600; color: #d0e8ff;
-      line-height: 1.45;
-      transition: color .15s;
+      line-height: 1.45; transition: color .15s;
     }
     .news-card:hover .news-title { color: #fff; }
 
-    /* ── STATES ── */
     .news-loading, .news-error, .news-empty {
       text-align: center; padding: 4rem 2rem;
       font-family: sans-serif; font-style: italic; color: #3a5870;
     }
     .news-error { color: #e87070; font-style: normal; }
-
     .news-spinner {
       display: inline-block; width: 28px; height: 28px;
-      border: 2px solid rgba(90,171,220,0.15);
-      border-top-color: var(--blue-lt);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin-bottom: 1rem;
+      border: 2px solid rgba(90,171,220,0.15); border-top-color: var(--blue-lt);
+      border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 1rem;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .feed-note {
       margin-top: 2.5rem; padding: 0.8rem 1rem;
-      background: rgba(26,110,181,0.06);
-      border: 1px solid rgba(90,171,220,0.1);
-      border-radius: 8px;
-      font-family: sans-serif; font-size: 0.75rem; color: #3a6080; line-height: 1.6;
+      background: rgba(26,110,181,0.06); border: 1px solid rgba(90,171,220,0.1);
+      border-radius: 8px; font-family: sans-serif; font-size: 0.75rem; color: #3a6080; line-height: 1.6;
     }
     .feed-note a { color: var(--blue-lt); text-decoration: none; }
     .feed-note a:hover { text-decoration: underline; }
@@ -194,14 +147,11 @@
 <div class="container">
   <div class="header-row">
     <div>
-      <span class="section-label">Google News · Αυτόματη Ενημέρωση</span>
+      <span class="section-label">Google News · Ενημερώνεται κάθε 2 ώρες</span>
       <h1>Νέα Ακραίφνιου</h1>
       <div class="divider"></div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem;">
-      <span id="last-updated" class="last-updated"></span>
-      <button id="refresh-btn" class="refresh-btn">↻ Ανανέωση</button>
-    </div>
+    <span id="last-updated" class="last-updated"></span>
   </div>
 
   <div id="news-feed">
@@ -219,151 +169,77 @@
 
 <script>
 (function(){
-  var RSS_URL='https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR&ceid=GR:el';
-  /* Try each proxy in order until one works */
-  var PROXIES=[
-    {url:'https://corsproxy.io/?',     mode:'text'},
-    {url:'https://api.allorigins.win/get?url=', mode:'json'},
-    {url:'https://api.codetabs.com/v1/proxy?quest=', mode:'text'}
-  ];
-
-  var MONTHS_GR=['Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
+  var MONTHS=['Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
 
   function fmtDate(str){
-    var d=new Date(str);
-    if(isNaN(d))return str;
-    var now=new Date();
-    var diff=Math.floor((now-d)/60000);
-    if(diff<2)return 'μόλις τώρα';
-    if(diff<60)return diff+' λεπτά πριν';
+    if(!str)return '';
+    var d=new Date(str); if(isNaN(d))return str;
+    var diff=Math.floor((Date.now()-d)/60000);
+    if(diff<2)  return 'μόλις τώρα';
+    if(diff<60) return diff+' λεπτά πριν';
     if(diff<120)return '1 ώρα πριν';
     if(diff<1440)return Math.floor(diff/60)+' ώρες πριν';
     if(diff<2880)return 'χθες';
-    return d.getDate()+' '+MONTHS_GR[d.getMonth()]+' '+d.getFullYear();
+    return d.getDate()+' '+MONTHS[d.getMonth()]+' '+d.getFullYear();
   }
 
   function cleanTitle(title, source){
-    if(source && title.endsWith(' - '+source)) return title.slice(0, -(source.length+3));
-    var m=title.match(/^(.*)\s-\s[^-]+$/);
-    return m ? m[1] : title;
+    if(source && title.endsWith(' - '+source)) return title.slice(0,-(source.length+3));
+    var m=title.match(/^(.*)\s-\s[^-]+$/); return m?m[1]:title;
   }
 
-  /* Extract thumbnail URL from description HTML using regex (no DOM side-effects) */
   function extractThumb(descHtml){
-    if(!descHtml) return null;
+    if(!descHtml)return null;
     var m=descHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
-    if(!m) return null;
-    /* Request a larger size from Google's image CDN when possible */
-    return m[1].replace(/=w\d+-h\d+(-[a-z-]+)?/, '=w200-h200-p-df-rw');
+    if(!m)return null;
+    return m[1].replace(/=w\d+-h\d+(-[a-z-]+)?/,'=w200-h200-p-df-rw');
   }
 
-  /* Get text content of an XML node safely */
-  function nodeText(item, tag){
-    var el=item.querySelector(tag);
-    return el ? (el.textContent||'') : '';
-  }
-
-  /* In RSS, <link> is a sibling text node, not a child element — grab it specially */
-  function getLink(item){
-    var nodes=item.childNodes;
-    for(var i=0;i<nodes.length;i++){
-      if(nodes[i].nodeType===1 && nodes[i].nodeName.toLowerCase()==='link'){
-        return nodes[i].nextSibling && nodes[i].nextSibling.nodeType===3
-          ? nodes[i].nextSibling.textContent.trim()
-          : nodes[i].textContent.trim();
-      }
-    }
-    /* fallback to guid */
-    return nodeText(item,'guid') || '#';
-  }
-
-  function renderItems(items){
+  function render(items){
     var feed=document.getElementById('news-feed');
     if(!items||!items.length){
-      feed.innerHTML='<div class="news-empty">Δεν βρέθηκαν νέα αυτή τη στιγμή.</div>';
+      feed.innerHTML='<div class="news-empty">Δεν βρέθηκαν νέα αυτή τη στιγμή.<br>Δοκιμάστε αργότερα.</div>';
       return;
     }
     var html='';
     items.forEach(function(item){
-      var title   = nodeText(item,'title');
-      var pubDate = nodeText(item,'pubDate');
-      var source  = nodeText(item,'source');
-      var descRaw = nodeText(item,'description');
-      var link    = getLink(item);
-
-      var cleanT  = cleanTitle(title, source);
-      var dateStr = fmtDate(pubDate);
-      var thumb   = extractThumb(descRaw);
-
-      var thumbHtml = thumb
+      var cleanT=cleanTitle(item.title||'', item.source||'');
+      var thumb=extractThumb(item.description||'');
+      var thumbHtml=thumb
         ? '<img class="news-thumb" src="'+thumb+'" alt="" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=news-thumb-placeholder>📰</div>\'">'
         : '<div class="news-thumb-placeholder">📰</div>';
-
-      html +=
-        '<a href="'+link+'" class="news-card" target="_blank" rel="noopener">'+
+      html+=
+        '<a href="'+item.link+'" class="news-card" target="_blank" rel="noopener">'+
           '<div class="news-thumb-wrap">'+thumbHtml+'</div>'+
           '<div class="news-content">'+
             '<div class="news-meta">'+
-              (source ? '<span class="news-source">'+source+'</span><span class="news-dot">·</span>' : '')+
-              '<span class="news-date">'+dateStr+'</span>'+
+              (item.source?'<span class="news-source">'+item.source+'</span><span class="news-dot">·</span>':'')+
+              '<span class="news-date">'+fmtDate(item.pubDate)+'</span>'+
             '</div>'+
             '<div class="news-title">'+cleanT+'</div>'+
           '</div>'+
         '</a>';
     });
     feed.innerHTML=html;
-
-    var now=new Date();
-    var p=function(n){return n<10?'0'+n:''+n;};
-    document.getElementById('last-updated').textContent='Ενημερώθηκε '+p(now.getHours())+':'+p(now.getMinutes());
   }
 
-  function parseXml(xml){
-    var parser=new DOMParser();
-    var doc=parser.parseFromString(xml,'text/xml');
-    if(doc.querySelector('parsererror'))throw new Error('parse');
-    return Array.from(doc.querySelectorAll('item'));
-  }
-
-  function tryProxy(index){
-    if(index>=PROXIES.length)return Promise.reject(new Error('all proxies failed'));
-    var p=PROXIES[index];
-    return fetch(p.url+encodeURIComponent(RSS_URL),{signal:AbortSignal.timeout(8000)})
-      .then(function(r){
-        if(!r.ok)throw new Error('HTTP '+r.status);
-        return p.mode==='json' ? r.json().then(function(j){return j.contents;}) : r.text();
-      })
-      .then(function(xml){return parseXml(xml);})
-      .catch(function(){return tryProxy(index+1);});
-  }
-
-  function doFetch(){
-    var feed=document.getElementById('news-feed');
-    var btn=document.getElementById('refresh-btn');
-    feed.innerHTML='<div class="news-loading"><div class="news-spinner"></div><br>Φόρτωση ειδήσεων…</div>';
-    if(btn){btn.disabled=true;btn.textContent='⏳ Φόρτωση…';}
-
-    tryProxy(0)
-      .then(function(items){
-        renderItems(items);
-        if(btn){btn.disabled=false;btn.textContent='↻ Ανανέωση';}
-      })
-      .catch(function(){
-        feed.innerHTML=
-          '<div class="news-error">'+
-            '⚠ Αδυναμία φόρτωσης ειδήσεων.<br><br>'+
-            '<a href="https://news.google.com/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR" '+
-               'target="_blank" rel="noopener" style="color:#5aabdc;">'+
-            'Δείτε τα νέα απευθείας στο Google News →</a>'+
-          '</div>';
-        if(btn){btn.disabled=false;btn.textContent='↻ Ανανέωση';}
-      });
-  }
-
-  document.addEventListener('DOMContentLoaded',function(){
-    document.getElementById('refresh-btn').addEventListener('click',doFetch);
-    doFetch();
-  });
+  fetch('/news/feed.json')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      render(data.items||[]);
+      if(data.updated){
+        var d=new Date(data.updated);
+        var p=function(n){return n<10?'0'+n:''+n;};
+        document.getElementById('last-updated').textContent=
+          'Ενημερώθηκε '+p(d.getHours())+':'+p(d.getMinutes())+' · '+d.getDate()+'/'+p(d.getMonth()+1);
+      }
+    })
+    .catch(function(){
+      document.getElementById('news-feed').innerHTML=
+        '<div class="news-error">⚠ Δεν ήταν δυνατή η φόρτωση.<br><br>'+
+        '<a href="https://news.google.com/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR" '+
+        'target="_blank" rel="noopener" style="color:#5aabdc;">Δείτε τα νέα στο Google News →</a></div>';
+    });
 })();
 </script>
 </body>
