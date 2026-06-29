@@ -12,8 +12,10 @@
   <meta property="og:description" content="Τελευταίες ειδήσεις για το Ακραίφνιο Βοιωτίας.">
   <meta property="og:locale" content="el_GR">
 
-  <!-- Performance: early connection to the proxy and news source -->
-  <link rel="preconnect" href="https://api.allorigins.win">
+  <!-- Performance: early connections to proxy fallback chain -->
+  <link rel="preconnect" href="https://corsproxy.io">
+  <link rel="dns-prefetch" href="https://api.allorigins.win">
+  <link rel="dns-prefetch" href="https://api.codetabs.com">
   <link rel="dns-prefetch" href="https://news.google.com">
   <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
 
@@ -218,7 +220,12 @@
 <script>
 (function(){
   var RSS_URL='https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR&ceid=GR:el';
-  var PROXY='https://api.allorigins.win/get?url=';
+  /* Try each proxy in order until one works */
+  var PROXIES=[
+    {url:'https://corsproxy.io/?',     mode:'text'},
+    {url:'https://api.allorigins.win/get?url=', mode:'json'},
+    {url:'https://api.codetabs.com/v1/proxy?quest=', mode:'text'}
+  ];
 
   var MONTHS_GR=['Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
 
@@ -311,19 +318,34 @@
     document.getElementById('last-updated').textContent='Ενημερώθηκε '+p(now.getHours())+':'+p(now.getMinutes());
   }
 
+  function parseXml(xml){
+    var parser=new DOMParser();
+    var doc=parser.parseFromString(xml,'text/xml');
+    if(doc.querySelector('parsererror'))throw new Error('parse');
+    return Array.from(doc.querySelectorAll('item'));
+  }
+
+  function tryProxy(index){
+    if(index>=PROXIES.length)return Promise.reject(new Error('all proxies failed'));
+    var p=PROXIES[index];
+    return fetch(p.url+encodeURIComponent(RSS_URL),{signal:AbortSignal.timeout(8000)})
+      .then(function(r){
+        if(!r.ok)throw new Error('HTTP '+r.status);
+        return p.mode==='json' ? r.json().then(function(j){return j.contents;}) : r.text();
+      })
+      .then(function(xml){return parseXml(xml);})
+      .catch(function(){return tryProxy(index+1);});
+  }
+
   function doFetch(){
     var feed=document.getElementById('news-feed');
     var btn=document.getElementById('refresh-btn');
     feed.innerHTML='<div class="news-loading"><div class="news-spinner"></div><br>Φόρτωση ειδήσεων…</div>';
     if(btn){btn.disabled=true;btn.textContent='⏳ Φόρτωση…';}
 
-    fetch(PROXY+encodeURIComponent(RSS_URL))
-      .then(function(r){return r.json();})
-      .then(function(j){
-        var parser=new DOMParser();
-        var doc=parser.parseFromString(j.contents,'text/xml');
-        if(doc.querySelector('parsererror'))throw new Error('parse');
-        renderItems(Array.from(doc.querySelectorAll('item')));
+    tryProxy(0)
+      .then(function(items){
+        renderItems(items);
         if(btn){btn.disabled=false;btn.textContent='↻ Ανανέωση';}
       })
       .catch(function(){
