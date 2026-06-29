@@ -60,13 +60,24 @@ jobs:
                   else:
                       link = ''
 
-                  # Extract thumbnail URL from description HTML
+                  # Extract thumbnail URL: try media:thumbnail namespace first, then description HTML
+                  MEDIA_NS = 'http://search.yahoo.com/mrss/'
                   thumb_local = None
-                  m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', desc, re.IGNORECASE)
-                  if m:
-                      img_url = m.group(1)
-                      # Request a larger size from Google CDN
+                  img_url = None
+                  media_thumb = item.find(f'{{{MEDIA_NS}}}thumbnail')
+                  media_content = item.find(f'{{{MEDIA_NS}}}content')
+                  if media_thumb is not None:
+                      img_url = media_thumb.get('url', '') or ''
+                  elif media_content is not None:
+                      img_url = media_content.get('url', '') or ''
+                  if not img_url:
+                      m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', desc, re.IGNORECASE)
+                      if m:
+                          img_url = m.group(1)
+                  if img_url:
+                      # Request a larger size from Google CDN if applicable
                       img_url = re.sub(r'=w\d+-h\d+(-[a-z-]+)?', '=w200-h200-p-df-rw', img_url)
+                  if img_url:
                       local_path = f'news/thumbs/{i}.jpg'
                       # Download with Referer header to bypass hotlink protection
                       result = subprocess.run([
