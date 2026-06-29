@@ -46,6 +46,10 @@
   }
   </script>
 
+  <!-- Performance: early connections to external resources -->
+  <link rel="preconnect" href="https://api.open-meteo.com">
+  <link rel="dns-prefetch" href="https://upload.wikimedia.org">
+
   <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -613,7 +617,7 @@
             <polygon points="18,40 140,8 262,40" fill="none" stroke="rgba(212,168,67,0.8)" stroke-width="2.5"/>
             <circle cx="140" cy="28" r="5" fill="rgba(212,168,67,0.55)"/>
           </svg>
-          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Temple_of_Apollo_Ptoon,_a_fountain,_and_nothing_else,_Boeotia,_central_Greece.jpg/640px-Temple_of_Apollo_Ptoon,_a_fountain,_and_nothing_else,_Boeotia,_central_Greece.jpg" alt="Ιερό Απόλλωνα Πτώου"
+          <img class="card-photo" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Temple_of_Apollo_Ptoon,_a_fountain,_and_nothing_else,_Boeotia,_central_Greece.jpg/640px-Temple_of_Apollo_Ptoon,_a_fountain,_and_nothing_else,_Boeotia,_central_Greece.jpg" alt="Ιερό Απόλλωνα Πτώου"
             onload="this.style.opacity=1" onerror="this.style.display='none'">
         </div>
         <div class="card-body">
@@ -643,7 +647,7 @@
             <rect x="248" y="70" width="7" height="8" rx="1" fill="rgba(212,168,67,0.35)"/>
             <rect x="259" y="70" width="6" height="8" rx="1" fill="rgba(212,168,67,0.35)"/>
           </svg>
-          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Mountain_Ptoon.JPG/640px-Mountain_Ptoon.JPG" alt="Βουνό Πτώου"
+          <img class="card-photo" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Mountain_Ptoon.JPG/640px-Mountain_Ptoon.JPG" alt="Βουνό Πτώου"
             onload="this.style.opacity=1" onerror="this.style.display='none'">
         </div>
         <div class="card-body">
@@ -669,7 +673,7 @@
             <path d="M0,105 Q35,95 70,105 Q105,115 140,105 Q175,95 210,105 Q245,115 280,105" fill="none" stroke="rgba(90,171,220,0.55)" stroke-width="2"/>
             <path d="M0,118 Q35,108 70,118 Q105,128 140,118 Q175,108 210,118 Q245,128 280,118" fill="none" stroke="rgba(90,171,220,0.35)" stroke-width="1.5"/>
           </svg>
-          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Lake_Yliki.jpg/640px-Lake_Yliki.jpg" alt="Λίμνη Υλίκη"
+          <img class="card-photo" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Lake_Yliki.jpg/640px-Lake_Yliki.jpg" alt="Λίμνη Υλίκη"
             onload="this.style.opacity=1" onerror="this.style.display='none'">
         </div>
         <div class="card-body">
@@ -759,7 +763,7 @@
             <text x="62" y="77" text-anchor="middle" fill="rgba(212,168,67,0.35)" font-size="18">Α</text>
             <text x="218" y="77" text-anchor="middle" fill="rgba(212,168,67,0.35)" font-size="18">Π</text>
           </svg>
-          <img class="card-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg/640px-Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg" alt="Κούροι από το Πτώο"
+          <img class="card-photo" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg/640px-Kouroi_from_Ptoon,_AM_of_Thebes,_201172.jpg" alt="Κούροι από το Πτώο"
             onload="this.style.opacity=1" onerror="this.style.display='none'">
         </div>
         <div class="card-body">
@@ -823,7 +827,7 @@
 
     <!-- APOLLON CLUB SPOTLIGHT -->
     <div class="club-spotlight">
-      <img src="apollon-logo.jpg" alt="Α.Ο. Απόλλων Ακραιφνίου" class="club-crest">
+      <img src="apollon-logo.jpg" alt="Α.Ο. Απόλλων Ακραιφνίου" class="club-crest" loading="lazy">
 
       <div class="club-body">
         <div class="club-label">Ε.Π.Σ. Βοιωτίας · Α΄ Κατηγορία · Ιδρύθηκε το 1976</div>
