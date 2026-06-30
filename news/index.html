@@ -11,7 +11,7 @@
   <meta property="og:title" content="Νέα Ακραίφνιου">
   <meta property="og:description" content="Τελευταίες ειδήσεις για το Ακραίφνιο Βοιωτίας.">
   <meta property="og:locale" content="el_GR">
-  <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+  <link rel="dns-prefetch" href="https://www.google.com">
 
   <link rel="icon" type="image/png" sizes="64x64" href="../favicon-64.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
@@ -78,16 +78,15 @@
     .news-card:hover { background: rgba(26,110,181,0.07); }
 
     .news-thumb-wrap {
-      flex-shrink: 0; width: 88px; height: 88px;
-      border-radius: 8px; overflow: hidden;
-      background: rgba(26,110,181,0.08);
-      border: 1px solid rgba(90,171,220,0.1);
-    }
-    .news-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .news-thumb-placeholder {
-      width: 100%; height: 100%;
+      flex-shrink: 0; width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(26,110,181,0.10);
+      border: 1px solid rgba(90,171,220,0.12);
       display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; opacity: 0.25;
+    }
+    .news-thumb { width: 28px; height: 28px; object-fit: contain; display: block; image-rendering: crisp-edges; }
+    .news-thumb-placeholder {
+      font-size: 1.1rem; opacity: 0.3; line-height: 1;
     }
 
     .news-content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.28rem; }
@@ -126,7 +125,6 @@
 
     @media (max-width: 500px) {
       .container { padding: 1.5rem 0.8rem 4rem; }
-      .news-thumb-wrap { width: 70px; height: 70px; }
       .news-title { font-size: 0.93rem; }
     }
   </style>
@@ -188,6 +186,12 @@
     var m=title.match(/^(.*)\s-\s[^-]+$/); return m?m[1]:title;
   }
 
+  function sourceDomain(source){
+    if(!source) return '';
+    var m=source.match(/([\w-]+\.(gr|com|net|org|eu|info|tv))/i);
+    return m ? m[1].toLowerCase() : '';
+  }
+
   function render(items){
     var feed=document.getElementById('news-feed');
     if(!items||!items.length){
@@ -197,10 +201,10 @@
     var html='';
     items.forEach(function(item){
       var cleanT=cleanTitle(item.title||'', item.source||'');
-      var thumb=item.thumb||null;
-      var thumbHtml=thumb
-        ? '<img class="news-thumb" src="'+thumb+'" alt="" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=news-thumb-placeholder>📰</div>\'">'
-        : '<div class="news-thumb-placeholder">📰</div>';
+      var domain=sourceDomain(item.source||'');
+      var thumbHtml=domain
+        ? '<img class="news-thumb" src="https://www.google.com/s2/favicons?domain='+domain+'&sz=64" alt="" loading="lazy" onerror="this.parentNode.innerHTML=\'<span class=news-thumb-placeholder>📰</span>\'">'
+        : '<span class="news-thumb-placeholder">📰</span>';
       html+=
         '<a href="'+item.link+'" class="news-card" target="_blank" rel="noopener">'+
           '<div class="news-thumb-wrap">'+thumbHtml+'</div>'+

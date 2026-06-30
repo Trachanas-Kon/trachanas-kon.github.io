@@ -22,17 +22,11 @@ jobs:
             -o /tmp/feed.xml
           echo "Feed size: $(wc -c < /tmp/feed.xml) bytes"
 
-      - name: Parse RSS, download thumbnails, write feed.json
+      - name: Parse RSS and write feed.json
         run: |
-          # Clean previous thumbnails so stale files don't accumulate
-          rm -rf news/thumbs && mkdir -p news/thumbs
-
           python3 << 'PYEOF'
           import xml.etree.ElementTree as ET
           import json
-          import re
-          import subprocess
-          import os
           from datetime import datetime, timezone
 
           try:
@@ -41,10 +35,9 @@ jobs:
               channel = root.find('channel')
               items = []
 
-              for i, item in enumerate(channel.findall('item')):
+              for item in channel.findall('item'):
                   title   = item.findtext('title', '')
                   pubDate = item.findtext('pubDate', '')
-                  desc    = item.findtext('description', '')
                   guid    = item.findtext('guid', '').strip()
 
                   source_el = item.find('source')
@@ -60,47 +53,7 @@ jobs:
                   else:
                       link = ''
 
-                  # Extract thumbnail URL: try media:thumbnail namespace first, then description HTML
-                  MEDIA_NS = 'http://search.yahoo.com/mrss/'
-                  thumb_local = None
-                  img_url = None
-                  media_thumb = item.find(f'{{{MEDIA_NS}}}thumbnail')
-                  media_content = item.find(f'{{{MEDIA_NS}}}content')
-                  if media_thumb is not None:
-                      img_url = media_thumb.get('url', '') or ''
-                  elif media_content is not None:
-                      img_url = media_content.get('url', '') or ''
-                  if not img_url:
-                      m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', desc, re.IGNORECASE)
-                      if m:
-                          img_url = m.group(1)
-                  if img_url:
-                      # Request a larger size from Google CDN if applicable
-                      img_url = re.sub(r'=w\d+-h\d+(-[a-z-]+)?', '=w200-h200-p-df-rw', img_url)
-                  if img_url:
-                      local_path = f'news/thumbs/{i}.jpg'
-                      # Download with Referer header to bypass hotlink protection
-                      result = subprocess.run([
-                          'curl', '-s', '-L', '--max-time', '10',
-                          '-H', 'Referer: https://news.google.com/',
-                          '-H', 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36',
-                          '-o', local_path, img_url
-                      ], capture_output=True)
-                      if result.returncode == 0 and os.path.exists(local_path) and os.path.getsize(local_path) > 500:
-                          thumb_local = f'/news/thumbs/{i}.jpg'
-                          print(f'  [{i}] thumb ok ({os.path.getsize(local_path)} bytes)')
-                      else:
-                          try: os.remove(local_path)
-                          except: pass
-                          print(f'  [{i}] thumb failed')
-
-                  items.append({
-                      'title':   title,
-                      'link':    link,
-                      'pubDate': pubDate,
-                      'source':  source,
-                      'thumb':   thumb_local,
-                  })
+                  items.append({'title': title, 'link': link, 'pubDate': pubDate, 'source': source})
 
               output = {
                   'updated': datetime.now(timezone.utc).isoformat(),
@@ -121,6 +74,6 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add news/feed.json news/thumbs/
+          git add news/feed.json
           git diff --cached --quiet && echo "No changes." || \
             (git commit -m "chore: update news feed [skip ci]" && git push)
