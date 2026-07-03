@@ -864,30 +864,41 @@
 </section>
 
 <!-- NEWS CTA -->
-<section id="news-cta" style="background:#0a1828;padding:3rem 0;">
+<section id="news-cta" style="background:#0a1828;">
   <div class="container">
-    <span class="section-label" style="color:#5aabdc;">Google News · Αυτόματη Ενημέρωση</span>
-    <h2 style="color:#e8f4ff;margin-bottom:0.4rem;">Νέα Ακραίφνιου</h2>
-    <div class="divider" style="margin-bottom:1.6rem;"></div>
-    <a href="/news/" style="
-      display:flex;align-items:center;gap:1.2rem;
-      background:rgba(26,74,138,0.18);
-      border:1px solid rgba(90,171,220,0.22);
-      border-radius:16px;padding:1.4rem 1.8rem;
-      text-decoration:none;
-      transition:background .18s,border-color .18s;
-      max-width:540px;
-    " onmouseover="this.style.background='rgba(26,74,138,0.32)';this.style.borderColor='rgba(90,171,220,0.45)'"
-       onmouseout="this.style.background='rgba(26,74,138,0.18)';this.style.borderColor='rgba(90,171,220,0.22)'">
-      <span style="font-size:2.4rem;line-height:1;flex-shrink:0;">📰</span>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:1rem;font-weight:700;color:#e8f4ff;font-family:sans-serif;margin-bottom:0.2rem;">Τελευταίες ειδήσεις για το Ακραίφνιο</div>
-        <div style="font-size:0.8rem;color:#4a7090;font-family:sans-serif;">Άρθρα από ελληνικά ΜΜΕ · Ενημερώνεται κάθε 2 ώρες</div>
+    <span class="section-label" style="color:#5aabdc;text-align:center;">Google News · Αυτόματη Ενημέρωση</span>
+    <h2 style="color:#e8f4ff;text-align:center;">Νέα Ακραίφνιου</h2>
+    <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;padding:1rem 0 0.5rem;">
+      <div style="
+        display:flex;align-items:center;gap:1.6rem;
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(90,171,220,0.18);
+        border-radius:18px;padding:1.6rem 2.2rem;
+        margin-bottom:1.8rem;
+        max-width:420px;width:100%;
+        flex-wrap:wrap;justify-content:center;
+      ">
+        <span style="font-size:2.4rem;line-height:1;flex-shrink:0;">📰</span>
+        <div style="flex:1;min-width:160px;">
+          <div id="news-cta-src" style="font-family:sans-serif;font-size:0.78rem;color:#a8c8e8;margin-bottom:0.25rem;letter-spacing:0.04em;"></div>
+          <div id="news-cta-title" style="font-family:sans-serif;font-size:0.88rem;color:#4a6880;font-style:italic;line-height:1.5;">Φόρτωση…</div>
+        </div>
       </div>
-      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="#5aabdc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:0.7;">
-        <path d="M3 8h10M9 4l4 4-4 4"/>
-      </svg>
-    </a>
+      <a href="/news/" style="
+        display:inline-flex;align-items:center;gap:0.6rem;
+        background:#1a6eb5;color:#fff;text-decoration:none;
+        padding:0.85rem 2.2rem;border-radius:50px;
+        font-family:sans-serif;font-size:1rem;font-weight:600;
+        letter-spacing:0.04em;
+        box-shadow:0 4px 18px rgba(26,110,181,0.4);
+        transition:background .2s,transform .15s,box-shadow .2s;
+      " onmouseover="this.style.background='#1e82d4';this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 24px rgba(26,110,181,0.55)'"
+         onmouseout="this.style.background='#1a6eb5';this.style.transform='';this.style.boxShadow='0 4px 18px rgba(26,110,181,0.4)'">
+        Νέα 📰
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -978,6 +989,25 @@
     }
     if(desc)desc.textContent=Math.round(d.temperature_2m_max[0])+'° / '+Math.round(d.temperature_2m_min[0])+'°  ·  Ακραίφνιο';
   }).catch(function(){});
+})();
+
+(function(){
+  fetch('/news/feed.json')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var items=data.items||[];
+      if(!items.length)return;
+      var item=items[0];
+      var title=item.title||'';
+      var source=item.source||'';
+      if(source&&title.endsWith(' - '+source))title=title.slice(0,-(source.length+3));
+      else{var m=title.match(/^(.*)\s-\s[^-]+$/);if(m)title=m[1];}
+      var t=document.getElementById('news-cta-title');
+      var s=document.getElementById('news-cta-src');
+      if(t){t.textContent=title;t.style.color='#c8e0f8';t.style.fontStyle='normal';}
+      if(s&&source)s.textContent=source;
+    })
+    .catch(function(){});
 })();
 </script>
 </body>
