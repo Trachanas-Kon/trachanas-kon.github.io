@@ -17,7 +17,7 @@ jobs:
       - name: Fetch RSS feed from Google News
         run: |
           curl -s --max-time 20 \
-            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR&ceid=GR:el" \
+            "https://news.google.com/rss/search?q=%22%CE%91%CE%BA%CF%81%CE%B1%CE%AF%CF%86%CE%BD%CE%B9%CE%BF%22%20OR%20%22%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF%22&hl=el&gl=GR&ceid=GR:el" \
             -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" \
             -o /tmp/feed.xml
           echo "Feed size: $(wc -c < /tmp/feed.xml) bytes"
