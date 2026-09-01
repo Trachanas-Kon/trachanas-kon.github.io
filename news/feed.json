@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-01T04:41:17.499174+00:00",
+  "updated": "2026-09-01T11:28:39.821760+00:00",
   "count": 100,
   "items": [
     {
@@ -31,12 +31,6 @@
       "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQQ0lVMFlEUzdLN2VhS2JmQmdISjQ5NzE3VWQ2cDZNMHVPX3MycWRHcmtkOFBJMTFDbUF3QnVKTjlTYTRlX3UtakJEcTAwdDA0bFNrbU1JUDNPekMtMGI2RzRTS0NBNnVZUFE0b0hrQWtEMkpGanZMR1lBMEFVbXJCQ3lQMDdtMF84R3o4UTkzOHdNZ2E2czNNWXo0OG55VThQMkcwQTF4MUJiZHZHZ2paWGxYbk1RdXfSAbwBQVVfeXFMTXZFRkJGcUlDeGdlaUJWUllXeEhBazI3UGtnX0lnN0lSekdfZDAzTl9kQkoxWEhwNWU1WGJlc0xhLVJ3RGRYdVhnaEN4bDd4YmYwWDBvY2x2STBMR2pnRG13V0RXSWUxR2JQUzd6U3dLbzhPMGEwYmdNbkJ1dWZ3aExoX0l1X3loOG1YTzlHRzQybEw3V0UyX3o5a3pzT2JyTkNpWmtpcklieEF2c2pveUdOYVF6elZqMVFHeXo?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "LiFO"
-    },
-    {
-      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Οχήματα περνούσαν μέσα από τις φλόγες στην εθνική οδό - Newsbeast",
-      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNNGNkX2ItUHB6eWluaEEyNVVaN0FXWFNkUmluMjVxNEhpRGt5aXJYWnEtakkwTjVPMDF0V0lLTHRJMFo4c3NBMXd3MlljTG85b0t4ZnFyNlNvN2VYcWlYYXlFUmVZbVN3UGk0a0t1V0htaVdpeXh2N0hCM216VmNfdjJGTFBuWlRWWTJXUXYwOTV2dw?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbeast"
     },
     {
       "title": "Φωτιά στο Ακραίφνιο Βοιωτίας – Εκλεισε η εθνική οδός - Moneyreview.gr",
@@ -81,6 +75,12 @@
       "source": "newmoney"
     },
     {
+      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Οχήματα περνούσαν μέσα από τις φλόγες στην εθνική οδό - Newsbeast",
+      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNNGNkX2ItUHB6eWluaEEyNVVaN0FXWFNkUmluMjVxNEhpRGt5aXJYWnEtakkwTjVPMDF0V0lLTHRJMFo4c3NBMXd3MlljTG85b0t4ZnFyNlNvN2VYcWlYYXlFUmVZbVN3UGk0a0t1V0htaVdpeXh2N0hCM216VmNfdjJGTFBuWlRWWTJXUXYwOTV2dw?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "Newsbeast"
+    },
+    {
       "title": "Πυρκαγιά στο Ακραίφνιο Βοιωτίας – Άνοιξε η Εθνική Οδός – ΒΙΝΤΕΟ - Real.gr",
       "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQdVNiMHdKeVVLQmZadGcxUDZnbFh4VFJXY2JBSTdIWlg1Z0dTRWdidEJaWWRwcEM0ZE1ENU05U1NtTGk2dDgwUUlDa21ySWVoejVDR2N3ZHE4NG54SXhQUnI5d1lwOTVnR0Z2eWFIVFphYzZSN29HT0FrcEk5QW9NUDlfNnU3aFZMMzJKNXEzbmt6WUFhZ3NnZUh0Q25McUswWkZuSDJNUQ?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
@@ -99,16 +99,16 @@
       "source": "toManifesto.gr"
     },
     {
-      "title": "Έκλεισε η Αθηνών - Λαμίας λόγω της φωτιάς στο Ακραίφνιο Βοιωτίας - Ισχυροί οι άνεμοι στην περιοχή - Athens Voice",
-      "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxOa0xUMkNlY1poX182ZU5GUmRSSnhKUDRTRU1Cd3hxSjFia21oakQ3cFpfUTFVX2x2aHNEY1Q5eWI1dWNDanhxTWRpZ2h3cWhiUmtRV1ZHMVVHa2ZXUVhpV3M3WmI0ZnM5VVRKYlAxVmV1THRWdExOcnhKdHFURWVPMlJ2UlY2R05oWFg5emwyelJqazBDOHVDVXpFTEtxRE1Sb3JDaEdoWFYtNkUzaXk5U2hNSHZ2SFpDaXROcTViSDE3bDFPRVJfRnVORS1TZG5WcGlkNDVGYkdzUmU4UGZIc296TdIB6AFBVV95cUxOZkxaM29uWG9LYV96MGFleXMwS05CMXF3cUlNR0FfRi1DNkpYakstMUdvMmZQVm1YbUJ3RkJMaUFGdUgwS2xldGxyWEZzNlVwaEN3c3RGTlNpTHhpVl91MzZYc291Sm95djFrMm5KX0JhZmM5ZXQ2RDNPNDQ1cUNLVHdycmhURURtR041a1RyQ29pY01IVE5YRFhHelFsUUZVXzVqay0yMzAydjdiY1U1cnFSSDctRnhYMUVicVBjVEhBTGdjTkswZ2xwVGJOZ0YtTC0xckVHNkRMc1h1UHNabnk0Qms1TVl4?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Athens Voice"
-    },
-    {
       "title": "Σε ύφεση η πυρκαγιά που ξέσπασε στο Ακραίφνιο Βοιωτίας - Kathimerini",
       "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPbWpsSE16VjlLMWNWVnpKYmhPQmxaN212d1Q0clBSMkM1UW12clBCZVg3djVMWm1pd1YtNU1XMUFRSi1leXdnWnQyck5oLUlRalRVTkJOT3NyQTBmVFFVb0NMTnROVnh0TWJtdWM0Vk5Vb2VYa3JRa2RISkFoS1d5STR5eHRoTURXOGtuMG1hNjljanZHMU9BSUJJS0pkeGgwdVE?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Kathimerini"
+    },
+    {
+      "title": "Σε ύφεση η φωτιά στο Ακραίφνιο – Άνοιξε η εθνική οδός Αθηνών – Λαμίας - In.gr",
+      "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOcFJJOGtCNDgwTzlwVHJzdi11RjAzX1pEZUowREwxTGtUSkZuX2NSZG9GZGZRaFFmbDJtcFNFa1hSUkp4U2hld2tUN01ReTJHLXQ1UENnbXdvVHNPMVhkWjJKVWdKR3hTVVB4SHROSXROSVgwSk1rZmRmaVhGVFNDcTdtZDBjbnJrZ0k0X1JaS0Z6dGdp0gGaAUFVX3lxTE1UdTZuSVFJQ3dkUFNQVGF2ZTMydExGTHQyNFUxNHNBQlRMT01lTFVmcHlKU000MWVmbGxSYWc1S0NYQmhndmdwbzZFU003NnNlSHVYNnVSN2VWNzM2dnU3UGdFUXB6Sk1wR1R2c3lWY3VWWVNkci1VLU4wY182cWYxZnFuckM4elRXZG1UNkd6NHExTjZMR0pPclE?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "In.gr"
     },
     {
       "title": "Δεκάδες νεκρά ζώα και ζημιές σε καλλιέργειες άφησε πίσω της η φωτιά στο Ακραίφνιο Βοιωτίας – Σε ύφεση το μέτωπο - Newsbeast",
@@ -123,28 +123,28 @@
       "source": "newmoney"
     },
     {
+      "title": "Έκλεισε η Αθηνών - Λαμίας λόγω της φωτιάς στο Ακραίφνιο Βοιωτίας - Ισχυροί οι άνεμοι στην περιοχή - Athens Voice",
+      "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxOa0xUMkNlY1poX182ZU5GUmRSSnhKUDRTRU1Cd3hxSjFia21oakQ3cFpfUTFVX2x2aHNEY1Q5eWI1dWNDanhxTWRpZ2h3cWhiUmtRV1ZHMVVHa2ZXUVhpV3M3WmI0ZnM5VVRKYlAxVmV1THRWdExOcnhKdHFURWVPMlJ2UlY2R05oWFg5emwyelJqazBDOHVDVXpFTEtxRE1Sb3JDaEdoWFYtNkUzaXk5U2hNSHZ2SFpDaXROcTViSDE3bDFPRVJfRnVORS1TZG5WcGlkNDVGYkdzUmU4UGZIc296TdIB6AFBVV95cUxOZkxaM29uWG9LYV96MGFleXMwS05CMXF3cUlNR0FfRi1DNkpYakstMUdvMmZQVm1YbUJ3RkJMaUFGdUgwS2xldGxyWEZzNlVwaEN3c3RGTlNpTHhpVl91MzZYc291Sm95djFrMm5KX0JhZmM5ZXQ2RDNPNDQ1cUNLVHdycmhURURtR041a1RyQ29pY01IVE5YRFhHelFsUUZVXzVqay0yMzAydjdiY1U1cnFSSDctRnhYMUVicVBjVEhBTGdjTkswZ2xwVGJOZ0YtTC0xckVHNkRMc1h1UHNabnk0Qms1TVl4?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "Athens Voice"
+    },
+    {
       "title": "Βελτιωμένη η εικόνα της φωτιάς στο Ακραίφνιο Βοιωτίας: Έκλεισε για αρκετές ώρες η Εθνική οδός Αθηνών - Λαμίας - Skai.gr",
       "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5qTU5mZk1Ka3VpQ1U2UkJFdjE3QmwtZlphaXpFVzdjT0pVdFNpT1M1b2xmZkQ3eFozTmQ2cHdXRU9zZlFzMHpGYlFTeGN1VUJ0VFBMamtoUXRnZ1h3VmMzUzBsSkhPMnRxdFlpRNIBckFVX3lxTFBCRl9Gay0zdmxYZS0xS19JRDFqNVdVNjlkSzQxWExLTlkxNzZ3b1psZ1VPTHlZLVgzRXhqdEFqaHZoU19rT3NmaFJQY0xZU050RWNKZzRaX3o1M29XTGVYUEdMVzJnbzVqZzRVbzdCcEo0Zw?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Skai.gr"
     },
     {
-      "title": "Σε ύφεση η φωτιά στο Ακραίφνιο – Άνοιξε η εθνική οδός Αθηνών – Λαμίας - In.gr",
-      "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOcFJJOGtCNDgwTzlwVHJzdi11RjAzX1pEZUowREwxTGtUSkZuX2NSZG9GZGZRaFFmbDJtcFNFa1hSUkp4U2hld2tUN01ReTJHLXQ1UENnbXdvVHNPMVhkWjJKVWdKR3hTVVB4SHROSXROSVgwSk1rZmRmaVhGVFNDcTdtZDBjbnJrZ0k0X1JaS0Z6dGdp0gGaAUFVX3lxTE1UdTZuSVFJQ3dkUFNQVGF2ZTMydExGTHQyNFUxNHNBQlRMT01lTFVmcHlKU000MWVmbGxSYWc1S0NYQmhndmdwbzZFU003NnNlSHVYNnVSN2VWNzM2dnU3UGdFUXB6Sk1wR1R2c3lWY3VWWVNkci1VLU4wY182cWYxZnFuckM4elRXZG1UNkd6NHExTjZMR0pPclE?oc=5",
+      "title": "Συγκλονιστικό βίντεο με αυτοκίνητα να περνάνε μέσα από τις φλόγες στην εθνική οδό στο Ακραίφνιο Βοιωτίας - ΤΑ ΝΕΑ",
+      "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQOER1eWV2U1ZDT0RLclR0RW9rOUZKNkdGRHpjVTh4TEM4eVdobll5QUFKNHpPUWliNUZmdVNRZTkyeVh2QWEyV1JheEktd0QwZ3QxRm9RV2lZalh4Wjh0dTZFNnBlSllUOGZSV2Zkb0pNR1dqM243TDhuV1piSnp2TXVFOWw4Mk9Bb3RmbGpYU1FKOFAxdVdDc3NFa0J0SUJLenhFOVpJZTVqSGF1Q1F6WFFDVG55bm9PdzNXVUJPNXpCZEZqRzlxSUlB0gHPAUFVX3lxTFBseTcxMEJldEdMMU9odnNnXzFjRElsU1dCMGZ1NXc0dk0tZ1ltcTZWVWR4LTJBNDJNQUYxU2lRU1ozcWgwdWRWdWtDeUVuWkhZSV9KYTNHOFZSaUFHa3l6YVRqN3dIOGZWbHJZTkZROE9jd0s0cUMtLUJsZ2Z1U3RMRTgwaURRcndzcFVhMElBMGVFQ0NveHhjdGF5Z2s0Rkp1RFlmaUVxSFp1T3RlY09CdGJzUk13RzltQy0yTUtYdDBBSlltYjFlTGlMVzU0dw?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "In.gr"
+      "source": "ΤΑ ΝΕΑ"
     },
     {
       "title": "Φωτιά στη Βοιωτία: Μάχη με τον χρόνο πριν πέσει το σκοτάδι στο Ακραίφνιο - Εικόνες από το μέτωπο - Ethnos",
       "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOTlZyTlk0MS1yOTBVMGJxSEs3YlMxVTZMNG96d0RJc0VLbDN0bkZ5bmpGVnFnMWZZSXNJVHUyRml2bng2RU5KMWdCN0F0dEtJVC1EcWxGWWxPc2dUSGVPZXFjZHZqZ3l5ZlpOaFBXQUZ5d2JiY3I2enFZNDM4QUdocHBHTzBJcHNsc3B3dGRmUThRNGVwUzRvRDJfVEVaU2dENVlTM3R2U1JfdWpob084RWVmeHhvZjhyOTlNSEdR0gG4AUFVX3lxTFBvNDBmaElGLVFHS2dNYzY2VUdqalFFUXlTa0x4clhwVWN5Q2V1ZE1iQ3E3SEdRX2pWMlZNS2t5S0R4dVlLVmpabTVGU0ZlVDZGS2RMWDhzeEJwNlVfd1Rra1hYSlVGX0lNbXF2M3JsRkFxNWpCNWk0NjZoZHZobHROdnhKRnlCcGR3OVgzRndzRzJJMG9UenQxMGxZWExCclVhaWpnSzRZTVhtYm1BdUdwYVk1NHhpQmU?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Ethnos"
-    },
-    {
-      "title": "Συγκλονιστικό βίντεο με αυτοκίνητα να περνάνε μέσα από τις φλόγες στην εθνική οδό στο Ακραίφνιο Βοιωτίας - ΤΑ ΝΕΑ",
-      "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQOER1eWV2U1ZDT0RLclR0RW9rOUZKNkdGRHpjVTh4TEM4eVdobll5QUFKNHpPUWliNUZmdVNRZTkyeVh2QWEyV1JheEktd0QwZ3QxRm9RV2lZalh4Wjh0dTZFNnBlSllUOGZSV2Zkb0pNR1dqM243TDhuV1piSnp2TXVFOWw4Mk9Bb3RmbGpYU1FKOFAxdVdDc3NFa0J0SUJLenhFOVpJZTVqSGF1Q1F6WFFDVG55bm9PdzNXVUJPNXpCZEZqRzlxSUlB0gHPAUFVX3lxTFBseTcxMEJldEdMMU9odnNnXzFjRElsU1dCMGZ1NXc0dk0tZ1ltcTZWVWR4LTJBNDJNQUYxU2lRU1ozcWgwdWRWdWtDeUVuWkhZSV9KYTNHOFZSaUFHa3l6YVRqN3dIOGZWbHJZTkZROE9jd0s0cUMtLUJsZ2Z1U3RMRTgwaURRcndzcFVhMElBMGVFQ0NveHhjdGF5Z2s0Rkp1RFlmaUVxSFp1T3RlY09CdGJzUk13RzltQy0yTUtYdDBBSlltYjFlTGlMVzU0dw?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "ΤΑ ΝΕΑ"
     },
     {
       "title": "Σε ύφεση η φωτιά σε δασική έκταση στο Ακραίφνιο Βοιωτίας - News.gr",
@@ -201,16 +201,16 @@
       "source": "MEGA TV"
     },
     {
-      "title": "Βοιωτία: Μεγάλη δασική πυρκαγιά στο Ακραίφνιο – Έκλεισε η εθνική οδός από Θήβα μέχρι Κάστρο - MEGA TV",
-      "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQQmRLV3REaXp3cW84ck41OGJBUHB3VTJmTFNMcVRCdmFpTkpOQ3ZtejE0ZmE0WnNzYlF2ZU9hTHMyNmhmajMtWmU4RDlkMFBUaUxVWmVsVXR1Umcya0lxN0xWY3k1c1ltMmdydE9GaWVZdHd3Mno2ellPeTFVdGpVSFRfb3NPYm1USmtqM25kdGJUaTlnQ0U3UVVaY054WDdiTWxjUTFuSEdRYmN6NG5RUlBaYjRvcnJMWktmV0lJMWVNeUE?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "MEGA TV"
-    },
-    {
       "title": "Φωτιά στη Βοιωτία: Μάχη με τις φλόγες στο Ακραίφνιο - Έκλεισε η εθνική Αθηνών-Λαμίας - Documento - Documento",
       "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOcm1EejBOdUFoek9wZEpKNXdrVVV1SnNhbVpCU1hVUURkd1VHMFpNUno2Smpjd0hTbkRXNUM0aWFSVG05cTRuSkdSenh1V2U3bnVTZUIxZkNIVWZITkVETzlQdmQ2SjQwZVdUZTA3WXdIMUQzd0JTemhZZC1jbHFfNHFkaWpoUGZHakMwYXpRRVc3WUxIUDhkNEJyb0FHWUlzbzdkVE1PcC0wSEtab3RjVnMtV0VUR2PSAbwBQVVfeXFMUEZMNHRJamd3MDhPNVhDSGdsZXdYU0F5VGJQYVBCYU45ckVyRUR6eWhVRXgtVm13TERkdmh0d2JSNnpBaWxPTGFfd3JlOTRTd2c5bHN6MU80LTBSNy12ZXNSd0lRWlgzOU94R3lGWkRoOEVaUkU1Mm9BSDNldm94V3pVTjFDbzI3OUdlYW9wYVBjaW1UOVV5aWtyXzBhRTR5OVpQUHh3MlNtVjhJNjBQbXFETENvYjZoR2I5UDQ?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Documento"
+    },
+    {
+      "title": "Βοιωτία: Μεγάλη δασική πυρκαγιά στο Ακραίφνιο – Έκλεισε η εθνική οδός από Θήβα μέχρι Κάστρο - MEGA TV",
+      "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQQmRLV3REaXp3cW84ck41OGJBUHB3VTJmTFNMcVRCdmFpTkpOQ3ZtejE0ZmE0WnNzYlF2ZU9hTHMyNmhmajMtWmU4RDlkMFBUaUxVWmVsVXR1Umcya0lxN0xWY3k1c1ltMmdydE9GaWVZdHd3Mno2ellPeTFVdGpVSFRfb3NPYm1USmtqM25kdGJUaTlnQ0U3UVVaY054WDdiTWxjUTFuSEdRYmN6NG5RUlBaYjRvcnJMWktmV0lJMWVNeUE?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "MEGA TV"
     },
     {
       "title": "Φωτιά στη Βοιωτία: Βελτιωμένη η εικόνα στο Ακραίφνιο - Δεν κινδυνεύει το χωριό, κάηκε ένα μαντρί - Άνοιξε η Εθνική [βίντεο] - The TOC",
@@ -231,10 +231,10 @@
       "source": "Ημεροδρόμος"
     },
     {
-      "title": "Φωτιά τώρα στο Ακραίφνιο Βοιωτίας: Επιχειρούν 8 εναέρια μέσα, 112 για ετοιμότητα - Newsbomb",
+      "title": "Φωτιά τώρα στο Ακραίφνιο Βοιωτίας: Επιχειρούν 8 εναέρια μέσα, 112 για ετοιμότητα - newsbomb.gr",
       "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQWEtuLUFjdkljQzNFSTdEZmdDUnZWMjNEWWJ5R3N5bDdtaG5HTDlkbVZCT1dUakh1MVVTaGQ5Ykh6MHdTSEtucFBfYTRIVEtITDF4S3lNSkxZZFVoTmgxcnBSMFpzRG55NFhPOHY4UExZYWE1Um1YSGRHdGxjQkdBRVl2UWl2N19OSmtQMWZuZFFMNzdocTlsdW9FM1NsVW16Ui1qcGZtMUU5M1FBNTFMSHBQbmJKZU5keXhQSEdrZmE?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
+      "source": "newsbomb.gr"
     },
     {
       "title": "Πυρκαγιά στο Ακραίφνιο Βοιωτίας - Δήμαρχος Ορχομενού: «Οι ζημιές είναι μεγάλες, καλλιέργειες καταστράφηκαν» - ΒΙΝΤΕΟ - Real.gr",
@@ -243,10 +243,10 @@
       "source": "Real.gr"
     },
     {
-      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας – Ισχυρές πυροσβεστικές δυνάμεις στο σημείο και μήνυμα 112 για ετοιμότητα - thepressproject.gr",
+      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας – Ισχυρές πυροσβεστικές δυνάμεις στο σημείο και μήνυμα 112 για ετοιμότητα - The Press Project",
       "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOblNseDNqZXl0Y0NHblc5Y1ZFal9nWWI3UEVvVWFjR040VUhjdHNlcXd3OWgyNWhiNk5nQVBaS1hOYnR4bDJxLUdOLVpyRUlxX3ZyM2NZeGc5Vmw3VGZiMWhWVnFqRFRBNDFaZ3pneVJBNW5ncmh5elE4eGdlVy1wN19wQl90RGVQZjlJcWRvaFNhMC02Nm5ObmpJV0JtUHpTZGY3WGJNOUt5Rno2TUtEelExUUlMSkNKNW1MLVluOFQ5Mm1ZcG1hTA?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "thepressproject.gr"
+      "source": "The Press Project"
     },
     {
       "title": "Σε ύφεση η φωτιά στη Βοιωτία: Καταστροφές σε καλλιέργειες και ποιμνιοστάσια - CNN.gr",
@@ -255,16 +255,16 @@
       "source": "CNN.gr"
     },
     {
-      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Εντυπωσιακό βίντεο από τον ανεφοδιασμό ελικοπτέρων στην Υλίκη - Newsbomb",
-      "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQNExiSVNJbjAxVjQ5bzNSdWg5bzdiVVRJZWRaU2l6SloxXzJKd1N6TERTLTBfSDhVTlgxdk13UFI2Nm50SkFvQlI0eXdnc1k0b05zMjlPcUZHdnJtb3lmMWJlLXl6Vy1aVG1Pb3lzLURRdEREZDI4bUFscXF0VzZpbHladzVvSnFIS2JqNE9kdWRNTkRwRUZraXVyNHEyZVJFYzlEOUpta2JiaFNaaXNTUTUxVU4zcFdLMWRqWjh2dEFUb0hXdjhQbjNQVENFN3dB?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
-    },
-    {
-      "title": "Φωτιά στο Ακραίφνιο: Κτηνοτροφική μονάδα τυλίχθηκε στις φλόγες - Κάηκαν δεκάδες ζώα - Newsbomb",
+      "title": "Φωτιά στο Ακραίφνιο: Κτηνοτροφική μονάδα τυλίχθηκε στις φλόγες - Κάηκαν δεκάδες ζώα - newsbomb.gr",
       "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQMUdLam45R0c1Q25HbFpQcGs0WDctdFJHRnduZktQSHg3eW5UVENNUi1mcFRLZEpJMWEzamVHaEV1eDBwVU0ydUtFVlFYTjhrRzgwVWNmaUtfdHBKZ3IyYlZlQV9uRzFLaV82TkNOZlFGRzNoaXZJQlVRRW5vSmlCYi1lbEVFbVU3anRLZ1o3M3BoYjk5LUNYbnVNYV9hWmw2R1JfbW9sMlRjcDNoNFViVHhQYndCWXJYU3hGdzVEU05FYXlr?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
+      "source": "newsbomb.gr"
+    },
+    {
+      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Εντυπωσιακό βίντεο από τον ανεφοδιασμό ελικοπτέρων στην Υλίκη - newsbomb.gr",
+      "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQNExiSVNJbjAxVjQ5bzNSdWg5bzdiVVRJZWRaU2l6SloxXzJKd1N6TERTLTBfSDhVTlgxdk13UFI2Nm50SkFvQlI0eXdnc1k0b05zMjlPcUZHdnJtb3lmMWJlLXl6Vy1aVG1Pb3lzLURRdEREZDI4bUFscXF0VzZpbHladzVvSnFIS2JqNE9kdWRNTkRwRUZraXVyNHEyZVJFYzlEOUpta2JiaFNaaXNTUTUxVU4zcFdLMWRqWjh2dEFUb0hXdjhQbjNQVENFN3dB?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "newsbomb.gr"
     },
     {
       "title": "Κλειστή η Εθνική Οδός Αθηνών-Λαμίας: Ανεξέλεγκτο το πύρινο μέτωπο στο Ακραίφνιο Βοιωτίας - Thriassio.gr",
@@ -285,28 +285,28 @@
       "source": "iefimerida.gr"
     },
     {
-      "title": "Πυρκαγιά σε δασική έκταση στο Ακραίφνιο Βοιωτίας: Μήνυμα 112 στους κατοίκους - BusinessDaily",
+      "title": "Πυρκαγιά σε δασική έκταση στο Ακραίφνιο Βοιωτίας: Μήνυμα 112 στους κατοίκους - businessdaily.gr",
       "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQMHpRZmVqUVYzSzBQNFpzSk5CRUlPaFc0SWNhWG9KTncwMXp6TV9IOTZtNG5qWWV5dGdxbnJBU0hKa3BHZnRvYkZFZ1ZVRTF0c1FjT2Q0MHdYNjRDU2tBNTdaak1hZ3EyR3JoWmN2X2N5alRRSzMwUnZnalp2dkJHWWQ0bXluMmVjcWhiWTlYRmJMeTc4bHdhY0U2MzB5dmVtLUFoTC04S0JqWDlRQWRlUQ?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "BusinessDaily"
+      "source": "businessdaily.gr"
     },
     {
-      "title": "Μεγάλη φωτιά στο Ακραίφνιο Βοιωτίας: Άνοιξε ξανά η Εθνική Οδός Αθηνών – Λαμίας - Popaganda",
-      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQdmNTbVRGTWtvM0poMGRYZ0xYU0J2WkhDeW9sVFEyR3VLMjA2ZkRYVmFET213aHlzQnpPU0xRQ0VWWm9lZE9Eb0FsQVVjUDBVTmREYko4TkVCOWgyUDVGVWQ0UjBMaXZnb2F3aThveE5LYkVjRDBJZjBSX2JmRXlTdTRYSnYzSEt0eHc?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Popaganda"
-    },
-    {
-      "title": "Μεγάλη φωτιά στο Ακραίφνιο Βοιωτίας: Συνεχίζεται η μάχη με τις φλόγες, άνοιξε η εθνική οδός - Newsbomb",
+      "title": "Μεγάλη φωτιά στο Ακραίφνιο Βοιωτίας: Συνεχίζεται η μάχη με τις φλόγες, άνοιξε η εθνική οδός - newsbomb.gr",
       "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPMmUzdkdvSlNleWFrc0hnY290OWNvWHlYTHdmVFpubmx2aWZuUnQyRU5pa3F1SklFZVhScW1OOGJUNG53QkNWQ3MzdFpjaFA3Wk5DcmxIOG9rQlUwcVBfVmdhaTRGWG1mOGc3Y2poeHlDejNuT2doOXZfSzJheHZzTjFmZEk5RDZjZmVpTldqdVE1U0NxQ0NfbnFqeTh1MWtGY0d5c0pEbEFEeGNrTlN4R211bmtpb0UwYld2aDJGRHFlM3hybFJDaGhGNTVaci1URnhmVkhXLUE1M2s?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
+      "source": "newsbomb.gr"
     },
     {
       "title": "Οριοθετήθηκε η φωτιά στην Κερατέα – Καλλιέργειες και ζώα κάηκαν στο Ακραίφνιο Βοιωτίας – Σε ύφεση στην Περαία Θεσσαλονίκης - Αθήνα 9,84",
       "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNRG9WOUQwQmI4bUdtM2lWNGtfMTJwNkc0MVlNcnZlSDFqZUp4c2V6Q2NaYWpYbXY5bDRZcEJpZWk2bmJmdkxXUE5XelVxZkRZclFIbTQ0YXpOaGRRbmVkS0FNNTVYZnZUTjdkVXFPOWViaTNjRC1FcWdjM20zLTZWdGdyVFFOc3cybnhUR2RfQWNEWW9NUHl0QmxBd2dWVlgzWkZEZ2s1YVl6QllWZjNLZ2JqSQ?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Αθήνα 9,84"
+    },
+    {
+      "title": "Μεγάλη φωτιά στο Ακραίφνιο Βοιωτίας: Άνοιξε ξανά η Εθνική Οδός Αθηνών – Λαμίας - popaganda.gr",
+      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQdmNTbVRGTWtvM0poMGRYZ0xYU0J2WkhDeW9sVFEyR3VLMjA2ZkRYVmFET213aHlzQnpPU0xRQ0VWWm9lZE9Eb0FsQVVjUDBVTmREYko4TkVCOWgyUDVGVWQ0UjBMaXZnb2F3aThveE5LYkVjRDBJZjBSX2JmRXlTdTRYSnYzSEt0eHc?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "popaganda.gr"
     },
     {
       "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Άνοιξε η ΕΟ Αθηνών-Λαμίας – Ήχησε το 112 - News 24/7",
@@ -339,10 +339,10 @@
       "source": "ΤΡΟΧΟΙ και TIR"
     },
     {
-      "title": "Βίντεο από τη φωτιά στο Ακραίφνιο: Οχήματα περνούν δίπλα από τις φλόγες στην εθνική οδό - Newsbomb",
+      "title": "Βίντεο από τη φωτιά στο Ακραίφνιο: Οχήματα περνούν δίπλα από τις φλόγες στην εθνική οδό - newsbomb.gr",
       "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPa0tyLVZUa1RqNzExTGV0SEw1dWxNYldIZ3AyYXE5NWw0OXpsYWtiN21WVHBMdjhJR01MRWR5WmQzRE82bnVlV0I0T1NWUTJnVGU5Y3A5Q1Fta3BHS0I4Zl9SWXFoVDhTRzRrSXJrNUt3Y2NoTXBDVVgzblVDbk9ZdmEtQ0xXbFVXTkdPc1ROU05menZNZHEwbTBDR1BWYkVvM2luSGxfWHgwRENlc2RYb2hrc1lLQWtP?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
+      "source": "newsbomb.gr"
     },
     {
       "title": "Συνεχίζεται η μάχη με τις φλόγες στο Ακραιφνίο Βοιωτίας: Άνοιξε η Αθηνών - Λαμίας και στα δύο ρεύματα - Athens Voice",
@@ -369,22 +369,16 @@
       "source": "Zougla"
     },
     {
-      "title": "Σε ύφεση η φωτιά στη Βοιωτία – Αποκαταστάθηκε η κυκλοφορία στην Εθνική Οδό - η ναυτεμπορικη",
-      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQeDJ2Y0YwekhmaUNTTS0yY2lfbkRPWUJqTDB0VGZzbDRlRTJRdExhUkJLM0thVHpBMTlvLVRBdE8wQmtvV2ltRVRoMTNTaG1oTGV0UG0xdFBTTnlQQm55SmV6amNwYnA4YzhPRFZzOXVMRHpUVTVRTjYxLVFYbmk5NzF3SG5LU09YQWs2dnJRbVpRYlJJX21lWHpwSjVmWWZfb2RJMmtFaW5uRXJEZ1NtN2NVeGtBQ0k?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "η ναυτεμπορικη"
-    },
-    {
       "title": "Σε ύφεση η φωτιά στο Ακραίφνιο Βοιωτίας – Καταστράφηκε κτηνοτροφική μονάδα - ertnews.gr",
       "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOdXVYOC1OZks5aGRkSnl2cW5aRkF5UFZHal9sTkpRX3RBVTBFSG80Z2JUTnBkYm9vTU5xQlRSSFVzQVBwT042N2VIajBaazUzSGFPbWhaWG1OeHNNR1FaT1NzNHFxMVdZTzNhTUlRVGtxREwyNVk4eWlnUS1EOHZEdTdGRXREejczQ1FKLTdNeERuSEFkRkZ6RzQtVnRDVmlPX1BtN0VpOG1VcVQzVU1nRUt30gG3AUFVX3lxTE5BTjBxQ2RVUGx6VGZ2UjJ6bzh4ckRZdUU3NDQzZnpJMnRDVmdtMmVoQThJT0VVbWlCUTV5V01FMjRkUlVVT1Rjb016aThJSGF6SjI3c0JBQXY2a2k2NjZCeFZmdlJINmI1S2gyMGphdTAtXzVCX2RFS1VTbElwRDZoeDVsek9WWndSX2Y4QWRNYXJBOE8wMW9GT3QwNGtyVXdMemVFMmlCd1FMNkE2bmt3c2lEdlJ6bw?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "ertnews.gr"
     },
     {
-      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Οχήματα περνούν μέσα από τις φλόγες στην εθνική οδό Αθηνών-Λαμίας - ΒΙΝΤΕΟ - ENIKOS",
-      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPWkRZNG5IREt3ZGN6bml5SHdpVW4zSlNGWUcwaFJHMFNiZG1oM3ptajFMTVFSVl9jeE0yRzNBNlBoWVR0MG4zT0V4Y2E1NWxfTEJhd04wcnlMX3h6akJkTkJJYTlBd1FqVEFLU05GbVd2MEE1aF9YWU1Bc0pXUTBRdnNYbFBmMjlyWlJua1RRTEhuRzBEOUV1XzA5X3BYaU5pRENkZENyZ2s5UVlRZW1SSHJhREZDejdUbURtYTN3bWNCN3N6dlZjcUhrTXhhVVhRM0trOEpYX2gyc0nSAeABQVVfeXFMUEsxMlZrWWo4N2kyMHUzeGYzQmZUMThsbWltcHM5ZjFnQjlfMm9halhSRURyRkNZYkFPalZFbGJ1UXk2NmJOZFFQYVZTNGRFYVc2Q0xMR2l0R2Z6U2dBS1JNSFpyaGFuUkhLYjVoVnlLblpUNEQ5MHZiWTJRM2lqR3p5S1NKMi1hN0ludTM4ODBuTzBhdkdPVncwTzE2SHRNVVA3VnlGNkx3MFRiTzg1S3NLeXQ4Z29GRWZ4b1JhdkJWelhhZU9reVpHMFV5bU9CNkFOa0JkXzVTOW52bGh3cHU?oc=5",
+      "title": "Σε ύφεση η φωτιά στη Βοιωτία – Αποκαταστάθηκε η κυκλοφορία στην Εθνική Οδό - η ναυτεμπορικη",
+      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQeDJ2Y0YwekhmaUNTTS0yY2lfbkRPWUJqTDB0VGZzbDRlRTJRdExhUkJLM0thVHpBMTlvLVRBdE8wQmtvV2ltRVRoMTNTaG1oTGV0UG0xdFBTTnlQQm55SmV6amNwYnA4YzhPRFZzOXVMRHpUVTVRTjYxLVFYbmk5NzF3SG5LU09YQWs2dnJRbVpRYlJJX21lWHpwSjVmWWZfb2RJMmtFaW5uRXJEZ1NtN2NVeGtBQ0k?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "ENIKOS"
+      "source": "η ναυτεμπορικη"
     },
     {
       "title": "Σε ύφεση η πυρκαγιά στο Ακραίφνιο Βοιωτίας - Επιχειρούν ισχυρές πυροσβεστικές δυνάμεις - Μακεδονικά Νέα",
@@ -393,16 +387,28 @@
       "source": "Μακεδονικά Νέα"
     },
     {
+      "title": "Ακραίφνιο Βοιωτίας: Λύκος καταγράφηκε στην κεντρική πλατεία μέρα μεσημέρι - Sterea News",
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPdkVkTDBQTWhWLXdGUTE4STFFM216ZGRIcXpkb0pwQkZSOUVKOVYwOVN5QTlENnhsTzZELUdIbVczQ1FFMFBWNnRZckduZTliUjNIM1BzMzk1ek5WeW1lajZ5eHRBbVdYMlpCZUozVUlrNHJRdng2QjJTZ2hmRThmVUJJekxTYXVXWDk3Y3BtVXhKazk4WEt3NE9hSk1DeFduelExaU5kSHN5S28?oc=5",
+      "pubDate": "Wed, 08 Jul 2026 07:00:00 GMT",
+      "source": "Sterea News"
+    },
+    {
+      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Οχήματα περνούν μέσα από τις φλόγες στην εθνική οδό Αθηνών-Λαμίας - ΒΙΝΤΕΟ - ENIKOS",
+      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPWkRZNG5IREt3ZGN6bml5SHdpVW4zSlNGWUcwaFJHMFNiZG1oM3ptajFMTVFSVl9jeE0yRzNBNlBoWVR0MG4zT0V4Y2E1NWxfTEJhd04wcnlMX3h6akJkTkJJYTlBd1FqVEFLU05GbVd2MEE1aF9YWU1Bc0pXUTBRdnNYbFBmMjlyWlJua1RRTEhuRzBEOUV1XzA5X3BYaU5pRENkZENyZ2s5UVlRZW1SSHJhREZDejdUbURtYTN3bWNCN3N6dlZjcUhrTXhhVVhRM0trOEpYX2gyc0nSAeABQVVfeXFMUEsxMlZrWWo4N2kyMHUzeGYzQmZUMThsbWltcHM5ZjFnQjlfMm9halhSRURyRkNZYkFPalZFbGJ1UXk2NmJOZFFQYVZTNGRFYVc2Q0xMR2l0R2Z6U2dBS1JNSFpyaGFuUkhLYjVoVnlLblpUNEQ5MHZiWTJRM2lqR3p5S1NKMi1hN0ludTM4ODBuTzBhdkdPVncwTzE2SHRNVVA3VnlGNkx3MFRiTzg1S3NLeXQ4Z29GRWZ4b1JhdkJWelhhZU9reVpHMFV5bU9CNkFOa0JkXzVTOW52bGh3cHU?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "ENIKOS"
+    },
+    {
       "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Ενισχύθηκαν οι δυνάμεις της Πυροσβεστικής -Επιχειρούν 15 εναέρια, 112 για ετοιμότητα - iefimerida.gr",
       "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQSDJYWmpsY0xBVFFGeWNwbW1WVG9YR2l5bFNXM1FPVmxOME96Z3oxSDNRdUdiMkhrSWJQNm1Zb2dSQkNhMzBQRXV3MEpDQ0dDVVlWdUhxb1lvbGNwNXRyNDJ5MTlJRDNVMUZNQVh3SlpiZkFFSnVmZF8wWWlYTVoxakVzRDdJeXFXakE4T1l2bFNkSnZPTzRRMll5bGxNTVRJTmtteXRfU2RrSFZxdU5EZXZ1WjlITTdnb3p1aUFZd1LSAcYBQVVfeXFMUFFhNHU0NVR0Rzd6cUhrR3owTVV1dFlQTzM2LWhXYlBMa2l3bmJCWDNaWmRCdVRQZW9Wd012ejd0bkc2RWg5VEhORVBuTjdkcTIxTmRyZzFjcFBsLTQ2aDNGX0dGY2Ixa1lOM0dSb08wZFFlY29YUjYyczA2TGN2bzdmT2xNMUg4QmJmeUZkd0NLZS1lZGd1YXNPLVM2dndHNnVNVm91bGNQWUhwQVZWSDhiRms3bHRXc3VBemg1ejQ5ckhjLXVB?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "iefimerida.gr"
     },
     {
-      "title": "Φωτιά στο Ακραίφνιο: Εικόνες καταστροφής από το πύρινο μέτωπο – Φωτογραφίες και βίντεο - Newsbomb",
+      "title": "Φωτιά στο Ακραίφνιο: Εικόνες καταστροφής από το πύρινο μέτωπο – Φωτογραφίες και βίντεο - newsbomb.gr",
       "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNSkd6UlMzdUJWUnN1WXE4UTFleGhtUm1MaEhwUEJCR3NXMFh6d3RfWnZOVjJ5Mk9SZHpMQ3ZoazFIS1VVMFVDNmF3cHk4UXd5WUVYVWtYQ2x2SW1lNGNCSUxGNlpqeG1PTl9RcjBOeHVIb29wQ3lDRjg0SG9EVXZna013NHRRbTFsVlctQlhxUmFsQ2JFNmNTTzI4RDNnOWE3ek5kTGZQbEZ2ZEhqN2RUWDMxZk00RjczUXR0bnBPNFBsZTh2UjlIWmhmOFI?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
+      "source": "newsbomb.gr"
     },
     {
       "title": "Κλειστό τμήμα της Αθηνών – Λαμίας λόγω της φωτιάς στο Ακραίφνιο Βοιωτίας - Moneyreview.gr",
@@ -435,28 +441,22 @@
       "source": "mononews.gr"
     },
     {
-      "title": "Φωτιά στο στη Ακραίφνιο Βοιωτίας: Άνοιξε η εθνική οδός – Ήχησε το 112 - Sterea News",
-      "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQUkFoYkY4RXBwa0NJclBuT2xOckVMbXFERHJYSVFXVGRWWC1vLUI3TWcyS1otVVdCdk4wZWlpUnJFODA4ajY5SDNENzhlYjhXTjc5bGJsMDFTSjk3WUVaSG1ma25nbldaa21yMDNIcVZWZ0xVbVBoNTFqNE45RF9mTk95dWZhcmRhUTIwa3pvdjhtazlBMXJxa3VCdnNBcjg?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Sterea News"
-    },
-    {
       "title": "Βοιωτία: Καταστροφές σε κτηνοτροφικές μονάδες από τη φωτιά στο Ακραίφνιο – «Τα ζωντανά είναι καμένα μέσα», - ENIKOS",
       "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxQTHBZYmV3eC1hdVZ1RGZoSmZkbGRkQUhIZFR2YjIwa2lrS1RxSUFCWGpxXzNwMXdWV0lEalN4Sktmcm8wX3lKMjliV2JJQUJfNXNtVTVBeDVnRWV0c191UTNsclBWUkV0aVdpcGRNUXpqQ19UTkVCV0k4MDBhTUNQSGY2RDIzTjU0S3NRV1lDUXh2V1FzdkxENjNOSlhya1VPSkVlSzVmbVp5UEV1Ni1Fb2kwbWRWTWF6SFM3NG1pRm9OOGptUnZBcExQZGo3cWNhVXpjZVZvVnZxa3pHeVpMMGJfT0RhbTE3dm9XMHQyd9IB9AFBVV95cUxOSU5Yb0ItYjlrNW1uYmk2a3pvaGtlbXk4dGF1eUd4S3BzWE1Cdkc1eU1ZMFA2dENIdEFOQ0p3bEJSY3ZoRWh1aFVsT3huUENpbTZ0Vy1IZ2Z4MUM1cXItMzBsa195REw5NFViLXEyeWZadmpPazRVd3M1VWNfMkV2M2I4WXhReUVFWkZXcW9XbVBoeTJOVGg0SWlqZklrN2lqYjY2aEx0bThTVU4wV2ZfYWw2ZkFWUF91Yml0dFlob25hdmhNWW0tNkdNM202WUQ3ellrYmtWSTlEbEdOTVBRX21EOE5OQUg2NVpCa3hQYzhfNkFI?oc=5",
       "pubDate": "Tue, 23 Jun 2026 07:00:00 GMT",
       "source": "ENIKOS"
     },
     {
+      "title": "Φωτιά στο στη Ακραίφνιο Βοιωτίας: Άνοιξε η εθνική οδός – Ήχησε το 112 - Sterea News",
+      "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQUkFoYkY4RXBwa0NJclBuT2xOckVMbXFERHJYSVFXVGRWWC1vLUI3TWcyS1otVVdCdk4wZWlpUnJFODA4ajY5SDNENzhlYjhXTjc5bGJsMDFTSjk3WUVaSG1ma25nbldaa21yMDNIcVZWZ0xVbVBoNTFqNE45RF9mTk95dWZhcmRhUTIwa3pvdjhtazlBMXJxa3VCdnNBcjg?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "Sterea News"
+    },
+    {
       "title": "Φωτιές: Καλύτερη εικόνα σε Ακραίφνιο και Περαία, υπό μερικό έλεγχο σε Έβρο και Σπάτα (Βίντεο) - Dnews",
       "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQdHQ4UVB0Y19EZldTWUd3LXdENmFvbjgyY2NRNEYwM1pCa1dpYW5XSWV0OHpKQ1FPNFFveVNiTEV3cXRJb01VTTFaeWVBckZlNXVveTJreUVCWUM2VENVejBBel8yY1pVYlo3V0tLbnhKUmUyVmotWmZUWjI1a3l5c0M4S2FMczRDVEhOb0FYbmdVMmhzVFRFdXdfZmVpdVNJbVA3SG1pNnZUYWo5WEl1alYwbURqN3NpNTRsM2NtZGFLRVY4RDRSdU5kNXJSUQ?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Dnews"
-    },
-    {
-      "title": "Ακραίφνιο Βοιωτίας: Λύκος καταγράφηκε στην κεντρική πλατεία μέρα μεσημέρι - Sterea News",
-      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPdkVkTDBQTWhWLXdGUTE4STFFM216ZGRIcXpkb0pwQkZSOUVKOVYwOVN5QTlENnhsTzZELUdIbVczQ1FFMFBWNnRZckduZTliUjNIM1BzMzk1ek5WeW1lajZ5eHRBbVdYMlpCZUozVUlrNHJRdng2QjJTZ2hmRThmVUJJekxTYXVXWDk3Y3BtVXhKazk4WEt3NE9hSk1DeFduelExaU5kSHN5S28?oc=5",
-      "pubDate": "Wed, 08 Jul 2026 07:00:00 GMT",
-      "source": "Sterea News"
     },
     {
       "title": "Φωτιά τώρα στο Ακραίφνιο Βοιωτίας: \"Σηκώθηκαν\" επτά αεροσκάφη και ελικόπτερο για το πύρινο μέτωπο - Προειδοποιητικό 112 - Παραπολιτικά",
@@ -483,22 +483,34 @@
       "source": "Alpha Tv"
     },
     {
-      "title": "Καλύτερη η εικόνα της πυρκαγιάς στο Άκραιφνο Βοιωτίας - Αποκαταστάθηκε η κυκλοφορία στην εθνική οδό [βίντεο] - Η Εφημερίδα των Συντακτών",
+      "title": "Καλύτερη η εικόνα της πυρκαγιάς στο Άκραιφνο Βοιωτίας - Αποκαταστάθηκε η κυκλοφορία στην εθνική οδό [βίντεο] - efsyn.gr",
       "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOS0o0NEQ2Yy1OT1RTLWNPdVNYVzA2X0ZQUjlObnc1QWhUMldhTS1BbEp4aXFYWlVGdHR2b09fQUk0UU9UcU5zOElIeFdGREFDYS1fdy1QRXVaX19EeEJzSlE3cDRVTzV6WUJUMEJoX0JKdEU3R3NFcmphRDk0WE16eE8teUxScjE1MDJXUEl0bnJzWFc3OGlIVk9UT2xGd1dJY0xoakhIOU16cEdMYjYzbFd1dHVfcVFiazV5TGE3VnFJN1ZxUlZqeDloRmZfckU?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Η Εφημερίδα των Συντακτών"
+      "source": "efsyn.gr"
     },
     {
-      "title": "Φωτιά στο Ακραίφνιο: «Η φωτιά δεν απειλεί σπίτια, δύσκολες συνθήκες με ανέμους», λέει ο δήμαρχος - Newsbomb",
+      "title": "Έκλεισε η Αθηνών - Λαμίας λόγω της φωτιάς στο Ακραίφνιο Βοιωτίας - Επιχειρούν 118 πυροσβέστες και 14 εναέρια - mononews.gr",
+      "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOSERwSGNjc3R2XzdLSjFlb0FtMzlnWWxuVWx3OXFzLXhlT19oalZKZklibDlVazktLUUzVE92YW5oSWYySDZxV0FOMEJHbTh6cHE1US0zSTdwVGpObmxRcEg2YVFUM3VBakMwZWVOcDFMaHBXem5tWnRjU3c1T1hTZUdIS05aMlhsR2F5VFN1RVNYOWd6c3h1QXZiUEIzWlVZNVJRZ3BINjAzOFJpQWZ6U2dYcGlMdVQ2YjNkN3JOR3FtVGJ0alVWRjdUcDNmZXFrOHdPRQ?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "mononews.gr"
+    },
+    {
+      "title": "Φωτιά στο Ακραίφνιο: «Η φωτιά δεν απειλεί σπίτια, δύσκολες συνθήκες με ανέμους», λέει ο δήμαρχος - newsbomb.gr",
       "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQOHdvU3I4dlFOQTEzUW5ONTZnU0sxRVlwX2N5blVWbVRrMUxRaUUySkpNMl96SzhqTTBlNWwyNGxaU0kxZkxldkdhc1JVWGJ4akpaTGhJWGFEQUQ4MTQtVnhPVkdqcWdqYUpISTkzRDR4dFg0REFyQmtPdEtEUUhrYUZWNlF3STJWTXFqVTJLelREcjgxZi0tTGtBdkR5TWRIclpJU2MwS24zTk9oLU00YVA1cV9nWXZuazlaalljTEFWSXJ5YW5SSXVZN01zRXVJNlE4?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
+      "source": "newsbomb.gr"
     },
     {
-      "title": "Μεγάλη φωτιά στο Ακραίφνιο Βοιωτίας, έκλεισε η Αθηνών - Λαμίας - Open TV",
+      "title": "Ενισχύθηκαν οι πυροσβεστικές δυνάμεις στην πυρκαγιά στο Ακραίφνιο Βοιωτίας - Οριοθετήθηκε σε Ελεώνα Θήβας - Sterea News",
+      "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQaGFjT1Z1QUFSbXc1X1pRNDFsbTctZnFDZlBpQWpXaUgxU2RUTHIyeUNQWVVKUXB0c0pYbVgzWl9QQndEQm1iMWZJZERnOUdZMHZHanZhTFJVbDNORTBpY2JjSTNrMk15X2lyRnVpWlpCZjBydDBYdFJ4RndmX1g3elZrbGh3RDdZVnBGbG02SUFDN3l5WldrOEhxcmd3SU85WldJMVRycXNwNkRjVWc?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "Sterea News"
+    },
+    {
+      "title": "Μεγάλη φωτιά στο Ακραίφνιο Βοιωτίας, έκλεισε η Αθηνών - Λαμίας - tvopen.gr",
       "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxONmNVZmY0cTNjR21QQkFxTm9zN1NWOWJLbmZrVXZkSDJGTFdYSG5JRFB5VTYzYUh3cWpDWUxHRlpVeGFFRDBlakhBd3lVLXdHSVdQTFdsV01EVkg4SmNvcE1BZ1ZtVzJjcTVmaWF6cGlVQkdrMEVnOHZlODZKcUlNbEdpSEFFdTJEcUFZb0psMVE?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Open TV"
+      "source": "tvopen.gr"
     },
     {
       "title": "Σε εξέλιξη η φωτιά στο Ακραίφνιο Βοιωτίας – Έκλεισε η Εθνική Οδός Αθηνών–Λαμίας, επιχειρούν 14 εναέρια - ΤΑ ΝΕΑ",
@@ -555,16 +567,10 @@
       "source": "avgi.gr"
     },
     {
-      "title": "Τρία πύρινα μέτωπα σε Αττική και Βοιωτία - Σε ύφεση η φωτιά στα Σπάτα, 112 σε Ακραίφνιο και Ελεώνα - Newsbomb",
+      "title": "Τρία πύρινα μέτωπα σε Αττική και Βοιωτία - Σε ύφεση η φωτιά στα Σπάτα, 112 σε Ακραίφνιο και Ελεώνα - newsbomb.gr",
       "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPQ2daSmVvT0VCMGRxd1F5T2tia3Q0aTdBU1dLV0dtc3NzeUxHM0lnZFkxdjkyMVFxRHl5aVRrMnJOTGVnbFJNQmFIRGtRelF1T0s3bVkzVEpfQTFiM0tVVTdPTUN3S1NHYlJsdEZJaWtURzdkV2NUVjBWellKWi1UblBWcHk4TFBCXzJ2UnNBbEZtdU5tNUQ4NDNsZkk3STlVaXN3ZlhtNUxVWTRVTzhOUzJSWVlYcW5UdEF2WHdaM0I1RUpHTHlVYkNIMm55VjB1ZXVZVXJoQQ?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
-    },
-    {
-      "title": "Ενισχύθηκαν οι πυροσβεστικές δυνάμεις στην πυρκαγιά στο Ακραίφνιο Βοιωτίας - Οριοθετήθηκε σε Ελεώνα Θήβας - Sterea News",
-      "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQaGFjT1Z1QUFSbXc1X1pRNDFsbTctZnFDZlBpQWpXaUgxU2RUTHIyeUNQWVVKUXB0c0pYbVgzWl9QQndEQm1iMWZJZERnOUdZMHZHanZhTFJVbDNORTBpY2JjSTNrMk15X2lyRnVpWlpCZjBydDBYdFJ4RndmX1g3elZrbGh3RDdZVnBGbG02SUFDN3l5WldrOEhxcmd3SU85WldJMVRycXNwNkRjVWc?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Sterea News"
+      "source": "newsbomb.gr"
     },
     {
       "title": "Λόγω φωτιάς στο Ακραίφνιο Βοιωτίας εκτρέπεται η κυκλοφορία στην εθνική οδό από Α/Κ Θήβας μέχρι αυτόν του Κάστρου - Sterea News",
@@ -595,12 +601,6 @@
       "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxObUlnM0Rob1ZQR0MzV0M1SWhnWkoxUHR2dG5tdkpjb0xIX0pzMERSRnlHcnJFXzZEYnJvZlNGcV9EcUxfSExwWFE2ckJhLTZJbGFhdFBUNDZyWnU0WU03YkhmZGNqdVZmWlBBRlJkdjBQU2RscGFXMGJnQXdQNG1VcTdQejJUdHFtNDhwRVBwbVpDbWVqQjFqSjg5UUsxbG9BUTZz?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Cretalive"
-    },
-    {
-      "title": "Σε ύφεση η φωτιά στο Ακραίφνιο Βοιωτίας: Κάηκαν καλλιέργειες, ζώα και γεωργικά μηχανήματα - ΦΩΤΟ και ΒΙΝΤΕΟ - ENIKOS",
-      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPR2FUOEFOOGRlTFhkMUlwblNKRDQteWN0RkFpLVhiRUJyd1FPb293ZGd3LXlMQUZFdmk0R3dPWHhRcGRsWV84cWE2VDV0cVRueGlEeTAtZFRyY1dhOVhHa1FXX254NVc5YzFqdmxDUDcyRWJ5V2hmOFpHcVhmQkk3cG5xencweEt6Vl9ZMWR4YlczcGlOSmVSVF9CYS1za0Y4RjVSTjMyaXJYOElIdmlkMWhmX2hVYloyNGJfcVN4OVFzY0tSZWR1RlFxUVp1QTk2bm9EOGUxSFcydGfSAeABQVVfeXFMUDV0QnJKX0wybzRZSW1tTUJTRThmRTR4NmxCTmRCcHpkZXdMUFF1T3FsRm1nZ2d6d3Nhd2RDb0wzVW1WQTNoV2RtMHJmUFh0ZHl4WlR4Vm1YeC0wNkRYX0w1Z3A2djNBclp3QlN1ektyalpUbFdWMUJRM2YxdWJWLTJ1ekhKbHZjdURORmNBdV9WQmloZTIxaGhHRURCbjhnVUVSUW1pbERQUjB2bXdpN3dpVWM0Wmo3anN3cENvOHNqQ0lZaXFsVzhNZDl5V004UDlRWUc3dmphUldPSlp4Q3o?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "ENIKOS"
     }
   ]
 }
