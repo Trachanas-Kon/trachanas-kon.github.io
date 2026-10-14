@@ -26,7 +26,7 @@ jobs:
 
           # Secondary: alternative spelling + broader area + Ptωios road
           curl -s --max-time 20 \
-            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%AF%CE%B1+OR+%CE%A0%CF%84%CF%8E%CE%BF+%CE%92%CE%BF%CE%B9%CF%89%CF%84%CE%AF%CE%B1+OR+%CF%80%CF%84%CF%8E%CE%B9%CE%BF%CF%82+%CE%B4%CF%81%CF%8C%CE%BC%CE%BF%CF%82&hl=el&gl=GR&ceid=GR:el" \
+            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%AF%CE%B1+OR+%CE%A0%CF%84%CF%8E%CE%BF+%CE%92%CE%BF%CE%B9%CF%89%CF%84%CE%AF%CE%B1+OR+%CF%80%CF%84%CF%8E%CE%B9%CE%BF%CF%82+%CE%B4%CF%81%CF%8C%CE%BC%CE%BF%CF%82+OR+%CF%85%CF%80%CE%BF%CE%B3%CF%81%CE%B1%CF%86%CE%AD%CF%82+%CE%91%CE%BA%CF%81%CE%B1%CE%AF%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR&ceid=GR:el" \
             -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
             -H "Accept-Language: el-GR,el;q=0.9" \
             -o /tmp/feed2.xml
