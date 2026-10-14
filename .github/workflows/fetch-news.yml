@@ -24,9 +24,9 @@ jobs:
             -o /tmp/feed1.xml
           echo "Feed1 size: $(wc -c < /tmp/feed1.xml) bytes"
 
-          # Secondary: alternative spelling + broader Boeotia area
+          # Secondary: alternative spelling + broader area + Ptωios road
           curl -s --max-time 20 \
-            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%AF%CE%B1+OR+%CE%A0%CF%84%CF%8E%CE%BF+%CE%92%CE%BF%CE%B9%CF%89%CF%84%CE%AF%CE%B1&hl=el&gl=GR&ceid=GR:el" \
+            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%AF%CE%B1+OR+%CE%A0%CF%84%CF%8E%CE%BF+%CE%92%CE%BF%CE%B9%CF%89%CF%84%CE%AF%CE%B1+OR+%CF%80%CF%84%CF%8E%CE%B9%CE%BF%CF%82+%CE%B4%CF%81%CF%8C%CE%BC%CE%BF%CF%82&hl=el&gl=GR&ceid=GR:el" \
             -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
             -H "Accept-Language: el-GR,el;q=0.9" \
             -o /tmp/feed2.xml
