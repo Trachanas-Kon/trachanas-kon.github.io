@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-14T18:26:49.746234+00:00",
+  "updated": "2026-10-14T23:05:30.221147+00:00",
   "count": 100,
   "newest_item": "2026-07-15T19:32:09+00:00",
   "items": [
@@ -232,6 +232,12 @@
       "source": "Newsbomb"
     },
     {
+      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Εντυπωσιακό βίντεο από τον ανεφοδιασμό ελικοπτέρων στην Υλίκη - Newsbomb",
+      "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQNExiSVNJbjAxVjQ5bzNSdWg5bzdiVVRJZWRaU2l6SloxXzJKd1N6TERTLTBfSDhVTlgxdk13UFI2Nm50SkFvQlI0eXdnc1k0b05zMjlPcUZHdnJtb3lmMWJlLXl6Vy1aVG1Pb3lzLURRdEREZDI4bUFscXF0VzZpbHladzVvSnFIS2JqNE9kdWRNTkRwRUZraXVyNHEyZVJFYzlEOUpta2JiaFNaaXNTUTUxVU4zcFdLMWRqWjh2dEFUb0hXdjhQbjNQVENFN3dB?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "Newsbomb"
+    },
+    {
       "title": "Βοιωτία: Έκλεισε η Αθηνών – Λαμίας λόγω της φωτιάς στο Ακραίφνιο - MEGA TV",
       "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxPNDVBN0lQdWZaSVlZTWQtTHA3anltQndPRlJBLWJya0tjcmxMWlNvVUF0dVJlTHJ5cl9sNG9DQ091M1dwYngtQXZTOE4yaFVyVDk5dkJncllCN3ZuZXF3QlBQaU5rUkU5LTZOMXhRNW5GZDhFTTJXVmZsZ0p3OEdkMjY0Y0JQTEF6S0hkYkoyUjBoT3RMRlRwcDhwOWVqZw?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
@@ -248,12 +254,6 @@
       "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPd0E0RmdVT2oyRFowZHJ4SDFlblJaaUg1YTNZbE5ybGtIc1pXbkR6bWVOc1p3ZWV4THRxcTFDV21lY2lXMUVGT3dqWEpuUFJJTDdvcmhDVFJUM0lQTUZpYk91eHRfQzhVQlcySVVubDBzcnQ1Ti01YTZIOXZVTEEtOUstamhvN1RXR3lmN2oyWUtCZV9QdjNwWnZYYnZxdDNKMUhfaFJtTW5UNlNjSFI0U0ZsTQ?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "CNN.gr"
-    },
-    {
-      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Εντυπωσιακό βίντεο από τον ανεφοδιασμό ελικοπτέρων στην Υλίκη - Newsbomb",
-      "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQNExiSVNJbjAxVjQ5bzNSdWg5bzdiVVRJZWRaU2l6SloxXzJKd1N6TERTLTBfSDhVTlgxdk13UFI2Nm50SkFvQlI0eXdnc1k0b05zMjlPcUZHdnJtb3lmMWJlLXl6Vy1aVG1Pb3lzLURRdEREZDI4bUFscXF0VzZpbHladzVvSnFIS2JqNE9kdWRNTkRwRUZraXVyNHEyZVJFYzlEOUpta2JiaFNaaXNTUTUxVU4zcFdLMWRqWjh2dEFUb0hXdjhQbjNQVENFN3dB?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
     },
     {
       "title": "Πυρκαγιά στο Ακραίφνιο Βοιωτίας - Δήμαρχος Ορχομενού: «Οι ζημιές είναι μεγάλες, καλλιέργειες καταστράφηκαν» - ΒΙΝΤΕΟ - Real.gr",
@@ -562,16 +562,16 @@
       "source": "Cretalive"
     },
     {
-      "title": "Τρία πύρινα μέτωπα σε Αττική και Βοιωτία - Σε ύφεση η φωτιά στα Σπάτα, 112 σε Ακραίφνιο και Ελεώνα - Newsbomb",
-      "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPQ2daSmVvT0VCMGRxd1F5T2tia3Q0aTdBU1dLV0dtc3NzeUxHM0lnZFkxdjkyMVFxRHl5aVRrMnJOTGVnbFJNQmFIRGtRelF1T0s3bVkzVEpfQTFiM0tVVTdPTUN3S1NHYlJsdEZJaWtURzdkV2NUVjBWellKWi1UblBWcHk4TFBCXzJ2UnNBbEZtdU5tNUQ4NDNsZkk3STlVaXN3ZlhtNUxVWTRVTzhOUzJSWVlYcW5UdEF2WHdaM0I1RUpHTHlVYkNIMm55VjB1ZXVZVXJoQQ?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Newsbomb"
-    },
-    {
       "title": "Έκλεισε η Αθηνών - Λαμίας λόγω της φωτιάς στο Ακραίφνιο Βοιωτίας: Επιχειρούν 10 αεροσκάφη και 2 ελικόπτερα - Thestival",
       "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNZkIxV1JlSDNLdjFMOU9EdmVYb3VaaUw0WDJhS19xT3NCZGtVZC1qTGR5YXpOcjd5OHRmbWFhYmFTTlJYR2VGb3R6bVRkbmI5NjQtdGJXVDhfZzB1amJZOFNNX0ZrZkNYYkVBWVA2OUlfQ085WTQ0U0VmZzh2c0JnS2NUdEhack9UWHc0T05R?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Thestival"
+    },
+    {
+      "title": "Τρία πύρινα μέτωπα σε Αττική και Βοιωτία - Σε ύφεση η φωτιά στα Σπάτα, 112 σε Ακραίφνιο και Ελεώνα - Newsbomb",
+      "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPQ2daSmVvT0VCMGRxd1F5T2tia3Q0aTdBU1dLV0dtc3NzeUxHM0lnZFkxdjkyMVFxRHl5aVRrMnJOTGVnbFJNQmFIRGtRelF1T0s3bVkzVEpfQTFiM0tVVTdPTUN3S1NHYlJsdEZJaWtURzdkV2NUVjBWellKWi1UblBWcHk4TFBCXzJ2UnNBbEZtdU5tNUQ4NDNsZkk3STlVaXN3ZlhtNUxVWTRVTzhOUzJSWVlYcW5UdEF2WHdaM0I1RUpHTHlVYkNIMm55VjB1ZXVZVXJoQQ?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "Newsbomb"
     },
     {
       "title": "Φωτιά τώρα στο Ακραίφνιο Βοιωτίας – Ήχησε το 112 - Athens Voice",
