@@ -230,6 +230,19 @@
         document.getElementById('last-updated').textContent=
           'Ενημερώθηκε '+p(d.getHours())+':'+p(d.getMinutes())+' · '+d.getDate()+'/'+p(d.getMonth()+1);
       }
+      // Show banner if newest article is older than 30 days
+      if(data.newest_item){
+        var newest=new Date(data.newest_item);
+        var ageDays=Math.floor((Date.now()-newest)/86400000);
+        if(ageDays>30){
+          var MONTHS=['Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
+          var banner=document.createElement('div');
+          banner.style.cssText='margin-bottom:1.2rem;padding:0.7rem 1rem;background:rgba(212,168,67,0.08);border:1px solid rgba(212,168,67,0.2);border-radius:8px;font-family:sans-serif;font-size:0.78rem;color:#a08030;line-height:1.5;';
+          banner.innerHTML='⚠ Δεν υπάρχουν πρόσφατα νέα για το Ακραίφνιο στο Google News. Τα παρακάτω άρθρα είναι από '+newest.getDate()+' '+MONTHS[newest.getMonth()]+' '+newest.getFullYear()+'.';
+          var feed=document.getElementById('news-feed');
+          feed.parentNode.insertBefore(banner,feed);
+        }
+      }
     })
     .catch(function(){
       document.getElementById('news-feed').innerHTML=

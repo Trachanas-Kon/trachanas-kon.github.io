@@ -14,57 +14,99 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch RSS feed from Google News
+      - name: Fetch RSS feeds from Google News
         run: |
+          # Primary: exact village name
           curl -s --max-time 20 \
-            "https://news.google.com/rss/search?q=%22%CE%91%CE%BA%CF%81%CE%B1%CE%AF%CF%86%CE%BD%CE%B9%CE%BF%22%20OR%20%22%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF%22&hl=el&gl=GR&ceid=GR:el" \
-            -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" \
-            -o /tmp/feed.xml
-          echo "Feed size: $(wc -c < /tmp/feed.xml) bytes"
+            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%AF%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR&ceid=GR:el" \
+            -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -H "Accept-Language: el-GR,el;q=0.9" \
+            -o /tmp/feed1.xml
+          echo "Feed1 size: $(wc -c < /tmp/feed1.xml) bytes"
 
-      - name: Parse RSS and write feed.json
+          # Secondary: alternative spelling + broader Boeotia area
+          curl -s --max-time 20 \
+            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%AF%CE%B1+OR+%CE%A0%CF%84%CF%8E%CE%BF+%CE%92%CE%BF%CE%B9%CF%89%CF%84%CE%AF%CE%B1&hl=el&gl=GR&ceid=GR:el" \
+            -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -H "Accept-Language: el-GR,el;q=0.9" \
+            -o /tmp/feed2.xml
+          echo "Feed2 size: $(wc -c < /tmp/feed2.xml) bytes"
+
+      - name: Parse RSS feeds and write feed.json
         run: |
           python3 << 'PYEOF'
           import xml.etree.ElementTree as ET
           import json
           from datetime import datetime, timezone
+          from email.utils import parsedate_to_datetime
 
-          try:
-              tree = ET.parse('/tmp/feed.xml')
-              root = tree.getroot()
-              channel = root.find('channel')
-              items = []
+          def parse_feed(path):
+              try:
+                  tree = ET.parse(path)
+                  root = tree.getroot()
+                  channel = root.find('channel')
+                  items = []
+                  for item in channel.findall('item'):
+                      title   = item.findtext('title', '')
+                      pubDate = item.findtext('pubDate', '')
+                      guid    = item.findtext('guid', '').strip()
+                      source_el = item.find('source')
+                      source = source_el.text.strip() if source_el is not None else ''
+                      link_text = item.findtext('link', '').strip()
+                      if link_text.startswith('http'):
+                          link = link_text
+                      elif guid.startswith('http'):
+                          link = guid
+                      elif guid:
+                          link = 'https://news.google.com/articles/' + guid
+                      else:
+                          link = ''
+                      items.append({'title': title, 'link': link, 'pubDate': pubDate, 'source': source})
+                  return items
+              except Exception as e:
+                  print(f'Error parsing {path}: {e}')
+                  return []
 
-              for item in channel.findall('item'):
-                  title   = item.findtext('title', '')
-                  pubDate = item.findtext('pubDate', '')
-                  guid    = item.findtext('guid', '').strip()
+          items1 = parse_feed('/tmp/feed1.xml')
+          items2 = parse_feed('/tmp/feed2.xml')
 
-                  source_el = item.find('source')
-                  source = source_el.text.strip() if source_el is not None else ''
+          # Merge and deduplicate by link
+          seen = set()
+          merged = []
+          for item in items1 + items2:
+              key = item['link'] or item['title']
+              if key and key not in seen:
+                  seen.add(key)
+                  merged.append(item)
 
-                  link_text = item.findtext('link', '').strip()
-                  if link_text.startswith('http'):
-                      link = link_text
-                  elif guid.startswith('http'):
-                      link = guid
-                  elif guid:
-                      link = 'https://news.google.com/articles/' + guid
-                  else:
-                      link = ''
+          # Sort by pubDate descending (newest first)
+          def sort_key(item):
+              try:
+                  return parsedate_to_datetime(item['pubDate'])
+              except Exception:
+                  return datetime.min.replace(tzinfo=timezone.utc)
 
-                  items.append({'title': title, 'link': link, 'pubDate': pubDate, 'source': source})
+          merged.sort(key=sort_key, reverse=True)
 
-              output = {
-                  'updated': datetime.now(timezone.utc).isoformat(),
-                  'count':   len(items),
-                  'items':   items,
-              }
-              print(f'Parsed {len(items)} items')
+          # Find the most recent article date
+          newest_iso = None
+          for item in merged:
+              try:
+                  d = parsedate_to_datetime(item['pubDate'])
+                  newest_iso = d.isoformat()
+                  break
+              except Exception:
+                  pass
 
-          except Exception as e:
-              print(f'Error: {e}')
-              import sys; sys.exit(1)
+          output = {
+              'updated':     datetime.now(timezone.utc).isoformat(),
+              'count':       len(merged),
+              'newest_item': newest_iso,
+              'items':       merged,
+          }
+          print(f'Parsed {len(items1)} + {len(items2)} = {len(merged)} unique items')
+          if newest_iso:
+              print(f'Newest article: {newest_iso}')
 
           with open('news/feed.json', 'w', encoding='utf-8') as f:
               json.dump(output, f, ensure_ascii=False, indent=2)
