@@ -24,13 +24,21 @@ jobs:
             -o /tmp/feed1.xml
           echo "Feed1 size: $(wc -c < /tmp/feed1.xml) bytes"
 
-          # Secondary: alternative spelling + broader area + Ptωios road
+          # Secondary: alternative spelling + broader Boeotia area
           curl -s --max-time 20 \
-            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%AF%CE%B1+OR+%CE%A0%CF%84%CF%8E%CE%BF+%CE%92%CE%BF%CE%B9%CF%89%CF%84%CE%AF%CE%B1+OR+%CF%80%CF%84%CF%8E%CE%B9%CE%BF%CF%82+%CE%B4%CF%81%CF%8C%CE%BC%CE%BF%CF%82+OR+%CF%85%CF%80%CE%BF%CE%B3%CF%81%CE%B1%CF%86%CE%AD%CF%82+%CE%91%CE%BA%CF%81%CE%B1%CE%AF%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR&ceid=GR:el" \
+            "https://news.google.com/rss/search?q=%CE%91%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%AF%CE%B1+OR+%CE%A0%CF%84%CF%8E%CE%BF+%CE%92%CE%BF%CE%B9%CF%89%CF%84%CE%AF%CE%B1+OR+%CF%85%CF%80%CE%BF%CE%B3%CF%81%CE%B1%CF%86%CE%AD%CF%82+%CE%91%CE%BA%CF%81%CE%B1%CE%AF%CF%86%CE%BD%CE%B9%CE%BF&hl=el&gl=GR&ceid=GR:el" \
             -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
             -H "Accept-Language: el-GR,el;q=0.9" \
             -o /tmp/feed2.xml
           echo "Feed2 size: $(wc -c < /tmp/feed2.xml) bytes"
+
+          # Tertiary: dedicated search for Ptώios road race
+          curl -s --max-time 20 \
+            "https://news.google.com/rss/search?q=%CE%A0%CF%84%CF%8E%CE%B9%CE%BF%CF%82+%CE%94%CF%81%CF%8C%CE%BC%CE%BF%CF%82&hl=el&gl=GR&ceid=GR:el" \
+            -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -H "Accept-Language: el-GR,el;q=0.9" \
+            -o /tmp/feed3.xml
+          echo "Feed3 size: $(wc -c < /tmp/feed3.xml) bytes"
 
       - name: Parse RSS feeds and write feed.json
         run: |
@@ -69,11 +77,12 @@ jobs:
 
           items1 = parse_feed('/tmp/feed1.xml')
           items2 = parse_feed('/tmp/feed2.xml')
+          items3 = parse_feed('/tmp/feed3.xml')
 
           # Merge and deduplicate by link
           seen = set()
           merged = []
-          for item in items1 + items2:
+          for item in items1 + items2 + items3:
               key = item['link'] or item['title']
               if key and key not in seen:
                   seen.add(key)
@@ -104,7 +113,7 @@ jobs:
               'newest_item': newest_iso,
               'items':       merged,
           }
-          print(f'Parsed {len(items1)} + {len(items2)} = {len(merged)} unique items')
+          print(f'Parsed {len(items1)} + {len(items2)} + {len(items3)} = {len(merged)} unique items')
           if newest_iso:
               print(f'Newest article: {newest_iso}')
 
