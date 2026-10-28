@@ -44,6 +44,16 @@ jobs:
             -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed5.xml
           echo "Feed5 (Πτώιος Δρόμος): $(wc -c < /tmp/feed5.xml) bytes"
 
+          # 6: permissos ακραιφνιου
+          curl -s --max-time 20 "${BASE}permissos+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF%CF%85" \
+            -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed6.xml
+          echo "Feed6 (permissos ακραιφνιου): $(wc -c < /tmp/feed6.xml) bytes"
+
+          # 7: permissos ακραιφνιο
+          curl -s --max-time 20 "${BASE}permissos+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF" \
+            -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed7.xml
+          echo "Feed7 (permissos ακραιφνιο): $(wc -c < /tmp/feed7.xml) bytes"
+
       - name: Parse RSS feeds and write feed.json
         run: |
           python3 << 'PYEOF'
@@ -84,11 +94,13 @@ jobs:
           items3 = parse_feed('/tmp/feed3.xml')
           items4 = parse_feed('/tmp/feed4.xml')
           items5 = parse_feed('/tmp/feed5.xml')
+          items6 = parse_feed('/tmp/feed6.xml')
+          items7 = parse_feed('/tmp/feed7.xml')
 
           # Merge and deduplicate by link
           seen = set()
           merged = []
-          for item in items1 + items2 + items3 + items4 + items5:
+          for item in items1 + items2 + items3 + items4 + items5 + items6 + items7:
               key = item['link'] or item['title']
               if key and key not in seen:
                   seen.add(key)
@@ -119,7 +131,7 @@ jobs:
               'newest_item': newest_iso,
               'items':       merged,
           }
-          print(f'Parsed {len(items1)} + {len(items2)} + {len(items3)} + {len(items4)} + {len(items5)} = {len(merged)} unique items')
+          print(f'Parsed {len(items1)} + {len(items2)} + {len(items3)} + {len(items4)} + {len(items5)} + {len(items6)} + {len(items7)} = {len(merged)} unique items')
           if newest_iso:
               print(f'Newest article: {newest_iso}')
 
