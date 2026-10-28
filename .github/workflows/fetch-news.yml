@@ -54,6 +54,11 @@ jobs:
             -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed7.xml
           echo "Feed7 (permissos ακραιφνιο): $(wc -c < /tmp/feed7.xml) bytes"
 
+          # 8: stereanews ακραιφνιο
+          curl -s --max-time 20 "${BASE}stereanews+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF" \
+            -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed8.xml
+          echo "Feed8 (stereanews ακραιφνιο): $(wc -c < /tmp/feed8.xml) bytes"
+
       - name: Parse RSS feeds and write feed.json
         run: |
           python3 << 'PYEOF'
@@ -96,11 +101,12 @@ jobs:
           items5 = parse_feed('/tmp/feed5.xml')
           items6 = parse_feed('/tmp/feed6.xml')
           items7 = parse_feed('/tmp/feed7.xml')
+          items8 = parse_feed('/tmp/feed8.xml')
 
           # Merge and deduplicate by link
           seen = set()
           merged = []
-          for item in items1 + items2 + items3 + items4 + items5 + items6 + items7:
+          for item in items1 + items2 + items3 + items4 + items5 + items6 + items7 + items8:
               key = item['link'] or item['title']
               if key and key not in seen:
                   seen.add(key)
@@ -131,7 +137,7 @@ jobs:
               'newest_item': newest_iso,
               'items':       merged,
           }
-          print(f'Parsed {len(items1)} + {len(items2)} + {len(items3)} + {len(items4)} + {len(items5)} + {len(items6)} + {len(items7)} = {len(merged)} unique items')
+          print(f'Parsed {len(items1)} + {len(items2)} + {len(items3)} + {len(items4)} + {len(items5)} + {len(items6)} + {len(items7)} + {len(items8)} = {len(merged)} unique items')
           if newest_iso:
               print(f'Newest article: {newest_iso}')
 
