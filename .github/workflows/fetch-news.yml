@@ -54,10 +54,10 @@ jobs:
             -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed7.xml
           echo "Feed7 (permissos ακραιφνιο): $(wc -c < /tmp/feed7.xml) bytes"
 
-          # 8: stereanews ακραιφνιο
-          curl -s --max-time 20 "${BASE}stereanews+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF" \
+          # 8: stereanews.gr ακραιφνιου
+          curl -s --max-time 20 "${BASE}stereanews.gr+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF%CF%85" \
             -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed8.xml
-          echo "Feed8 (stereanews ακραιφνιο): $(wc -c < /tmp/feed8.xml) bytes"
+          echo "Feed8 (stereanews.gr ακραιφνιου): $(wc -c < /tmp/feed8.xml) bytes"
 
       - name: Parse RSS feeds and write feed.json
         run: |
