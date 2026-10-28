@@ -44,15 +44,15 @@ jobs:
             -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed5.xml
           echo "Feed5 (Πτώιος Δρόμος): $(wc -c < /tmp/feed5.xml) bytes"
 
-          # 6: permissos ακραιφνιου
-          curl -s --max-time 20 "${BASE}permissos+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF%CF%85" \
+          # 6: permissos.gr ακραιφνιου
+          curl -s --max-time 20 "${BASE}permissos.gr+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF%CF%85" \
             -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed6.xml
-          echo "Feed6 (permissos ακραιφνιου): $(wc -c < /tmp/feed6.xml) bytes"
+          echo "Feed6 (permissos.gr ακραιφνιου): $(wc -c < /tmp/feed6.xml) bytes"
 
-          # 7: permissos ακραιφνιο
-          curl -s --max-time 20 "${BASE}permissos+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF" \
+          # 7: permissos.gr ακραιφνιο
+          curl -s --max-time 20 "${BASE}permissos.gr+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF" \
             -H "User-Agent: $UA" -H "Accept-Language: el-GR,el;q=0.9" -o /tmp/feed7.xml
-          echo "Feed7 (permissos ακραιφνιο): $(wc -c < /tmp/feed7.xml) bytes"
+          echo "Feed7 (permissos.gr ακραιφνιο): $(wc -c < /tmp/feed7.xml) bytes"
 
           # 8: stereanews.gr ακραιφνιου
           curl -s --max-time 20 "${BASE}stereanews.gr+%CE%B1%CE%BA%CF%81%CE%B1%CE%B9%CF%86%CE%BD%CE%B9%CE%BF%CF%85" \
