@@ -1,14 +1,8 @@
 {
-  "updated": "2026-11-18T03:32:15.512761+00:00",
-  "count": 74,
-  "newest_item": "2026-11-17T07:30:23+00:00",
+  "updated": "2026-11-18T12:53:09.306782+00:00",
+  "count": 85,
+  "newest_item": "2026-11-17T07:06:00+00:00",
   "items": [
-    {
-      "title": "Ακραίφνιο: Στις 20 Δεκεμβρίου το άναμμα του χριστουγεννιάτικου δέντρου - Η απόφαση του Τοπικού Συμβουλίου - Radio Thiva",
-      "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxNdHVGRnZJbDQ5bXZha2tJTWFFMzR1VmZtaG1mVXBtdTRUYzlsZ1pVWEZTYnY0LUNOZTV0a0ZQLU9yWnBodU41XzM5MWhWTmY3dFpyVFc5bXNKWHVfRm1TN2w3MVRHbG1tVUNST3N4THRuN2dKTTR2TEZfU1V3X2FZUDdoa09zRk9DWTBHNUpoMk1IRXh2UW5DV2VIb2JoaFlVWlMzY0tLZHg0LVpkTkNxc3NWWUM2RnYwVjdVRjRZZzEwWExuWVNuS2lEYng4UFFwSjk0NmZ4NVBJalU?oc=5",
-      "pubDate": "Tue, 17 Nov 2026 07:30:23 GMT",
-      "source": "Radio Thiva"
-    },
     {
       "title": "Αυτοκίνητο βρέθηκε στα χωράφια στο δρόμο Αλιάρτου - Ακραιφνίου (ΦΩΤΟ) - LamiaReport.gr",
       "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQa0x0ZGVWU1ZoX1EtTkMzNzhIX3NVWHhYUmRRNnhuaUN6Z0M2S1NTVFNoa2xCS0dNMHNnWEVMbmVORjZfckZQMi1scDRfeWYwS2NGMDcyeGxZamNsZFljWXpKUHpldVVtWWJzenM3UjUydmVUcm03dzF0cE5peDBEM005U0x4ZW41ZktsdEtURjBCaV9rVURRX2xIX3VnUXJwaGtPbGdRNGZRWUJNdXh5Q1FZR3ZCejg?oc=5",
@@ -34,6 +28,12 @@
       "source": "permissos.gr"
     },
     {
+      "title": "Χρηματοδότηση 8.800.000 € για έργα στο οδικό δίκτυο της Π.Ε. Βοιωτίας - Sterea News",
+      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOXzdlREpHZ043YWdHelBZUlVtUGQyOTlldGxXRU0tdEJXLXBuS240eTkwTlRjRGh2ZThGTTQ0NHprQ3BFWTdhenFRUGlJNFBWdVpKTkVWeHd4aFI0OWUtR3BuWVNKMlZrSks2bV9jQ2RveXBPXy11YUt6d2RmQWVtSUxhTHotQ2ZidUZzZ1dITW53dWFnVmM4TUlYbXpuOHZqVWxWZA?oc=5",
+      "pubDate": "Mon, 02 Nov 2026 12:08:51 GMT",
+      "source": "Sterea News"
+    },
+    {
       "title": "Ομόφωνο «ΝΑΙ» από το Δημοτικό Συμβούλιο Αλιάρτου–Θεσπιέων για την προσάρτηση του Ακραιφνίου! - permissos.gr",
       "link": "https://news.google.com/rss/articles/CBMi4wJBVV95cUxQSFhVd3UwOFEzS1RjLTJNTUZ0Uk8tdW1GNV9fQldtU0I1Nk5qZTlfU3p1Tk15bU04Rlp6cS1PZ0QzUVNUUFFxMnhkZDYtVDVuTDZ5UUNPWW1Pcy1nbFRZdVdGNjJYbUd6NktuUXRadXFuQTJjU05LMno3REZZUnRndUktSkF2MzdNMDdPZ0RVc1otZ0s5c19QZ0JvZjJES2w5Y1l6dEZjMzVmbDkyYjNucVVCdGFqOUp3ZDY3SnozeE1Od1BKU3ktTDRfd0hkT2RZZmNJemhEWUJyYk9YeTZhY1VxODQ2dU4yTUtQLUJWUjN4OGhWS3ROYjJkWkZaMWVkUjNzX3Q1TndOV25iNEVRcVFVbTZ6WFEtTHZmT2lVQ3h6ZnFpUmNlamV1N29Id3NhbUpGR3VFai1Va19ZQ08wQ3RKWUJSZFFIbHZxTHlHenVJMFkzRFEzOVFjWnhqc05WVmNv?oc=5",
       "pubDate": "Fri, 30 Oct 2026 07:00:00 GMT",
@@ -46,10 +46,28 @@
       "source": "permissos.gr"
     },
     {
+      "title": "Δυναμικές εμφανίσεις στο ΑΚΟΛ σε διοργανώσεις της Περιφέρειας - Radio Thiva",
+      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOdGF3R1RuYl9Lc2RsZ3lvck9PbktCUy1QYmNjbmVHSWhxYmE0QnNVR0YtcVAxdWNSMUNvalk5RDdDSFVHTDM2RGZDbDdYbTF3Zkl2ZUtpUlRNRVlhNUJwWkk3b3Z3Z0h3TXZ5bFNzQVFjV25TU2t5SGI1QklsWkZtQ3Mxd0JzZmVxZFNDcWExMlNVZk55YzlXdXR6dGVtTmNyeVVrWQ?oc=5",
+      "pubDate": "Thu, 22 Oct 2026 07:00:00 GMT",
+      "source": "Radio Thiva"
+    },
+    {
       "title": "Σε κατάληψη το Γυμνάσιο & Λ.Τ. Ακραιφνίου: Κενά καθηγητών, μούχλα στις αίθουσες και στήριξη από τον Δήμο Ορχομενού - permissos.gr",
       "link": "https://news.google.com/rss/articles/CBMi7AJBVV95cUxNY2VDUVdwTjkwWVlIaTlqNndzTVlfLURySGJCdVI1WlA2NGc4b1ZiUzRQcElsTEFQMDFNZmRpSXNSNW45ZUJBbGNiclZqMkxFVDJ3VThLRUZMMzNucjE0eFRnbEUzY08wQW9ENHFzLUFob2hXWDNtazdjZjVOV0hFTTZuWnFlLS1Rd0VRQlIwT2NhcE9GRnNiekFiSmlxUTk3ODJFRmZlbi1pNWkzOU5CdHFIbmppY3RpaU9vNHp3UHJPbWNhZG10THRSME91SXVVM3lxSEt0RzI4RW91WFhXaXI1RkVNTXVodlFpUnVOTXBKN3lrZEs4Yk50V1FyX2xxYmM0Um5NSGFyTFlrM2ZFc3ZOb0pUeEtrZ2pHOXpnY2VBaE5WWGFuV1R3VXV5Tzg4VlhUb01GalFfcE5QQXpwNzFSUTlLbEZfTXpka1B5ZFhGcWJJOXBzODdMUHZhTFV0aFFpQ1BBVXlTM3Ay?oc=5",
       "pubDate": "Thu, 22 Oct 2026 07:00:00 GMT",
       "source": "permissos.gr"
+    },
+    {
+      "title": "14ος Πτώιος Δρόμος 2026 - RunningNews.gr",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE0yd3VBbUtSNGw0M1FtODl1ZmppcDVmbHdxMi1lUFAzNjk3NGh1MkUzNjI5RDBDRXFVcTN4aE85eTROMW1jczNTNUVnd2hwSG0zeDhYYlVQQQ?oc=5",
+      "pubDate": "Sun, 18 Oct 2026 07:00:00 GMT",
+      "source": "RunningNews.gr"
+    },
+    {
+      "title": "Τα αποτελέσματα 14ος Πτώιος Δρόμος 2026 - RunningNews.gr",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE4zODk0QWlHejVNMHZrbTRGQS1PN3gwcmx6MHR2YWg4bjNEbGV0d3hOM2Q3R3ByT0pLNFI3SlRUeEl5aGhPMUVEMzExYzhObm1mdy1DczF6SQ?oc=5",
+      "pubDate": "Sun, 18 Oct 2026 07:00:00 GMT",
+      "source": "RunningNews.gr"
     },
     {
       "title": "Α’ Βοιωτίας: Τα αποτελέσματα της 3ης αγωνιστικής(φωτο) - permissos.gr",
@@ -88,6 +106,12 @@
       "source": "Sterea News"
     },
     {
+      "title": "Δυο ιστορικά μοναστήρια που πανηγυρίζουν το Γενέθλιο της Θεοτόκου - Orthodox Times",
+      "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNYjNRRFdxUWk4VUhySXkwOGNuaWRyVVh5enhJdk9LNlJobDF3YW9rTGo1YlByZ19oUHZlOURwVkVnM1E4dUNiMFZHLWtNbnA1OG1jRlFpdEdNVy1OeDJEVUJJUzdaYlMyVzJrTEVTaGp5aS1QWG1PcUtERXpNYThfSUxDRjBtbGxOa1pXdm1mVS1BTDI3alJ1RnpIOEt3d9IBowFBVV95cUxQU0JuVHl5WVVZTXhfNnVtdWphVkJGZnFxRWVHSmNzTWk0S3lBSlQtanRaTXRvbktjZ3NOSUtuX0tlTjRra3llTGxUYkFGMmxTazJrYTR2TkNxbEMtZGkyOEVwdEFYT05Rc3B4Y2ZxVGF2cFE3TUpDMThMOTg2eDJDZzVOaWVZZ0gtQWt2UVd6VEJqTlNUc21kNW84ZFRfVUtHQkZN?oc=5",
+      "pubDate": "Thu, 03 Sep 2026 05:07:14 GMT",
+      "source": "Orthodox Times"
+    },
+    {
       "title": "Ακραίφνιο Βοιωτίας: Λύκος καταγράφηκε στην κεντρική πλατεία μέρα μεσημέρι - Sterea News",
       "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPdkVkTDBQTWhWLXdGUTE4STFFM216ZGRIcXpkb0pwQkZSOUVKOVYwOVN5QTlENnhsTzZELUdIbVczQ1FFMFBWNnRZckduZTliUjNIM1BzMzk1ek5WeW1lajZ5eHRBbVdYMlpCZUozVUlrNHJRdng2QjJTZ2hmRThmVUJJekxTYXVXWDk3Y3BtVXhKazk4WEt3NE9hSk1DeFduelExaU5kSHN5S28?oc=5",
       "pubDate": "Wed, 08 Jul 2026 07:00:00 GMT",
@@ -118,16 +142,16 @@
       "source": "LiFO"
     },
     {
-      "title": "Φωτιά στο Ακραίφνιο: Σοβαρές καταστροφές σε κτηνοτροφική μονάδα και αγροτικές εκτάσεις - Δεκάδες νεκρά ζώα (Βίντεο) - Skai.gr",
-      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNNlQ3RG5JUjQ3SmlDelEtY0tTaEFYaTBWQUJrUTVIclNtWXZhWlltSVpNalJ0dC1TRzVVME1iazNJOUw3MU1tQV85aF9RdWtrdEVFbXZodzVXRVJSUGdGcXJ3QVdNOF93RDVRMUtFSUJSMHdEaXlLdVpLQ0tfLXVWbjRjOW1LUGlRWXNvVmFMQVFhcTNJcjBlcUgxanNWQ0J1aW5RWGxtand5emdKMWhlYXVSMTI2OGF2Z3JWcGNrd9IBxAFBVV95cUxQYkRsS05yUGs5QWJOZ1hPdGRIRmpMSVd2M3BSd2p5Y2pDUGV5R3FwMmR3THhpREVzMS15LTBwQkhLQ3ZFMnBuTkZNXzhjRlg5d2FaTDJLNkxmaE9Ldnlyb2tjMGx1akhXOXlvb1ljd3diM21wdVpSTGxGeHNXcVZlaGZWdTg2QXZXYi1QbmVTZ2VkUnhXMzl1ai1XY1ptYkxUQlBtQmZjbTUtUW1maVphVUdIZ1doQ1NxSkwxY1ZPamEyY00z?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Skai.gr"
-    },
-    {
       "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: έκλεισε η Αθηνών-Λαμίας, 14 εναέρια στη μάχη (video) - toManifesto.gr",
       "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxORjE2ejVKYlpGaGh5cXZiY1puTjNSVXY0R3R3OFZwZVdVQ0dRaXZOX2stZDdVQU10Vlg2NjJZeGdUVDRzUFF3ZzJzamJtVkVMT2U2OGpDRnpsSjJrckN1TzVyVzhPcU5QM3p0SjFJajdqSFFWQndtTVRYaE11VURYbWlRQlJCWG5xLXRraU83MW43eW8wVjVVMS1WTDJ6MnNIX3ctME5jTjdrZWF3VENrdkdLNks?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "toManifesto.gr"
+    },
+    {
+      "title": "Φωτιά στο Ακραίφνιο: Σοβαρές καταστροφές σε κτηνοτροφική μονάδα και αγροτικές εκτάσεις - Δεκάδες νεκρά ζώα (Βίντεο) - Skai.gr",
+      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNNlQ3RG5JUjQ3SmlDelEtY0tTaEFYaTBWQUJrUTVIclNtWXZhWlltSVpNalJ0dC1TRzVVME1iazNJOUw3MU1tQV85aF9RdWtrdEVFbXZodzVXRVJSUGdGcXJ3QVdNOF93RDVRMUtFSUJSMHdEaXlLdVpLQ0tfLXVWbjRjOW1LUGlRWXNvVmFMQVFhcTNJcjBlcUgxanNWQ0J1aW5RWGxtand5emdKMWhlYXVSMTI2OGF2Z3JWcGNrd9IBxAFBVV95cUxQYkRsS05yUGs5QWJOZ1hPdGRIRmpMSVd2M3BSd2p5Y2pDUGV5R3FwMmR3THhpREVzMS15LTBwQkhLQ3ZFMnBuTkZNXzhjRlg5d2FaTDJLNkxmaE9Ldnlyb2tjMGx1akhXOXlvb1ljd3diM21wdVpSTGxGeHNXcVZlaGZWdTg2QXZXYi1QbmVTZ2VkUnhXMzl1ai1XY1ptYkxUQlBtQmZjbTUtUW1maVphVUdIZ1doQ1NxSkwxY1ZPamEyY00z?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "Skai.gr"
     },
     {
       "title": "Σε ύφεση η φωτιά στο Ακραίφνιο – Άνοιξε η εθνική οδός Αθηνών – Λαμίας - In.gr",
@@ -140,12 +164,6 @@
       "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNNGNkX2ItUHB6eWluaEEyNVVaN0FXWFNkUmluMjVxNEhpRGt5aXJYWnEtakkwTjVPMDF0V0lLTHRJMFo4c3NBMXd3MlljTG85b0t4ZnFyNlNvN2VYcWlYYXlFUmVZbVN3UGk0a0t1V0htaVdpeXh2N0hCM216VmNfdjJGTFBuWlRWWTJXUXYwOTV2dw?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "Newsbeast"
-    },
-    {
-      "title": "Βοιωτία: «112» για φωτιά στο Ακραίφνιο – Κλειστή η Εθνική Οδός στον κόμβο του Κάστρου - Ημεροδρόμος",
-      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOYXZ5dUFrN0pmMlVrTHZKSzVuSnN6RHB0SG5TZlVGUTA5S0RzX1YzZjNtb3dVamllYXllVHY2Z0N2ZVdRZ2pEcHVoSkxmdXR6M0hLWXhycTlKeHY4YWN4NklLY19TemYtdmdoM1FsZmlDc0lRSndTaVBnNVpiWXdObDk2dFJfQW1qbGF4WEE5YW5Ueks0b2FyNm5oNFVlWjE2Tlo1TjhSNFZ6T0E?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "Ημεροδρόμος"
     },
     {
       "title": "Αποκαρδιωτικές εικόνες στο Ακραίφνιο μετά τη φωτιά: Στάχτη κτηνοτροφική μονάδα με ζώα, καλλιέργειες και ένα σπίτι - Ethnos",
@@ -184,6 +202,12 @@
       "source": "Real.gr"
     },
     {
+      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Ενισχύθηκαν οι δυνάμεις της πυροσβεστικής – Έκλεισε η Αθηνών – Λαμίας - ΤΟ ΒΗΜΑ",
+      "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNRW9uZ1RacEdfWktSYUpYY2RZVUtOeWo2b0RVM3NGempQMUdKUGJMc0lVOWt3N2VzT2dJbFZXR3A3dXZwVENnMkJPWWttOWtlUUZpRUxjeVFhVTZHV19yUF9sMXdzNzJiZmt4QnhYWmdLcnRadG80YVd0cHUxNDRRQVltSVFkVmY3MTRZV1c4Z1Vxb2o1bGRrMzIyTnRSbWxSTUg5R1ozRmxTZzZoYlc2bWVodnFna05QbU9kbUxOQ3RWcUxldTFDNlJsaVhGNDhuZHJpbdIB2gFBVV95cUxONV9YaWFRTjBaTlhpRjdVak04NUVRUWNLaUFUdzVIX3djbUk4WjRvS19PTFdkczFfVkhDWkdWVXJXcnhOQ1lCcFVjdWpZbkRTQVNqb2lvSXRXcDhtNTMwdk0wcGN5V2Y2amtuNi1hNFh1SHEwR2hUNC15c28xR2JBME45ckh6NWFNVnlwZkF4ZnhrRkY3UDVnOFZWMER2ZVpmZ1RCRDkzSE5ObEV3UkhXQ3B2NElscWdoTFFjWTNtQjhqd2FoTkticUpENDBiVWJWMGEyTXJuRXZmUQ?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "ΤΟ ΒΗΜΑ"
+    },
+    {
       "title": "Φωτιά στο Ακραίφνιο Βοιωτίας – Ανοιξε η εθνική οδός - Kathimerini",
       "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNUHloeE1wM0pwREFESmtHUmNKb3F4ZmJMeEJvR0JrTjRXZWM0Wk1oV293SFZYWU82MWJ3M0FIZy1nREFIbkhkUEFpQkh0UFNCVE9iTlNrWmpEWkIxWWg4M1M5bDRfdWJONkJhVFdDS3dOVUNnQU1sQ1B5OVozLW5TSDNrR1ppOWFRMExhdllSMFF3eVMyTlFnaHBtUG1HV3ZSeEtSSWh3?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
@@ -214,16 +238,16 @@
       "source": "Newsbeast"
     },
     {
-      "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Ενισχύθηκαν οι δυνάμεις της πυροσβεστικής – Έκλεισε η Αθηνών – Λαμίας - ΤΟ ΒΗΜΑ",
-      "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNRW9uZ1RacEdfWktSYUpYY2RZVUtOeWo2b0RVM3NGempQMUdKUGJMc0lVOWt3N2VzT2dJbFZXR3A3dXZwVENnMkJPWWttOWtlUUZpRUxjeVFhVTZHV19yUF9sMXdzNzJiZmt4QnhYWmdLcnRadG80YVd0cHUxNDRRQVltSVFkVmY3MTRZV1c4Z1Vxb2o1bGRrMzIyTnRSbWxSTUg5R1ozRmxTZzZoYlc2bWVodnFna05QbU9kbUxOQ3RWcUxldTFDNlJsaVhGNDhuZHJpbdIB2gFBVV95cUxONV9YaWFRTjBaTlhpRjdVak04NUVRUWNLaUFUdzVIX3djbUk4WjRvS19PTFdkczFfVkhDWkdWVXJXcnhOQ1lCcFVjdWpZbkRTQVNqb2lvSXRXcDhtNTMwdk0wcGN5V2Y2amtuNi1hNFh1SHEwR2hUNC15c28xR2JBME45ckh6NWFNVnlwZkF4ZnhrRkY3UDVnOFZWMER2ZVpmZ1RCRDkzSE5ObEV3UkhXQ3B2NElscWdoTFFjWTNtQjhqd2FoTkticUpENDBiVWJWMGEyTXJuRXZmUQ?oc=5",
-      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
-      "source": "ΤΟ ΒΗΜΑ"
-    },
-    {
       "title": "Ακραίφνιο Βοιωτίας: Aνεξέλεγκτη η φωτιά, έκλεισε η Αθηνών-Λαμίας – Επιχειρούν 118 πυροσβέστες και 14 εναέρια (vid) - newmoney",
       "link": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQWFZ6ajZuTHA5UV8ydjc5Z182clZSTVhBak1oTmlrUXFhcEZKTmtvcDFaUEE4SmFHcmRGRkNZS3N1RV9MQ3Z1Q3ZQNW9uLV9Zc1pxeGNmYkQzRXZ1NC1nWFNacllEZ3J6bGVZeXJmRUNobUMyb081VHZwNUJGQ3pXSXczVGg5Sl9RcExYWk94RVYxbGo2b0NHS0RwbzhuQ2RnNnhjY2dqaHctSW9RRFRJNWNmZThERmNpVnE5Z05qSzR5dE1zV1pjb2hkalpzYkdNVWtRVVIxaWNqLWxaaTVTSE5rUHpGd1dhdGU40gHwAUFVX3lxTFBZd1k1SVUwSlpmMy1DQmZTcDdXWkpvdGRrenl4OE1rdlNEQUVhZE92T1U2b3RTd2h3dG8zeGFnSGI4bmdLeEZBa0ZYWFNFbkttWUh6czVFN3NMTkpZVHpBSGdRTkg0OEtUNXZlVmdBMVBma1ZKT3pZZGZLOWpOWEJlaVFiZ1hIVWlyQzJTNVd0cTNJTEtJWFNTY0JPR21mMkVYb3BQdFV3OEdpcktJdFhuSEo4OVFfSzlpeENNSjlhYzZhdm1mUVRJRUNwNTNPTnlTdUVfTmZUT3lvTDZKaVpnbUpCTTRaRGZhLV9HZlM3aA?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
       "source": "newmoney"
+    },
+    {
+      "title": "Μάχη με τις φλόγες σε Ακραίφνιο, Σπάτα και Θήβα - Σε γενική επιφυλακή η Πυροσβεστική - worldenergynews.gr",
+      "link": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNWnZNazhHZm5OVHBOMVZWZXFfbjhubENlRzJPZUdoZDczX19fZ1dEZ3RNRkRlcEtqLUFOS0hoT1hPem5sN0x1dC00VEtOcVNhVklRY1RpeUJHVl9SMEdJV3laR09fLWtQRVEzTGx6bHNsanVNZXpURHNnQkhHRkh1MDVIeWpOWjlMbDE1ZUlxVEVockduVHRxaUlySWEzSm9INl8tMnBlbHQtanp6LS1YNkp5LTNuNTZIbDVmZGF6YWdhM3NKSE1LY05Ba0VtVmtIUm1mLVFWT0loQQ?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "worldenergynews.gr"
     },
     {
       "title": "Σε ύφεση η πυρκαγιά στο Ακραίφνιο Βοιωτίας - Επιχειρούν ισχυρές πυροσβεστικές δυνάμεις - Μακεδονικά Νέα",
@@ -382,6 +406,12 @@
       "source": "Reader.gr"
     },
     {
+      "title": "Βελτιωμένη η εικόνα της φωτιάς στο Ακραίφνιο Βοιωτίας: Άνοιξε η Εθνική Οδός... Έπεσαν οι άνεμοι... Επιχειρούν ισχυρές δυνάμεις της Πυροσβεστικής - Hellasjournal.com",
+      "link": "https://news.google.com/rss/articles/CBMihgJBVV95cUxQV1pQMHB6OWVySW1NQXdBeUxLei14cEhCenAxa25iWTJ2SUgtUy1rc3U5QjhCcWRCX1R4aHZTYXkyTzVZOG5QTEl4RFpKWmF3YmkzR0Y1dE1ZVVBHTVktTnkzcVZBTmJhNGxlUlp5NFZvdkktZk4xUGxjZGhsZXI0ckhGOWpmSHI0elBvejh5dHcwVU1nQ0tyMGxQQ3hTeHR2WnZuNHBzY2NDSHRVWTBPRlkzX1ZXbktreGVmeGRabmE2NkFDZjhhNzhJX3preElhOXlUaXFaNFlzTVROUWdmREwzdlZiX2NIUUswLVFWOWo4YmtES3pJcmpjVDN2Q0N1SXphWGtn?oc=5",
+      "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+      "source": "Hellasjournal.com"
+    },
+    {
       "title": "Φωτιά στο Ακραίφνιο: Κτηνοτροφική μονάδα τυλίχθηκε στις φλόγες - Κάηκαν δεκάδες ζώα - Newsbomb",
       "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQMUdLam45R0c1Q25HbFpQcGs0WDctdFJHRnduZktQSHg3eW5UVENNUi1mcFRLZEpJMWEzamVHaEV1eDBwVU0ydUtFVlFYTjhrRzgwVWNmaUtfdHBKZ3IyYlZlQV9uRzFLaV82TkNOZlFGRzNoaXZJQlVRRW5vSmlCYi1lbEVFbVU3anRLZ1o3M3BoYjk5LUNYbnVNYV9hWmw2R1JfbW9sMlRjcDNoNFViVHhQYndCWXJYU3hGdzVEU05FYXlr?oc=5",
       "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
@@ -400,6 +430,12 @@
       "source": "Newsbomb"
     },
     {
+      "title": "13ος Πτώιος Αγώνας Δρόμου Ακραίφνιου - RunningNews.gr",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBUbkhWMGd1cWcyTXJDR1pEWXFYWnk1eXZ6bGk3UTJfOUJsWGJ2N0FKeWU5WFhuTkhNWHFDbVNOZUgyOGZnUW85Tkw1NlpkOWcxY0FnYTB3aw?oc=5",
+      "pubDate": "Sun, 19 Oct 2025 07:00:00 GMT",
+      "source": "RunningNews.gr"
+    },
+    {
       "title": "Φωτιά στο Ακραίφνιο Βοιωτίας: Χωρίς ενεργό μέτωπο - Ethnos",
       "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPY3M3cGswNHVTWlBPTzQ3aVl5TzNkYXNlX0RQZ1U2WXA0cmw3OUR4ZnpUakR2X1dQUm40WjhkbXBKNEpyalo1ZXV1a3M5LWJkUUhzY0ozUHZpdk1ZTmw5c0ZEVDF3M3NNQWZ0c0JvamttMnlZRzlVZG5oWlFlZy1zYTJuS1EtVGdBTmZfNnRaTdIBigFBVV95cUxPQXNzUG96QS1iQ3JCUDV4UTdVSHk3cVBoLVBWVm9QTmNNWXZ5ckhUMS1YUWdrQ1d6RGV1VnRHTldZXzExV1AtcWxvcThadkFwTHQySjdLUjl0amhZaGM5MDh2bEt5eUF2VXFqWXFUQl9DbWFiZF96X2JqZ2ItODNkWHFnTVFEVnFnR2c?oc=5",
       "pubDate": "Sat, 25 May 2024 07:00:00 GMT",
@@ -410,6 +446,24 @@
       "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQNkpoRTYwNEJOSHhxQS1sUkZubldRb3laTkE4R0ZhNnN6U2hMSERXUmhNVmJBbFJhME5xd0dXQ25DaVFmMjVhallPeGN0NjdZVHhTRlRwNnFfTmFYVW5HS25zd2RpNHdFbnVldW9MU2JoTmxzMHNrQUFxNVZGS2FsN1FBeDVQYmpyd2pZN0ZfN3dOZHFaZ0p0QjROXzY3SFpPTHduczRQdmNLc3Z1RTA3aVg0ZUxoUmJ6?oc=5",
       "pubDate": "Sat, 25 May 2024 07:00:00 GMT",
       "source": "CNN.gr"
+    },
+    {
+      "title": "ΤΑ ΑΠΟΤΕΛΕΣΜΑΤΑ 12ος Πτώιος Αγώνας Δρόμου Ακραιφνίου - RunningNews.gr",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE42UTVhTDFkaXRyU3ZaYTVyVDk3czRuUFRmUFpUWjVZd3E0azcxT2xaRklDWldFNjA3dzhsLXpuTE9VUklwTUNnU3Z0SkpiUEVNdWNOaHh2UQ?oc=5",
+      "pubDate": "Sun, 22 Oct 2023 07:00:00 GMT",
+      "source": "RunningNews.gr"
+    },
+    {
+      "title": "12ος Πτώιος Αγώνας Δρόμου Ακραιφνίου - RunningNews.gr",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5aMVBGTFM1X0gtN1VMWWhLMGdncE90ZHZPZFRyOXEyMjlaNm9sLWVweTZ4WTlyMUhHOVFWUlprUHp5SFRJblpOeFBzYXhabEtabk02V1ZINA?oc=5",
+      "pubDate": "Sun, 22 Oct 2023 07:00:00 GMT",
+      "source": "RunningNews.gr"
+    },
+    {
+      "title": "12ος Πτώιος Αγώνας Δρόμου Ακραιφνίου στις 22 Οκτωβρίου 2023 - iRunmag",
+      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9IV3ZkS2hhRVdSREd2MkVvWHUyVmU0VFliR0I2Sk5MNUZLZ1AzX1NYTmV3bTFzTlA0N3ZTTnZ5QU5uekpDa2h1Q1IzV1V3QXgwdHFuM0lBYUV0ZFlWWmNRNGV3?oc=5",
+      "pubDate": "Tue, 03 Oct 2023 07:00:00 GMT",
+      "source": "iRunmag"
     },
     {
       "title": "Βοιωτία: Το πιο αναπάντεχο weekend πολιτισμού - Sterea News",
@@ -424,6 +478,12 @@
       "source": "Sterea News"
     },
     {
+      "title": "11ος Πτώιος Αγώνας Δρόμου: Τα αποτελέσματα - iRunmag",
+      "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9idHdKVTNKaGhVMHg5OVJuS3lrWjVhOWFHVzk0ZGxRNlo0SVFTaVdJT2pMSWdKMlgzenhNS3VFcTNQeUVpNkI0LVp2SkZDb1djdkR4MTFJcGw?oc=5",
+      "pubDate": "Mon, 17 Oct 2022 07:00:00 GMT",
+      "source": "iRunmag"
+    },
+    {
       "title": "Ακραίφνιο: Κλειστό το σχολείο - Ασθενείς οι 45 από τους 60 μαθητές - Documento",
       "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPa1lHQjhITXlMZFp2YmlUTFFUYnlIYTBQbXN0MkE0VnRFZkhjUVV5MkJFQkFEYURuMGN3ZFh0OExHUEJkT2tFdEo5cEluZnRzdjJZSWhHWlp5dEhuS1ZEQ1czek1hbnRselNVZVBEcFdteUFZNEVYRGNwNm1ya3VEUGRJUG1PUEZ5M1BSWko5SlEtb2lZaDhkem4yV1Fkc1VPYmtaQWxn0gGrAUFVX3lxTE1yQTRIMzBVRVpTLWY2RDltU3R5anFkelR5Wi16OEdMX0JMb0RtbGdVam9mQVIzUHVIMjVoMG9YR29LZDlpQUwtUXkwOFVBZGhsa1BuV0R0M09jRXpIWXBFYVdIVUktaWdNSWg2VmxRR1ZvdDNCRTJVUlVmUEtNUFE0ZXgwbWlyRzBWWXhzN3kwOFpLeDBMX0d1R3ZBd1BHa3BtQVdjS0FaV19ITQ?oc=5",
       "pubDate": "Sat, 05 Jun 2021 10:31:57 GMT",
@@ -434,6 +494,12 @@
       "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFB3RWcxN25wODR5MTVxbHNHa2dsdG9Eemlic0ZBaXNIVFRxWHFUOUdTbGhvTElQajluSEpFczQ4WjFCQ1g5U19VVW5zbHVsVjFCa1JtUFE4VXp5OEVBcVN0UkgwbmVHOVpLM1Bj0gFwQVVfeXFMTU8xYmJNUWh3SkdkbWU4WWVIYXdzNnpzaXMxYi1aTTRIRTRZQ0VkeEJObkFzU09FM2plOFVxOXRBY1BiWTFMdmVNZWIxd1JabHNEOFlwb01rcTNyRmd3VjUzZTVuSzZzdTNLaldLaWZONg?oc=5",
       "pubDate": "Mon, 11 May 2020 07:00:00 GMT",
       "source": "News 24/7"
+    },
+    {
+      "title": "8ος Πτώιος Αγώνας Δρόμου Ακραιφνίου - RunningNews.gr",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5HRl8wVXNQUDBOUUhpeDJpWExuOUFCU3JDbDVUbEpIYlNlV25YVjllUzFQV1NQU1lKSUxPa2FVMDB2VHBCcVdneThrcTE0WHdSQ2xTZ1kxWQ?oc=5",
+      "pubDate": "Sun, 14 Oct 2018 07:00:00 GMT",
+      "source": "RunningNews.gr"
     },
     {
       "title": "Εκδρομή ΑΠΣ Απόλλωνα Δ.Α. στο Ακραίφνιο Βοιωτίας για τον Πτώιο Αγώνα - RunningNews.gr",
